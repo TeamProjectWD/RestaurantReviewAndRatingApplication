@@ -12,4 +12,6 @@ const HomePageController = require('../controllers/homePage');
 
 router.get('/',HomePageController.HomePage);
 
+router.use('/posts',require('./posts'));
+
 module.exports = router;
