@@ -1,7 +1,15 @@
+const Post = require('../model/postModel');
+
+module.exports.HomePage = async function(req,res){
+
+    const postData = await Post.find({});
+
+    console.log(postData);
 
 
-module.exports.HomePage = function(req,res){
-
-    res.render('homePage.ejs');
+    return res.render('homePage.ejs',{
+        
+        postData:postData
+    });
 
 }

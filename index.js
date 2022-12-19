@@ -2,15 +2,15 @@ const express = require('express');
 
 const expressEjsLayouts = require('express-ejs-layouts');
 
- 
-
 const path = require('path');
 
-const port = 8002;
+const port = 8000;
 
 const app = express();
 
-// app.use(express.json());
+const db = require('./config/mongoose');
+
+ 
 
 app.use(express.urlencoded({extended:false}));
 

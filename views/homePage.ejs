@@ -4,12 +4,39 @@
         
         <input type="text" name="content">
         
-        
-        <input type="file" name="avatar" />
+        <input type="file" name="avatar"/>
 
-        <input type="submit" value="Submit" >
+        <input type="submit" value="Submit">
 
     </form>
 
+
+</div>
+
+
+<div>
+
+    <ul>
+
+        <%for(post of postData){%>
+        
+            <li>
+    
+                <%=post.content%>
+
+                <img src = "<%=post.avatar%>" alt="image">
+    
+            </li>
+    
+             
+             
+    
+        <%}%>
+
+
+
+
+    </ul>
+    
 
 </div>
