@@ -18,13 +18,13 @@ module.exports.PostConroller = async function(req,res){
             avatar:Post.picPath + "/"+req.file.filename
         });
 
-        console.log(req.file);
+        console.log("qqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqq",req.file);
 
         console.log("**************************",presentPost);
 
-        if(req.file){
-            presentPost.avatar  = post.picPath + '/' + req.file.filename;
-        }
+        // if(req.file){
+        //     presentPost.avatar  = Post.picPath + '/' + req.file.filename;
+        // }
 
         console.log("**************************",presentPost);
 

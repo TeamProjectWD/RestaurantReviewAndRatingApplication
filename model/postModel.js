@@ -4,7 +4,7 @@ const multer = require('multer');
 
 const path = require('path');
 
-const postPicturePath = path.join('./uploads/posts/pics');
+const postPicturePath = path.join('/uploads/posts/pics');
 
 const postSchema = new mongoose.Schema({
 

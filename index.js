@@ -4,7 +4,7 @@ const expressEjsLayouts = require('express-ejs-layouts');
 
 const path = require('path');
 
-const port = 8000;
+const port = 8009;
 
 const app = express();
 
@@ -21,6 +21,10 @@ app.use(expressEjsLayouts);
 app.set('view engine','ejs');
 
 app.set('views',path.join(__dirname,'views')); 
+
+//making upload folder available to browser
+
+app.use('/uploads',express.static(__dirname +"/uploads"));
 
 app.use('/',require('./routes'));
 
