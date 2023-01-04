@@ -1,10 +1,14 @@
+<p>user : <%= locals.user.name%></p>
+
+<a href="/user/signOut">signOut</a>
+
 <div>
 
     <form action="/posts" method="POST" enctype="multipart/form-data">
         
-        <input type="text" name="content">
+        <input type="text" name="content" required/>
         
-        <input type="file" name="avatar"/>
+        <input type="file" name="avatar" required/>
 
         <input type="submit" value="Submit">
 

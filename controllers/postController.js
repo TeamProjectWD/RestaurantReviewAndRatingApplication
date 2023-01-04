@@ -5,6 +5,8 @@ const Post = require('../model/postModel');
 
 module.exports.PostConroller = async function(req,res){
 
+
+
     Post.uploadPicture(req,res,async function(err){
 
         if(err){
@@ -18,17 +20,7 @@ module.exports.PostConroller = async function(req,res){
             avatar:Post.picPath + "/"+req.file.filename
         });
 
-        console.log("qqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqq",req.file);
-
-        console.log("**************************",presentPost);
-
-        // if(req.file){
-        //     presentPost.avatar  = Post.picPath + '/' + req.file.filename;
-        // }
-
-        console.log("**************************",presentPost);
-
-    })
+    });
 
     console.log("here");
  

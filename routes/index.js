@@ -1,8 +1,10 @@
 const express = require('express');
 
-const { Module } = require('module');
+ 
 
 const router = express.Router();
+
+const passport = require('../config/passport');
 
 
 
@@ -10,8 +12,10 @@ const router = express.Router();
 const HomePageController = require('../controllers/homePage');
 
 
-router.get('/',HomePageController.HomePage);
+router.get('/',passport.checkAuthentication,HomePageController.HomePage);
 
 router.use('/posts',require('./posts'));
+
+router.use('/user',require('./user'));
 
 module.exports = router;

@@ -2,6 +2,8 @@ const mongoose = require('mongoose');
 
 mongoose.connect('mongodb://localhost/majorDB');
 
+ 
+
 mongoose.set('strictQuery', true);
 
 const db = mongoose.connection;
