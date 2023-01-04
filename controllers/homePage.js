@@ -9,7 +9,7 @@ module.exports.HomePage = async function(req,res){
 
     return res.render('homePage',{
         
-        title : "HR&R :: homePage",
+        title : "HR&R @ homePage",
         postData:postData
     });
 
