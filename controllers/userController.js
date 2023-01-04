@@ -50,7 +50,7 @@ module.exports.createSession = function(req,res){
     return res.redirect('/');
 }
  
-
+//for deleting session cookie created by passport
 module.exports.destroySession = async function(req,res,next){
     req.logout(function(err) {
         if (err) { return next(err); }
