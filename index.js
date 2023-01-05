@@ -4,7 +4,7 @@ const expressEjsLayouts = require('express-ejs-layouts');
 
 const path = require('path');
 
-const port = 8004;
+const port = 8000;
 
 const app = express();
 
@@ -18,6 +18,8 @@ const passportLocal = require('./config/passport');
 
 const MongoStore = require('connect-mongo');
 
+//to encode url
+
 app.use(express.urlencoded({extended:false}));
 
 app.use(expressEjsLayouts);
@@ -26,7 +28,7 @@ app.set('view engine','ejs');
 
 app.set('views',path.join(__dirname,'views')); 
 
-//creating cookie using express-session
+//creating cookie using express-session and stroing session in Mongostore to prevent users from logging out while the server restarts
 app.use(session({
     
     name:"HR&R",
@@ -36,16 +38,19 @@ app.use(session({
     cookie:{
         maxAge:(100000*60*100) 
     },
+    //address for storing cookie in DB
     store: new MongoStore({
-        mongoUrl:'mongodb://localhost/majorDB',
+        mongoUrl:db._connectionString,
         collectionName:'sessionCookies'
     })
 
 }));
 
+//starting the passport authentication
 app.use(passport.initialize());
+//passport session intialization
 app.use(passport.session());
-
+//making active user avaliable for views
 app.use(passport.setAuthenticated);
 
 
@@ -53,6 +58,7 @@ app.use(passport.setAuthenticated);
 
 app.use('/uploads',express.static(__dirname +"/uploads"));
 
+//seperate directory for routes
 app.use('/',require('./routes'));
 
  
