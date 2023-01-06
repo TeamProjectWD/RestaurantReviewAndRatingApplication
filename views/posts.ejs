@@ -1,0 +1,50 @@
+<li>
+
+    <div>
+
+        <div>
+            <span><%= post.user.name %></span>
+        </div>
+
+
+        <div>
+
+            <span><%= post.content%></span>
+
+            <img src="<%= post.picturePath %>" alt="" class="img-fluid">
+            
+            <form action="/upVote/<%=post.id%>/?type=Post" method="post">
+
+                <button><i class="fa-regular fa-circle-up"></i></button>
+                <%= post.upVotes.length%>
+            </form>
+
+        </div>
+
+        <div>
+
+            <form action="/posts/comment/<%=post.id%>" method="POST">
+
+                <input type="text" name="content" id="" placeholder="comment">
+                <input type="submit" id="submit">
+                <label for="submit"><i class="fa-solid fa-paper-plane"></i></label>
+                
+
+            </form>
+            
+
+        </div>
+
+            <small>
+                <ul>
+                    <% for(comment of post.comments){%>
+                        <%-include('comments')%>
+                    <%}%>
+
+                </ul>
+            </small>
+
+    </div>
+
+
+</li>

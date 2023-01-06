@@ -1,0 +1,25 @@
+<div>
+    
+
+
+    <span>
+        <%= UserProfile.name%>
+    </span>
+
+    <%if(UserProfile.avatar){%>
+        <img src="<%= UserProfile.avatar %>" alt="">
+    <%}else{%>
+        <img src="/uploads/noprofile.png" alt="">
+    <%}%>
+
+     
+
+
+    <%for (post of UserProfile.posts) {%>
+
+        <%- include('posts')%>
+
+    <%}%>
+
+
+</div>

@@ -8,12 +8,25 @@ const postPicturePath = path.join('/uploads/posts/pics');
 
 const postSchema = new mongoose.Schema({
 
+    user:{
+        type:mongoose.Schema.Types.ObjectId,
+        ref:'User'
+    },
     content:{
         type : String,
         required:true 
     },
+    upVotes:[{
 
-    avatar:{
+        type: mongoose.Schema.Types.ObjectId,
+        ref:'UpVote'
+
+    }],
+    comments:[{
+        type:mongoose.Schema.Types.ObjectId,
+        ref:'Comment'
+    }],
+    picturePath:{
         type:String,
     }
 },{
@@ -32,7 +45,7 @@ const storage = multer.diskStorage({
   
  
 
-postSchema.statics.uploadPicture =  multer({storage:storage}).single('avatar');
+postSchema.statics.uploadPicture =  multer({storage:storage}).single('picturePath');
 
 postSchema.statics.picPath = postPicturePath;
 

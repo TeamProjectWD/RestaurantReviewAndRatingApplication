@@ -59,3 +59,39 @@ module.exports.destroySession = async function(req,res,next){
     
 
 }
+
+module.exports.userProfile = async function(req,res){   
+    
+     
+    const profileUSerData = await User.findById(req.params.uID)
+    .populate({
+        path:'posts',
+        populate:{
+            path:'user'
+        }
+    }).populate({
+        path:'posts',
+        populate:{
+            path:'upVotes'
+        }
+    }) 
+    .populate({
+        path:'posts',
+        populate:{
+            path:'comments'
+        }
+    });
+    
+
+    return res.render('userProfile',{
+        
+        title:"HR&R @ UserProfile",
+
+        UserProfile : profileUSerData
+
+    });
+
+
+}
+
+ 

@@ -1,0 +1,14 @@
+<li>
+    <div>
+
+        <span><%=comment.user.name%></span> 
+        <span><%=comment.content%></span>
+        <form action="/upVote/<%=comment.id%>/?type=Comment" method="POST">
+            <button><i class="fa-regular fa-circle-up"></i></button>
+            <%= comment.upVotes.length%>
+        </form>
+
+
+    </div>    
+
+</li>

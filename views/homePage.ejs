@@ -1,6 +1,9 @@
-<p>user : <%= locals.user.name%></p>
-
 <a href="/user/signOut">signOut</a>
+<div>
+    
+    <a href="/user/profile/<%= locals.user._id%>">profile</a>
+
+</div>
 
 <div>
 
@@ -8,7 +11,7 @@
         
         <input type="text" name="content" required/>
         
-        <input type="file" name="avatar" required/>
+        <input type="file" name="picturePath" required/>
 
         <input type="submit" value="Submit">
 
@@ -17,24 +20,23 @@
 
 </div>
 
+<p>user : <%= locals.user.name%></p>
+
+ 
+
+
+
 
 <div>
 
     <ul>
 
         <%for(post of postData){%>
-        
-            <li>
-    
-                <%=post.content%>
+       
+                
+            <%-include('posts')%>
 
-                <img src = "<%=post.avatar%>" alt="image">
-    
-            </li>
-    
-             
-             
-    
+           
         <%}%>
 
 

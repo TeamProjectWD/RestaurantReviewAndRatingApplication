@@ -58,6 +58,8 @@ app.use(passport.setAuthenticated);
 
 app.use('/uploads',express.static(__dirname +"/uploads"));
 
+app.use('/assets',express.static(__dirname+"/assets"));
+
 //seperate directory for routes
 app.use('/',require('./routes'));
 
