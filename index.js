@@ -17,10 +17,13 @@ const passport = require('passport');
 const passportLocal = require('./config/passport');
 
 const MongoStore = require('connect-mongo');
+const exp = require('constants');
 
 //to encode url
 
 app.use(express.urlencoded({extended:false}));
+
+
 
 app.use(expressEjsLayouts);
 
@@ -59,6 +62,9 @@ app.use(passport.setAuthenticated);
 app.use('/uploads',express.static(__dirname +"/uploads"));
 
 app.use('/assets',express.static(__dirname+"/assets"));
+
+// app.use('/',express.static(__dirname+"/assets/input"));
+// app.use('/user/profile',express.static(__dirname+"/assets/js"));
 
 //seperate directory for routes
 app.use('/',require('./routes'));

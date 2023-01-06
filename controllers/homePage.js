@@ -1,3 +1,4 @@
+const { reverse } = require('dns');
 const Post = require('../model/postModel');
 
 module.exports.HomePage = async function(req,res){
@@ -11,12 +12,12 @@ module.exports.HomePage = async function(req,res){
             path:'user'
         }
     });
-
-     
+    var postData2 = postData.reverse();
+    //  console.log(postData2);
     return res.render('homePage',{
         
         title : "HR&R @ homePage",
-        postData:postData
+        postData:postData2
     });
 
 }

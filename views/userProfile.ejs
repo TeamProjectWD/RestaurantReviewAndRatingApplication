@@ -1,25 +1,68 @@
+<span style="margin-left: 1200px;">
+    <a href="/"><button>Home</button></a>
+</span>
 <div>
     
 
 
-    <span>
+    <span >
         <%= UserProfile.name%>
     </span>
 
+    <!-- edit btn -->
+    <% if(userToVisit==userId){%>
+
+        <button id="editOrPosts">edit</button>
+    <%}
+        else{%>
+            <button id="follow">follow</button>
+       <% } %>
+    
+
     <%if(UserProfile.avatar){%>
-        <img src="<%= UserProfile.avatar %>" alt="">
+        <img src="/uploads/userProfile/pics/<%= UserProfile.avatar %>" alt="">
     <%}else{%>
         <img src="/uploads/noprofile.png" alt="">
     <%}%>
 
      
+<!-- posts starting -->
 
+        <div id="postDiv">
 
-    <%for (post of UserProfile.posts) {%>
+            <%for (post of UserProfile.posts) {%>
 
-        <%- include('posts')%>
+                <%- include('posts')%>
 
-    <%}%>
+            <%}%>
+
+        </div>
+
+<!-- edit starting -->
+        <div id="editDiv" style="margin-left: 540px; border: 2px solid black; width: 390px; padding-top: 10px; padding-left: 30px; display: none;">
+            <h1 id="editHeading" style="text-align: center;">Edit profile</h1>
+            
+            <form action="/user/profile/update/<%= UserProfile._id %>" method="POST"  autocomplete="off" enctype="multipart/form-data" >
+            <label style="float: left; padding-right:75px;" for="email" >email:</label>
+            <input type="email" name="email"  placeholder="<%= UserProfile.email %>" >
+            <br>
+            <br>
+            <label style="float: left; padding-right: 50px;" for="username">username:</label>
+            <input type="text" name="name" placeholder="<%= UserProfile.name %>">
+            <br>
+            <br>
+            <label style="float: left; padding-right: 45px;" for="avatar">profile photo:</label>
+            <input type="file" name="avatar" >
+            <br>
+            <br>
+            <input style="margin-left: 150px; background-color: blue; color: white; border-radius: 2px;" type="submit"  >
+        </form>
+    </div>
+    <!-- edit ending -->
 
 
 </div>
+
+<script type="text/javascript" src="/assets/js/userPage.js"></script>
+
+

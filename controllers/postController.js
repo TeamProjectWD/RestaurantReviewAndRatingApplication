@@ -5,7 +5,7 @@ const Post = require('../model/postModel');
 const User = require('../model/User');
 
 
-module.exports.PostConroller = async function(req,res){
+module.exports.PostConroller = function(req,res){
 
     console.log(req.user);
 
@@ -13,17 +13,19 @@ module.exports.PostConroller = async function(req,res){
 
     Post.uploadPicture(req,res,async function(err){
 
+        console.log(req.file);
+
         if(err){
             console.error(err);
         }
         
         const post_User = await User.findById(req.user._id);
 
-        console.log("postUser",post_User);
+        // console.log("postUser",post_User);
 
          
 
-        console.log("reqBody",req.body);
+        console.log("reqBody",req.file.filename);
 
         let presentPost = await Post.create({
             user:req.user._id,
@@ -35,13 +37,13 @@ module.exports.PostConroller = async function(req,res){
 
         await post_User.save();
 
-        console.log("afterrrrrrrrrrrrrr",post_User)
+        // console.log("afterrrrrrrrrrrrrr",post_User)
 
-        console.log(presentPost);
+        // console.log(presentPost);
 
     });
 
-    console.log("here");
+    // console.log("here");
  
     return res.redirect('back');
 }

@@ -39,12 +39,12 @@ const storage = multer.diskStorage({
       cb(null, path.join(__dirname,'..',profilePicturePath));
     },
     filename: function (req, file, cb) {
-      cb(null, file.fieldname + '-' + Date.now()+path.extname(file.originalname));
+      cb(null, file.fieldname + '-' + Date.now());
     }
 });
 
 
-userSchemma.statics.uploadPicture =  multer({storage:storage}).single('avatar');
+userSchemma.statics.uploadPicture =  multer({storage:storage});
 
 userSchemma.statics.picPath = profilePicturePath;
 
