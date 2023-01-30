@@ -3,7 +3,7 @@
     <div>
 
         <div>
-            <span><%= post.user.name %></span>
+           <a href="/user/profile/<%=post.user._id%>"> <span><%= post.user.name %></span> </a>
         </div>
 
 
@@ -21,13 +21,15 @@
 
         </div>
 
+
+        
         <div>
 
-            <form action="/posts/comment/<%=post.id%>" method="POST">
+            <form  id="commentForm-<%=post.id%>" action="/posts/comment/<%=post.id%>"  method="post">
 
-                <input type="text" name="content" id="" placeholder="comment">
-                <input type="submit" id="submit">
-                <label for="submit"><i class="fa-solid fa-paper-plane"></i></label>
+                <input type="text" name="content" id="" placeholder="comment" required>
+                <input type="submit" name="submitComment">
+                <label for="submitComment"><i class="fa-solid fa-paper-plane"></i></label>
                 
 
             </form>
@@ -35,7 +37,7 @@
 
         </div>
 
-            <small>
+            <small >
                 <ul>
                     <% for(comment of post.comments){%>
                         <%-include('comments')%>
@@ -43,7 +45,6 @@
 
                 </ul>
             </small>
-
     </div>
 
 

@@ -8,6 +8,8 @@ const router = express.Router();
 
 const userController = require('../controllers/userController');
 
+const User = require('../model/User');
+
 router.get('/signIn',userController.signIn);
 
 router.get('/signUp',userController.signUp);
@@ -26,6 +28,8 @@ router.get('/signOut',userController.destroySession);
 
 
 router.get('/profile/:uID',passport.checkAuthentication,userController.userProfile);
+
+router.post('/profile/update/:id',User.uploadPicture.single('avatar'),userController.editProfile);
 
 module.exports = router;
 
