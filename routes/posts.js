@@ -16,7 +16,7 @@ router.post('/',postController.PostConroller);
 
  
 
-router.post('/comment/:pId',commentController.commentController);
+router.post('/comment',commentController.commentController);
 
 
 

@@ -1,4 +1,4 @@
-<li>
+<li class="postItem" id="post-<%=post._id%>">
 
     <div>
 
@@ -11,7 +11,7 @@
 
             <span><%= post.content%></span>
 
-            <img src="<%= post.picturePath %>" alt="" class="img-fluid">
+            <img src="<%= post.picturePath %>" alt="" class="img-fluid" style="width: 200; height: 200;">
             
             <form action="/upVote/<%=post.id%>/?type=Post" method="post">
 
@@ -25,20 +25,27 @@
         
         <div>
 
-            <form  id="commentForm-<%=post.id%>" action="/posts/comment/<%=post.id%>"  method="post">
+            <form  id="commentForm-<%=post._id%>" action="/posts/comment"  method="post" class="commentFormClass">
 
                 <input type="text" name="content" id="" placeholder="comment" required>
-                <input type="submit" name="submitComment">
+                <input type="submit" id="submitComment">
                 <label for="submitComment"><i class="fa-solid fa-paper-plane"></i></label>
-                
+                <input type="hidden" name="post_id" value="<%=post.id%>">
+
 
             </form>
+
+            <script>
+                new commentDOMClass(`<%=post._id%>`);
+            </script>
+
+             
             
 
         </div>
 
             <small >
-                <ul>
+                <ul id="commentUL-<%=post._id%>" class="commentULClass">
                     <% for(comment of post.comments){%>
                         <%-include('comments')%>
                     <%}%>
@@ -47,5 +54,5 @@
             </small>
     </div>
 
-
+     
 </li>

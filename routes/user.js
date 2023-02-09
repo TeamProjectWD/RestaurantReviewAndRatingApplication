@@ -29,7 +29,7 @@ router.get('/signOut',userController.destroySession);
 
 router.get('/profile/:uID',passport.checkAuthentication,userController.userProfile);
 
-router.post('/profile/update/:id',User.uploadPicture.single('avatar'),userController.editProfile);
+router.post('/profile/update/:id',userController.editProfile);
 
 module.exports = router;
 

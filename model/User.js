@@ -44,7 +44,7 @@ const storage = multer.diskStorage({
 });
 
 
-userSchemma.statics.uploadPicture =  multer({storage:storage});
+userSchemma.statics.uploadPicture =  multer({storage:storage}).single('avatar');
 
 userSchemma.statics.picPath = profilePicturePath;
 

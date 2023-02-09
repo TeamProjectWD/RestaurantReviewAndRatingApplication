@@ -13,11 +13,9 @@ module.exports.PostConroller = function(req,res){
 
     Post.uploadPicture(req,res,async function(err){
 
-<<<<<<< HEAD
-        console.log(req.body.picturePath);
-=======
-        console.log(req.file);
->>>>>>> 6bdb3eb880fa6238ab23362eaa981f312df47dc2
+ 
+ 
+ 
 
         if(err){
             console.error(err);

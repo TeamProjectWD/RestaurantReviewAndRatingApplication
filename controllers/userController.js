@@ -102,36 +102,39 @@ module.exports.userProfile = async function(req,res){
 }
 
 module.exports.editProfile =async(req,res)=>{
-    console.log(req.file,__dirname);
-    const userId = req.user._id.toString();
-    if(userId==req.params.id){
-        console.log(req.body);
-        console.log(userId,req.params.id);
 
-        const newObj = JSON.parse(JSON.stringify(req.body));
-        console.log("newObj",newObj);
-        const newObj2 ={};
-        for(var key in newObj){
-            if(newObj[key]!=""){
-                newObj2[key] = newObj[key];
-            }
+    User.uploadPicture(req,res,async function(err){
+
+        if(err){
+            console.log(err);
         }
-        if(req.file){
-            // removing previous file from folder
-            const user2 = await User.findById(userId);
-            if(user2.avatar){
-                // const pat = path.join(__dirname,"..\\uploads\\userProfile\\pics\\",user2.avatar)
-                const path1 = path.join(__dirname,'../uploads/userProfile/pics',user2.avatar);
-                fs.unlinkSync(path1);
+        const user = await User.findById(req.user.id);
+        const nonEmptyValues = JSON.parse(JSON.stringify(req.body));
+        const nonEmptyObject = {};
 
+        console.log("values",nonEmptyValues,req.file);
+        if(req.user.id == req.params.id){
+
+            for(let userData in nonEmptyValues){
+                if(nonEmptyValues[userData]!=""){
+                    nonEmptyObject[userData] = nonEmptyValues[userData];
+                }
             }
+            if(req.file){
+                // removing previous file from folder
+                if(user.avatar){
+                    const oldProfilePath = path.join(__dirname,'../uploads/userProfile/pics',user.avatar);
+                    fs.unlinkSync(oldProfilePath);
+                }
+                nonEmptyObject.avatar = req.file.filename;
+                console.log(user);
+            }
+            
+            await User.findByIdAndUpdate(req.user.id,{$set:nonEmptyObject});
 
-
-            // console.log("yesssssss");
-            newObj2.avatar=req.file.filename;
         }
-        const user1 = await User.findByIdAndUpdate(userId,{$set:newObj2});
-        return res.redirect(`/user/profile/${userId}`);
-    }
-    return res.json('error');
+        
+    });
+   
+    return res.redirect('back');
 }
