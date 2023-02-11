@@ -1,51 +1,48 @@
 
 const console = require('console');
-const { compile } = require('ejs');
 const Post = require('../model/postModel');
 const User = require('../model/User');
+const upVote = require('../model/upVote');
 
 
 module.exports.PostConroller = function(req,res){
 
-    console.log(req.user);
-
-
+    
 
     Post.uploadPicture(req,res,async function(err){
-
- 
- 
- 
 
         if(err){
             console.error(err);
         }
-        
+          
         const post_User = await User.findById(req.user._id);
-
-        // console.log("postUser",post_User);
-
-         
-
-        console.log("reqBody",req.file.filename);
-
+        
         let presentPost = await Post.create({
             user:req.user._id,
             content:req.body.content,
-            picturePath:Post.picPath + "/"+req.file.filename
+            picturePath:Post.picPath + "/"+req.file.filename,
+            upVotesCount:0
         });
 
-        await post_User.posts.push(presentPost.id);
 
-        await post_User.save();
+        let upvote = await upVote.create({
+            votable:presentPost.id,
+            postORcomment:"Post",
+            user : req.user.id,
+            upVoted:false
+        });
 
-        // console.log("afterrrrrrrrrrrrrr",post_User)
+        presentPost.upVotes.push(upvote.id);
 
-        // console.log(presentPost);
+        presentPost.save(); 
 
+        post_User.posts.push(presentPost.id);
+
+        post_User.save();
+ 
     });
 
-    // console.log("here");
+  
  
     return res.redirect('back');
 }

@@ -1,5 +1,3 @@
- 
-const { findById } = require('../model/User');
 const User = require('../model/User');  
 const fs = require('fs');
 const path = require('path');
@@ -86,8 +84,7 @@ module.exports.userProfile = async function(req,res){
         }
     });
     profileUSerData.posts.reverse();
-    console.log(profileUSerData.avatar);
-    console.log(userId,userToVisit);
+
     return res.render('userProfile',{
         
         title:"HR&R @ UserProfile",

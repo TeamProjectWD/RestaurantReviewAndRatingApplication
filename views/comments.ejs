@@ -1,11 +1,46 @@
 <li>
+
+    <%
+    function upVote(data){
+
+        let bools = false;
+
+        data.findIndex(upvote => {
+
+            if(upvote.user == locals.user.id){
+
+                console.log("TRUE DATA",upvote.upVoted);
+             
+                bools =  upvote.upVoted;
+            }
+
+        });
+
+       return bools;
+
+    }
+
+   
+    %>
     <div id="commentsDiv">
 
         <span><%=comment.user.name%></span> 
         <span><%=comment.content%></span>
-        <form action="/upVote/<%=comment.id%>/?type=Comment" method="POST">
-            <button><i class="fa-regular fa-circle-up"></i></button>
-            <%= comment.upVotes.length%>
+        <form action="/upVote/<%=comment.id%>/?type=Comment" method="POST" id="commentUpVoteForm-<%=comment._id%>">
+            
+            <div id="commentContainer-<%=comment._id%>">
+
+                <%if(upVote(comment.upVotes) == true){%>
+                    <button><i class="fa-regular fa-circle-up"></i></button>
+                <%}else{%>
+                    <button style="color:white;"><i class="fa-regular fa-circle-up"></i></button>
+                <%}%>
+                <span>
+                    <%= comment.upVotesCount%>
+                </span>
+
+            </div>
+            
         </form>
 
 
@@ -16,5 +51,5 @@
 
 
 <script>
-    
+    new upVoteClass("comment","<%=comment._id%>");
 </script>

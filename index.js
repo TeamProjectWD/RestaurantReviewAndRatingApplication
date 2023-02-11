@@ -16,6 +16,8 @@ const passport = require('passport');
 
 const passportLocal = require('./config/passport');
 
+const mongoose = require('mongoose');
+
 const MongoStore = require('connect-mongo');
 const exp = require('constants');
 
@@ -43,7 +45,8 @@ app.use(session({
     },
     //address for storing cookie in DB
     store: new MongoStore({
-        mongoUrl:db._connectionString,
+
+        mongoUrl: 'mongodb://localhost:27017/mydatabase',
         collectionName:'sessionCookies'
     })
 

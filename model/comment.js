@@ -11,6 +11,10 @@ const CommentSchema = new mongoose.Schema({
         required:true
     },
 
+    upVotesCount:{
+        type:Number,
+        required:true
+    },
     upVotes:[{
 
         type: mongoose.Schema.Types.ObjectId,

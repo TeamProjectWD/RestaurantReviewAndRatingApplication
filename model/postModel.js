@@ -16,6 +16,10 @@ const postSchema = new mongoose.Schema({
         type : String,
         required:true 
     },
+    upVotesCount:{
+        type:Number,
+        required:true
+    },
     upVotes:[{
 
         type: mongoose.Schema.Types.ObjectId,
@@ -35,7 +39,6 @@ const postSchema = new mongoose.Schema({
 
 const storage = multer.diskStorage({
     destination: function (req, file, cb) {
-        console.log(__dirname);
       cb(null, path.join(__dirname,'..',postPicturePath));
     },
     filename: function (req, file, cb) {

@@ -1,23 +1,27 @@
-const { reverse } = require('dns');
 const Post = require('../model/postModel');
 
 module.exports.HomePage = async function(req,res){
 
     const postData = await Post.find({})
     .populate('user')
-    .populate('upVotes')
+    .populate({
+        path:'upVotes',
+       
+    })
     .populate({
         path:'comments',
+        options: { sort: { createdAt: -1 } },
         populate:{
             path:'user'
         }
     });
-    var postData2 = postData.reverse();
-    //  console.log(postData2);
+
+    postData.reverse();
+
     return res.render('homePage',{
         
         title : "HR&R @ homePage",
-        postData:postData2
+        postData:postData
     });
 
 }

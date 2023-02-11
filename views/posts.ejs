@@ -1,3 +1,25 @@
+<%
+    function upVote(data){
+
+        let bools = false;
+
+        data.findIndex(upvote => {
+
+            if(upvote.user == locals.user.id){
+             
+                bools =  upvote.upVoted;
+            }
+
+        });
+
+       return bools;
+
+    }
+
+
+%>
+
+
 <li class="postItem" id="post-<%=post._id%>">
 
     <div>
@@ -13,10 +35,21 @@
 
             <img src="<%= post.picturePath %>" alt="" class="img-fluid" style="width: 200; height: 200;">
             
-            <form action="/upVote/<%=post.id%>/?type=Post" method="post">
+            <form action="/upVote/<%=post.id%>/?type=Post" method="post" id = "postUpVoteForm-<%=post._id%>">
+                
+                <div id="postContainer-<%=post._id%>">
 
-                <button><i class="fa-regular fa-circle-up"></i></button>
-                <%= post.upVotes.length%>
+                    <%if(upVote(post.upVotes) == true){%>
+                        <button><i class="fa-regular fa-circle-up"></i></button>
+                    <%}else{%>
+                        <button style="color:white;"><i class="fa-regular fa-circle-up"></i></button>
+                    <%}%>
+                    <span>
+                        <%= post.upVotesCount%>
+                    </span>
+    
+                </div>
+                 
             </form>
 
         </div>
@@ -37,6 +70,7 @@
 
             <script>
                 new commentDOMClass(`<%=post._id%>`);
+                new upVoteClass("post","<%=post._id%>");
             </script>
 
              

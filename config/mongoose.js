@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
+mongoose.connect('mongodb://localhost:27017/mydatabase');
 
-mongoose.connect('mongodb+srv://venom:venom1234@backendlearn.adxcioh.mongodb.net/RRR2?retryWrites=true&w=majority');
-
+ 
  
 
 mongoose.set('strictQuery', true);

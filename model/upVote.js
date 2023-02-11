@@ -6,18 +6,20 @@ const  upVoteSchema = new mongoose.Schema({
         type:mongoose.Schema.Types.ObjectId,
         ref:'User'
     },
-
     votable:{
         type:mongoose.Schema.Types.ObjectId,
         refPath:'postORcomment'
     },
-
+    upVoted:{
+        type:Boolean,
+        required:true,
+    },
     postORcomment:{
         type:String,
         required:true,
         enum:['Post','Comment']
     }
-    
+     
 
 });
 
