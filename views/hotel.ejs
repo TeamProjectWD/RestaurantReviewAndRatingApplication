@@ -1,0 +1,89 @@
+<span style="margin-left: 1200px;">
+    <a href="/"><button>Home</button></a>
+</span>
+    <div>
+        
+        <h1>Hotel Name :-  <%= HotelProfile.name %> </h1>
+
+        <div id="menuArray" style="border: 2px solid black;">
+            <h2 style="text-align: center;">menu </h2>
+
+            <br>
+
+            <form action="/hotel/addMenu/<%=HotelProfile.id%>" method="POST" enctype="multipart/form-data">
+                <input type="file" name="picturePath" required>
+                <input type="text" name="name" id="" placeholder="Enter name of Dish">
+                <input type="text" name="content" placeholder="Decribe about the item">
+                <input type="submit" value="Add menu">
+            </form>
+            <%  
+                for(item of HotelProfile.menuArray){ %>
+
+                    
+
+                <div style="margin-right: 20px; ">
+                    <h3>menu Name : <%= item.name%></h3>
+
+                    <span>
+                        <%= item.content%>
+                    </span>
+
+                    
+
+                    <img src="<%=item.picturePath%>" alt="menuPic" class="img-fluid" style="width: 200; height: 200;">
+
+                    <div>
+                        <h4><%=item.name%></h4>
+
+                         
+
+                        <%if(locals.user.id != HotelProfile._id && typeOfUser!="Hote") {%>
+
+                            <%-include ("rating.ejs")%>
+
+                        <%}%>
+                        
+                        <div id="average-<%=item.id%>">
+
+                            <span id="span-<%=item.id%>">
+                                present rating : <%= item.averageRating %> 
+                            </span>
+                    
+
+                        </div>  
+
+                    </div>
+                </div>
+             <% } %>   
+        </div>
+
+        <h2>reviews</h2>
+
+        <ul>
+
+            <%for (post of HotelProfile.reviewPosts) { %>
+
+                <%-include('posts')%>
+    
+            <%}%>
+
+        </ul>
+
+        
+         
+    
+
+         
+
+    </div>
+
+    <script>
+
+        new ratingClass("<%=item.id%>","<%=locals.user._id%>")
+    
+    </script>
+
+<!-- <script type="text/javascript" src="/assets/js/userPage.js"></script> -->
+
+
+

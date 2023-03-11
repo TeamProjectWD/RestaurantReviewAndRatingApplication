@@ -4,27 +4,37 @@ const multer = require('multer');
 
 const path = require('path');
 
+const hotelModel = require('../model/hotelModel');
+
+const menuModel = require('../model/menuModel');
+
 const postPicturePath = path.join('/uploads/posts/pics');
 
 const postSchema = new mongoose.Schema({
 
     user:{
         type:mongoose.Schema.Types.ObjectId,
-        ref:'User'
+        refPath:'UserOrHotel'
     },
     content:{
         type : String,
         required:true 
+    },
+    hotelName:{
+        type : mongoose.Schema.Types.ObjectId,
+        ref : 'Hotel'
+    },
+    menuModel:{
+        type : mongoose.Schema.Types.ObjectId,
+        ref: 'Menu'
     },
     upVotesCount:{
         type:Number,
         required:true
     },
     upVotes:[{
-
         type: mongoose.Schema.Types.ObjectId,
         ref:'UpVote'
-
     }],
     comments:[{
         type:mongoose.Schema.Types.ObjectId,
@@ -32,7 +42,13 @@ const postSchema = new mongoose.Schema({
     }],
     picturePath:{
         type:String,
+    },
+    UserOrHotel:{
+        type:String,
+        required:true,
+        enum:['User','Hotel']
     }
+
 },{
     timestamps:true
 });

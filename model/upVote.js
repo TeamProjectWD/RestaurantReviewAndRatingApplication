@@ -4,7 +4,7 @@ const  upVoteSchema = new mongoose.Schema({
     
     user:{
         type:mongoose.Schema.Types.ObjectId,
-        ref:'User'
+        refPath:'UserOrHotel'
     },
     votable:{
         type:mongoose.Schema.Types.ObjectId,
@@ -18,6 +18,12 @@ const  upVoteSchema = new mongoose.Schema({
         type:String,
         required:true,
         enum:['Post','Comment']
+    },
+    UserOrHotel:{
+        type:String,
+        required:true,
+        enum:['User','Hotel']
+
     }
      
 

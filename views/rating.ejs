@@ -1,0 +1,138 @@
+<%
+
+  function ratingBool(){
+
+    let bool = false;
+
+    item.rating.findIndex( (data) => {
+
+      if(data.ratedBy == locals.user.id){
+
+        bool = false;
+      }
+
+      return bool;
+
+    });
+
+  }
+
+   
+
+
+
+%>
+
+
+
+
+<link rel="stylesheet" href="/assets/css/rating.css">
+
+<%if(ratingBool()){%>
+  
+  <div id="formWrap-<%=item.id%>">
+
+    <form class="rating" id="rating-<%=item.id%>"  method="POST" action="/hotel/addRating/<%=item.id%>">
+
+            <label>
+              <input type="radio" name="stars" value="1" />
+              <span class="icon">★</span>
+            </label>
+            <label>
+              <input type="radio" name="stars" value="2" />
+              <span class="icon">★</span>
+              <span class="icon">★</span>
+            </label>
+            <label>
+              <input type="radio" name="stars" value="3" />
+              <span class="icon">★</span>
+              <span class="icon">★</span>
+              <span class="icon">★</span>   
+            </label>
+            <label>
+              <input type="radio" name="stars" value="4" />
+              <span class="icon">★</span>
+              <span class="icon">★</span>
+              <span class="icon">★</span>
+              <span class="icon">★</span>
+            </label>
+            <label>
+              <input type="radio" name="stars" value="5" />
+              <span class="icon">★</span>
+              <span class="icon">★</span>
+              <span class="icon">★</span>
+              <span class="icon">★</span>
+              <span class="icon">★</span>
+            </label>
+
+    </form>
+
+
+  <button form="rating-<%=item.id%>" id="button-<%=item.id%>">
+    <i class="fa-solid fa-paper-plane"></i>
+  </button>
+
+</div>
+
+<button id="press-<%=item.id%>" hidden>
+  Rate Again
+</button>
+
+<%}else{%>
+
+  <div id="formWrap-<%=item.id%>"> 
+
+    <form class="rating" id="rating-<%=item.id%>"  method="POST" action="/hotel/addRating/<%=item.id%>" style="display: none;">
+
+            <label>
+              <input type="radio" name="stars" value="1" />
+              <span class="icon">★</span>
+            </label>
+            <label>
+              <input type="radio" name="stars" value="2" />
+              <span class="icon">★</span>
+              <span class="icon">★</span>
+            </label>
+            <label>
+              <input type="radio" name="stars" value="3" />
+              <span class="icon">★</span>
+              <span class="icon">★</span>
+              <span class="icon">★</span>   
+            </label>
+            <label>
+              <input type="radio" name="stars" value="4" />
+              <span class="icon">★</span>
+              <span class="icon">★</span>
+              <span class="icon">★</span>
+              <span class="icon">★</span>
+            </label>
+            <label>
+              <input type="radio" name="stars" value="5" />
+              <span class="icon">★</span>
+              <span class="icon">★</span>
+              <span class="icon">★</span>
+              <span class="icon">★</span>
+              <span class="icon">★</span>
+            </label>
+
+    </form>
+
+
+  <button form="rating-<%=item.id%>" id="button-<%=item.id%>" style="display: none;">
+    <i class="fa-solid fa-paper-plane"></i>
+  </button>
+
+</div>
+
+  <button id="press-<%=item.id%>">
+    Rate Again
+  </button>
+
+<%}%>
+
+ 
+
+
+ 
+
+ 

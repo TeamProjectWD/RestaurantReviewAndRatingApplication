@@ -22,11 +22,22 @@ module.exports.upVoteController = async function(req,res){
         postORcom = await Comment.findById(req.params.id);
     }
 
-   
+    const user_type = req.query.type1;
+    if(user_type=="user"){
+        // var post_User = await User.findById(req.user._id);
+        var UserOrHotel = "User"
+    }
+    else{
+        // var post_User = await Hotel.findById(req.user._id);
+        var UserOrHotel = "Hotel"
+        
+    }
+
 
     let upvoteInfo = await upVote.findOne({
         votable: req.params.id,
         user : req.user.id,
+
     });
 
     if(upvoteInfo == null){
@@ -35,6 +46,7 @@ module.exports.upVoteController = async function(req,res){
             postORcomment : req.query.type,
             user : req.user.id,
             upVoted:false,
+            UserOrHotel:UserOrHotel
         })
 
         postORcom.upVotes.push(newUpVote.id);

@@ -7,7 +7,6 @@ class commentDOMClass {
         this.postCommentForm = $(`#commentForm-${postID}`);
         this.createComment(this.postID);
         this.commentUl = postID;
-        
 
     }
     createComment(postID){
@@ -16,9 +15,7 @@ class commentDOMClass {
             e.preventDefault();
     
             let commentForm = $(".commentFormClass").attr('id');
-             
-    
-    
+            
             $.ajax({
                 type:'Post',
                 url: $('.commentFormClass').attr('action'),
@@ -42,7 +39,6 @@ class commentDOMClass {
 
     }
      
-
 
     commentDOM(data){
 

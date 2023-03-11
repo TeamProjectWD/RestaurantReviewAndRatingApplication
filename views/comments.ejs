@@ -4,10 +4,9 @@
     function upVote(data){
 
         let bools = false;
-
         data.findIndex(upvote => {
 
-            if(upvote.user == locals.user.id){
+            if(upvote.user== locals.user.id){
 
                 console.log("TRUE DATA",upvote.upVoted);
              
@@ -26,7 +25,7 @@
 
         <span><%=comment.user.name%></span> 
         <span><%=comment.content%></span>
-        <form action="/upVote/<%=comment.id%>/?type=Comment" method="POST" id="commentUpVoteForm-<%=comment._id%>">
+        <form action="/upVote/<%=comment.id%>/?type=Comment&type1=<%=typeOfUser%>" method="POST" id="commentUpVoteForm-<%=comment._id%>">
             
             <div id="commentContainer-<%=comment._id%>">
 

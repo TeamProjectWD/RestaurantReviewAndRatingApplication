@@ -6,19 +6,29 @@ const upVote = require("../model/upVote");
 
 module.exports.commentController = async function(req,res){
 
-     
+    const user_type = req.query.type;
+    if(user_type=="User"){
+        var UserOrHotel = "User"
+    }
+    else{
+        var UserOrHotel = "Hotel"
+        
+    }
 
     let commentData = await comment.create({
         user:req.user.id,
         content:req.body.content,
-        upVotesCount:0
+        upVotesCount:0,
+        UserOrHotel:UserOrHotel
     });
 
     let upvote = await upVote.create({
         votable: commentData.id,
         postORcomment:"Comment",
         user : req.user.id,
-        upVoted:false
+        upVoted:false,
+        UserOrHotel:UserOrHotel
+
     });
 
     let postData = await post.findById(req.body.post_id);

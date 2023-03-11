@@ -22,7 +22,7 @@ const MongoStore = require('connect-mongo');
 const exp = require('constants');
 
 //to encode url
-
+app.use(express.json());
 app.use(express.urlencoded({extended:false}));
 
 
@@ -46,7 +46,7 @@ app.use(session({
     //address for storing cookie in DB
     store: new MongoStore({
 
-        mongoUrl: 'mongodb://localhost:27017/mydatabase',
+        mongoUrl: db._connectionString,
         collectionName:'sessionCookies'
     })
 
@@ -65,6 +65,7 @@ app.use(passport.setAuthenticated);
 app.use('/uploads',express.static(__dirname +"/uploads"));
 
 app.use('/assets',express.static(__dirname+"/assets"));
+
 
 // app.use('/',express.static(__dirname+"/assets/input"));
 // app.use('/user/profile',express.static(__dirname+"/assets/js"));

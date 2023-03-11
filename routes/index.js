@@ -17,6 +17,9 @@ router.use('/posts',require('./posts'));
 
 router.use('/user',require('./user'));
 
+router.use('/hotel',require('./hotel'));
+
+
 router.post('/upVote/:id',upVoteController.upVoteController);
 
 module.exports = router;

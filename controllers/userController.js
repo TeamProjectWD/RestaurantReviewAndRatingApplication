@@ -74,24 +74,35 @@ module.exports.userProfile = async function(req,res){
     }).populate({
         path:'posts',
         populate:{
-            path:'upVotes'
+            path:'upVotes',
+            populate:{
+                path:'user'
+            }
         }
     }) 
     .populate({
         path:'posts',
         populate:{
-            path:'comments'
+            path:'comments',
+            populate:{
+                path:'user'
+            },
+            populate:{
+                path:'upVotes'
+            }
+
         }
     });
+
     profileUSerData.posts.reverse();
 
     return res.render('userProfile',{
         
         title:"HR&R @ UserProfile",
-
         UserProfile :profileUSerData,
         userToVisit:userToVisit,
-        userId:userId
+        userId:userId,
+        typeOfUser:"User"
 
     });
 

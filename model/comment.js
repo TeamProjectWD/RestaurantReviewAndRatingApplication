@@ -4,7 +4,7 @@ const CommentSchema = new mongoose.Schema({
 
     user:{
         type:mongoose.Schema.Types.ObjectId,
-        ref:'User'
+        refPath:'UserOrHotel'
     },
     content:{
         type:String,
@@ -20,7 +20,13 @@ const CommentSchema = new mongoose.Schema({
         type: mongoose.Schema.Types.ObjectId,
         ref:'UpVote'
 
-    }]
+    }],
+    UserOrHotel:{
+        type:String,
+        required:true,
+        enum:['User','Hotel']
+
+    }
 
 });
 
