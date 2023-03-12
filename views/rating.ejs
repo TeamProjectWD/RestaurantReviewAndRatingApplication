@@ -2,33 +2,54 @@
 
   function ratingBool(){
 
-    let bool = false;
+    let bool = true;
+
+    let rating = 0;
+
+    let arr = [];
 
     item.rating.findIndex( (data) => {
 
       if(data.ratedBy == locals.user.id){
 
+        rating = data.rating;
+
         bool = false;
+
+        arr.push(rating);
+
+        arr.push(bool);
       }
 
-      return bool;
-
     });
+
+    if(arr.length == 0){
+
+        arr.push(rating);
+
+        arr.push(bool);
+
+    }
+    return arr;
 
   }
 
    
+  ans = ratingBool();
 
+  console.log("ans",ans);
 
 
 %>
+
+ 
 
 
 
 
 <link rel="stylesheet" href="/assets/css/rating.css">
 
-<%if(ratingBool()){%>
+<%if(ans[1]){%>
   
   <div id="formWrap-<%=item.id%>">
 
@@ -117,6 +138,9 @@
 
     </form>
 
+  
+  
+
 
   <button form="rating-<%=item.id%>" id="button-<%=item.id%>" style="display: none;">
     <i class="fa-solid fa-paper-plane"></i>
@@ -124,9 +148,28 @@
 
 </div>
 
+
+  <div id="givenRating-<%=item.id%>">
+        
+      <%if(ans[0] == 1){%>
+
+        <b>you have rated 1 star for this item</b>
+
+      <%}else{%>
+        
+        <b>you have rated <%=ans[0]%> stars for this item</b>
+
+      <%}%>
+
+  </div>
+  
+
+
   <button id="press-<%=item.id%>">
     Rate Again
   </button>
+
+
 
 <%}%>
 

@@ -74,8 +74,6 @@ module.exports.destroySession = async function(req,res,next){
 
 module.exports.userProfile = async function(req,res){   
 
-    console.log("acessed ***********************");
-    
     const userToVisit = req.params.uID;
  
     let visitor = await User.findById(req.params.vID);
@@ -89,7 +87,7 @@ module.exports.userProfile = async function(req,res){
         model = "Hotel"
     }
 
-    console.log(req.params.uID);
+     
 
     const userId = req.user._id.toString();
     
@@ -147,7 +145,7 @@ module.exports.userProfile = async function(req,res){
     });
 
 
-    console.log("MODEL DATA",model);
+  
 
     return res.render('hotel',{
         

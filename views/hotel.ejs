@@ -5,7 +5,8 @@
         
         <h1>Hotel Name :-  <%= HotelProfile.name %> </h1>
 
-        <div id="menuArray" style="border: 2px solid black;">
+        <%if(typeOfUser == "Hotel"){%>
+            
             <h2 style="text-align: center;">menu </h2>
 
             <br>
@@ -16,8 +17,12 @@
                 <input type="text" name="content" placeholder="Decribe about the item">
                 <input type="submit" value="Add menu">
             </form>
-            <%  
-                for(item of HotelProfile.menuArray){ %>
+
+
+        <%}%>
+
+        <div id="menuArray" style="border: 2px solid black;">
+            <% for(item of HotelProfile.menuArray){ %>
 
                     
 
@@ -54,6 +59,11 @@
 
                     </div>
                 </div>
+                <script>
+
+                    new ratingClass("<%=item.id%>","<%=locals.user._id%>")
+                
+                </script>
              <% } %>   
         </div>
 
@@ -77,11 +87,7 @@
 
     </div>
 
-    <script>
-
-        new ratingClass("<%=item.id%>","<%=locals.user._id%>")
-    
-    </script>
+     
 
 <!-- <script type="text/javascript" src="/assets/js/userPage.js"></script> -->
 

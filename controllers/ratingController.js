@@ -26,6 +26,8 @@ module.exports.addRating = async(req,res)=>{
 
             let hasUserRated = false;
 
+            let rating;
+
             menu.rating.map((data)=>{
 
                 total = total+1;
@@ -33,6 +35,8 @@ module.exports.addRating = async(req,res)=>{
                 if(data.ratedBy.id == req.body.ratingUser){
 
                     hasUserRated = true;
+
+                    rating = req.body.ratingValue;
 
                     data.rating = req.body.ratingValue;
 
@@ -59,6 +63,8 @@ module.exports.addRating = async(req,res)=>{
                     ratedBy:user
                 });
 
+                rating = req.body.ratingValue;
+
                 if(menu.rating.length == 0){
                     menu.averageRating = newRating.rating;
                 }else{
@@ -71,7 +77,8 @@ module.exports.addRating = async(req,res)=>{
             menu.save();
 
             return res.status(200).json({
-                average:menu.averageRating
+                average:menu.averageRating,
+                rating:rating
             })
         }
     }

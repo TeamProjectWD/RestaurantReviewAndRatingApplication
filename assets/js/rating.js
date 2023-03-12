@@ -2,7 +2,7 @@ class ratingClass {
 
     constructor(id,userID){
 
-        // console.log("called");
+        console.log("called");
 
         this.id = id;
         this.form = $(`#rating-${this.id}`);
@@ -15,6 +15,8 @@ class ratingClass {
         this.formWrap = $(`#formWrap-${this.id}`);
         
         this.rateAgainButton = $(`#press-${this.id}`);
+
+        this.prevRatingWrap = $(`#givenRating-${this.id}`)
         
         let altThis = this;
 
@@ -25,9 +27,7 @@ class ratingClass {
             altThis.rated = true;
             new ratingClass(altThis.id,altThis.userID);
             altThis.rateAgainButton.remove();
-            altThis.destruct()
-
-             
+            altThis.destruct();
         });
 
 
@@ -67,10 +67,11 @@ class ratingClass {
 
                     if(self.rated == false){
                         // console.log("here1");
-                        let newAverage = self.averageMakerAndFormRemover(data.average);
+                        let newAverage = self.averageMakerAndFormRemover(data);
                         self.prevAverageWrap.html(newAverage);
                         self.form.remove();
                         self.button.remove();
+                        self.prevRatingWrap.remove();
                         self.buttonHandler();
                     } 
 
@@ -90,8 +91,17 @@ class ratingClass {
 
         return(`
 
+            <div id="givenRating-${this.id}">
+            
+                ${data.rating == 1 ? 
+                    `<b>you have rated 1 star for this item</b>` :
+                    `<b>you have rated ${data.rating} stars for this item</b>`
+                }
+
+            </div>
+
             <span id="span-${this.id}">
-                present rating : ${data}
+                present rating : ${data.average}
             </span>
         
         `)
