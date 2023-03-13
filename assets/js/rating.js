@@ -2,8 +2,6 @@ class ratingClass {
 
     constructor(id,userID){
 
-        console.log("called");
-
         this.id = id;
         this.form = $(`#rating-${this.id}`);
         this.ajaxFunction();
@@ -45,9 +43,11 @@ class ratingClass {
 
         this.form.on('submit',function(e){
 
-            // console.log(self);
-
             let ratingValue = self.form.find(`input[name="stars"]:checked`).val();
+
+            if (!ratingValue){
+                ratingValue = 0;
+            }
 
             let idData = self.id;
 

@@ -34,7 +34,7 @@ router.post('/profile/update/:id',hotelController.editProfile);
 
 router.post('/addMenu/:id',menuController.addMenu);
 
-router.post('/addReview/:id',reviewController.addReview);
+// router.post('/addReview/:id',reviewController.addReview);
 
 router.post('/addRating/:id',ratingController.addRating);
 
