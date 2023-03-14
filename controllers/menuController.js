@@ -14,23 +14,14 @@ module.exports.addMenu = (req,res)=>{
             }
         
             const HotelUser = await Hotel.findById(req.user._id);
-            if(!HotelUser || req.params.id!=req.user._id){
-                return res.json("you cannot add menu")
-            }
-            
-            let filename = "";
-            if(req.file){
-                filename = Menu.picPath + "/"+req.file.filename;
-            }
-
+          
             let menu = await Menu.create({
                 hotel:req.user._id,
                 content:req.body.content,
                 name:req.body.name,
-                picturePath:filename
+                picturePath:Menu.picPath + "/"+req.file.filename
             });
 
-            menu.save();
             HotelUser.menuArray.push(menu.id);
             HotelUser.save();
             return res.redirect('back');

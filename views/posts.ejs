@@ -2,6 +2,8 @@
 function upVote(data){
     
     let bools = false;
+
+    console.log(data);
     
     data.findIndex(upvote => {
         
@@ -9,14 +11,9 @@ function upVote(data){
             
                 bools =  upvote.upVoted;
             }
-
         });
-
        return bools;
-
     }
-
-
 %>
 
 <!-- route information ,whether the post from the user or hotel -->
@@ -25,7 +22,6 @@ function upVote(data){
 }
 else{
     var postUserType = "hotel";
-
 }%>
 
 <li class="postItem" id="post-<%=post._id%>">
@@ -37,26 +33,22 @@ else{
         </div>
 
         <%if(post.UserOrHotel == "User" && (post.menuModel != null && post.hotelName!= null)){%>
-
             <span>
                 <b>
                     <%=post.user.name%> 
                 </b>
             
                 shared their experience about 
-
                 <b>
                     <%=post.menuModel.name%> 
                 </b>
                  
                 they had at
-
                 <b>
                     <%= post.hotelName.name%>
                 </b>
                  
             </span>
-
         <%}%>
 
 
