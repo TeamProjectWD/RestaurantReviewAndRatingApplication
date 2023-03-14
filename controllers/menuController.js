@@ -19,7 +19,8 @@ module.exports.addMenu = (req,res)=>{
                 hotel:req.user._id,
                 content:req.body.content,
                 name:req.body.name,
-                picturePath:Menu.picPath + "/"+req.file.filename
+                picturePath:Menu.picPath + "/"+req.file.filename,
+                averageRating:0
             });
 
             HotelUser.menuArray.push(menu.id);
