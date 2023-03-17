@@ -19,6 +19,8 @@ router.use('/user',require('./user'));
 
 router.use('/hotel',require('./hotel'));
 
+router.use('/search',require('./search'));
+
 
 router.post('/upVote/:id',upVoteController.upVoteController);
 

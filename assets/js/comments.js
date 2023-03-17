@@ -7,9 +7,12 @@ class commentDOMClass {
         this.postCommentForm = $(`#commentForm-${postID}`);
         this.createComment(this.postID);
         this.commentUl = postID;
+         
 
     }
     createComment(postID){
+
+        let self = this;
         $(this.postCommentForm).on("submit",(e)=>{
 
             e.preventDefault();
@@ -19,15 +22,17 @@ class commentDOMClass {
             $.ajax({
                 type:'Post',
                 url: $('.commentFormClass').attr('action'),
-                data: $(this.postCommentForm).serialize(),
+                data: $(self.postCommentForm).serialize(),
                 success:(data)=>{
 
                     let freshComment = this.commentDOM(data.data);
-
-                     
                     
                     $(`#commentUL-${this.postID}`).append(freshComment);
-                    
+
+                    console.log(data.data.comment._id);
+
+                    new deleteComment(data.data.comment._id);
+
                 },
                 error: (err)=>{
                     console.log(err.responseText);
@@ -43,9 +48,24 @@ class commentDOMClass {
     commentDOM(data){
 
         return(`
-                <li>
+                <li id="commentArea-${data.commentID}">
             
                     <div id="commentsDiv">
+
+                    <b>
+                        <form action="/posts/comment/delete/" method="post" id="commentDelete-${data.commentID}">
+
+                            <input type="hidden" value="${data.commentID}" name="cID">
+
+                            <input type="hidden" value="${this.postID}" name="pID">
+
+                            <button>
+                                <i class="fa-solid fa-delete-left"></i>
+                            </button>
+
+                        </form>
+                        
+                    </b>
                 
                         <span>${data.userName}</span> 
                         <span>${data.comment.content}</span>
@@ -77,7 +97,5 @@ class commentDOMClass {
         `)
 
     }
-
-
 
 }

@@ -25,7 +25,6 @@ const CommentSchema = new mongoose.Schema({
         type:String,
         required:true,
         enum:['User','Hotel']
-
     }
 
 });

@@ -42,7 +42,9 @@ module.exports.HomePage = async function(req,res){
 
     postData.reverse();
 
-    console.log(postData);
+    // console.log(postData);
+
+ 
 
     return res.render('homePage',{
         

@@ -22,48 +22,10 @@
         <%}%>
 
         <div id="menuArray" style="border: 2px solid black;">
-            <% for(item of HotelProfile.menuArray){ %>
+            <% for(item of HotelProfile.menuArray){%>
 
-                    
-
-                <div style="margin-right: 20px; ">
-                    <h3>menu Name : <%= item.name%></h3>
-
-                    <span>
-                        <%= item.content%>
-                    </span>
-
-                    
-
-                    <img src="<%=item.picturePath%>" alt="menuPic" class="img-fluid" style="width: 200; height: 200;">
-
-                    <div>
-                        <h4><%=item.name%></h4>
-
-                         
-
-                        <%if(locals.user.id != HotelProfile._id && typeOfUser!="Hote") {%>
-
-                            <%-include ("rating.ejs")%>
-
-                        <%}%>
-                        
-                        <div id="average-<%=item.id%>">
-
-                            <span id="span-<%=item.id%>">
-                                present rating : <%= item.averageRating %> 
-                            </span>
-                    
-
-                        </div>  
-
-                    </div>
-                </div>
-                <script>
-
-                    new ratingClass("<%=item.id%>","<%=locals.user._id%>")
-                
-                </script>
+                <%-include('menu')%>
+                 
              <% } %>   
         </div>
 
@@ -71,7 +33,7 @@
 
         <ul>
 
-            <%for (post of HotelProfile.reviewPosts) { %>
+            <%for (post of HotelProfile.posts) { %>
 
                 <%-include('posts')%>
     

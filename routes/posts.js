@@ -18,6 +18,10 @@ router.post('/',postController.PostConroller);
 
 router.post('/comment',commentController.commentController);
 
+router.post('/comment/delete/',commentController.deleteComment);
+
+router.post('/delete/:uID/:pID/',postController.deletePost);
+
 
 
 module.exports = router;

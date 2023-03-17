@@ -58,3 +58,46 @@ module.exports.commentController = async function(req,res){
     return res.redirect('back');
     
 }
+
+module.exports.deleteComment = async function(req,res){
+
+    console.log("hello",req.body.cID,req.body.pID);
+
+
+    if(req.xhr){
+
+        let commentData = await comment.findById(req.body.cID);
+
+        if(!commentData){
+
+            return res.status(401).json({
+                deleted:false
+            })
+
+        }
+
+        let postData = await post.findById(req.body.pID);
+    
+        let commentUpvotes = commentData.upVotes;
+    
+        commentUpvotes.map(async data => {
+     
+            await upVote.findByIdAndDelete(data.toString());
+    
+        });
+    
+        postData.comments.pull(commentData.id);
+    
+        await postData.save();
+    
+        await commentData.remove();
+    
+        return res.status(200).json({
+            deleted:true
+        })
+
+    }
+
+    
+
+}

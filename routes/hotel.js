@@ -8,8 +8,6 @@ const hotelController = require('../controllers/hotelController');
 
 const menuController = require('../controllers/menuController');
 
-const reviewController = require('../controllers/reviewController');
-
 const ratingController = require('../controllers/ratingController');
 
 router.get('/signIn',hotelController.signIn);
@@ -28,17 +26,18 @@ router.post('/create-session',passport.authenticate(
 
 router.get('/signOut',hotelController.destroySession);
 
-router.get('/profile/:uID/:vID',passport.checkAuthentication,hotelController.userProfile);
+router.get('/profile/:uID/',passport.checkAuthentication,hotelController.userProfile);
+
+router.get('/toggleAvailability',menuController.toggleAvaialability);
 
 router.post('/profile/update/:id',hotelController.editProfile);
 
 router.post('/addMenu/:id',menuController.addMenu);
 
-// router.post('/addReview/:id',reviewController.addReview);
-
 router.post('/addRating/:id',ratingController.addRating);
 
 router.post('/showMenu',menuController.getMenu);
+
 
 
 module.exports = router;

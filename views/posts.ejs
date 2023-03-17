@@ -3,7 +3,7 @@ function upVote(data){
     
     let bools = false;
 
-    console.log(data);
+    <!-- console.log(data); -->
     
     data.findIndex(upvote => {
         
@@ -16,27 +16,46 @@ function upVote(data){
     }
 %>
 
-<!-- route information ,whether the post from the user or hotel -->
+<!-- route information ,whether the post is from the user or hotel -->
 <% if(post.UserOrHotel=="User"){
-    var postUserType = "user";
+    var postUserType = "User";
 }
 else{
-    var postUserType = "hotel";
+    var postUserType = "Hotel";
 }%>
+
+<!-- <%console.log(post.UserOrHotel)%> -->
 
 <li class="postItem" id="post-<%=post._id%>">
 
     <div>
 
         <div>
-           <a href="/<%=postUserType%>/profile/<%=post.user.id%>/<%=locals.user._id%>"> <span><%= post.user.name %></span> </a>
+           <a href="/<%=postUserType%>/profile/<%=post.user.id%>/"> <span><%= post.user.name %></span> </a>
         </div>
+
+        <%if(locals.user.id == post.user.id){%>
+
+            <b>
+                <form action="/posts/delete/<%=locals.user.id%>/<%=post.id%>/?type=<%=postUserType%>" method="POST">
+
+                    <button>
+                        <i class="fa-solid fa-delete-left"></i>
+                    </button>
+
+                </form>
+                
+            </b>
+
+        <%}%>
+
+        <%console.log(post.hotelName.name,post.menuModel.name)%>
 
         <%if(post.UserOrHotel == "User" && (post.menuModel != null && post.hotelName!= null)){%>
             <span>
                 <b>
                     <%=post.user.name%> 
-                </b>
+                </b> 
             
                 shared their experience about 
                 <b>

@@ -20,7 +20,8 @@ module.exports.addMenu = (req,res)=>{
                 content:req.body.content,
                 name:req.body.name,
                 picturePath:Menu.picPath + "/"+req.file.filename,
-                averageRating:0
+                averageRating:0,
+                isAvailable:true
             });
 
             HotelUser.menuArray.push(menu.id);
@@ -34,12 +35,9 @@ module.exports.addMenu = (req,res)=>{
 
 
 module.exports.getMenu = async function(req,res){
-
-    console.log(req.body.hotelID);
-
+ 
     let hotelMenu = await Hotel.findById(req.body.hotelID)
     .populate('menuArray');
-
 
     console.log(hotelMenu.menuArray);
 
@@ -48,3 +46,12 @@ module.exports.getMenu = async function(req,res){
     })
     
 }
+
+module.exports.toggleAvaialability = async function(req,res){
+
+    return res.status(200).json("reached");
+    
+}
+
+
+

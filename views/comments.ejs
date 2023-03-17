@@ -1,27 +1,57 @@
-<li>
+<li id="commentArea-<%=comment.id%>">
 
     <%
-    function upVote(data){
+        function upVote(data){
 
-        let bools = false;
-        data.findIndex(upvote => {
+            let bools = false;
+            data.findIndex(upvote => {
 
-            if(upvote.user== locals.user.id){
+                if(upvote.user== locals.user.id){
 
-                console.log("TRUE DATA",upvote.upVoted);
-             
-                bools =  upvote.upVoted;
-            }
+                    <!-- console.log("TRUE DATA",upvote.upVoted); -->
+                
+                    bools =  upvote.upVoted;
+                }
 
-        });
+            });
 
-       return bools;
+        return bools;
 
-    }
+        }
+
+
+        if(comment.UserOrHotel=="User"){
+            var postUserType = "User";
+        }
+        else{
+            var postUserType = "Hotel";
+        } 
+        
+        console.log("$$$$$$$$$$$$$$$$$$$$$$$$$$$",postUserType);
 
    
     %>
-    <div id="commentsDiv">
+    <div id="commentsDiv%>">
+
+        <%if(locals.user.id == comment.user.id){%>
+
+            <b>
+                <form action="/posts/comment/delete/" method="post" id="commentDelete-<%=comment.id%>">
+
+                    <input type="hidden" value="<%=comment.id%>" name="cID">
+
+                    <input type="hidden" value="<%=post.id%>" name="pID">
+
+                    <button>
+                        <i class="fa-solid fa-delete-left"></i>
+                    </button>
+
+                </form>
+                
+            </b>
+
+        <%}%>
+
 
         <span><%=comment.user.name%></span> 
         <span><%=comment.content%></span>
@@ -51,4 +81,5 @@
 
 <script>
     new upVoteClass("comment","<%=comment._id%>");
+    new deleteComment("<%=comment.id%>")
 </script>

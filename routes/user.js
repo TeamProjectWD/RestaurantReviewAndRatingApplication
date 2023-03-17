@@ -27,7 +27,7 @@ router.post('/create-session',passport.authenticate(
 router.get('/signOut',userController.destroySession);
 
 
-router.get('/profile/:uID/:vID',passport.checkAuthentication,userController.userProfile);
+router.get('/profile/:uID/',passport.checkAuthentication,userController.userProfile);
 
 router.post('/profile/update/:id',userController.editProfile);
 

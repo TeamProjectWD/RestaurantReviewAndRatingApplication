@@ -27,6 +27,9 @@ const MenuSchema = new mongoose.Schema({
     averageRating:{
         type:Number
     },
+    isAvailable:{
+        type:Boolean
+    },
     rating:[{
         type:mongoose.Schema.Types.ObjectId,
         ref:'Rating'

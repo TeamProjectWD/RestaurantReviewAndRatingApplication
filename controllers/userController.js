@@ -135,7 +135,7 @@ module.exports.editProfile =async(req,res)=>{
                     fs.unlinkSync(oldProfilePath);
                 }
                 nonEmptyObject.avatar = req.file.filename;
-                console.log(user);
+                // console.log(user);
             }
             
             await User.findByIdAndUpdate(req.user.id,{$set:nonEmptyObject});

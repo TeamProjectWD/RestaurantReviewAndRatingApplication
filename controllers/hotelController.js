@@ -18,7 +18,7 @@ module.exports.signUp = function(req,res){
 
 module.exports.signIn = function(req,res){
 
-    console.log("Yes+++++++++++++++++++++++++++++++++++++++++++++");
+    // console.log("Yes+++++++++++++++++++++++++++++++++++++++++++++");
 
     if(req.isAuthenticated()){
         const user = req.user.id
@@ -57,7 +57,7 @@ module.exports.createSession = function(req,res){
   
     const id = req.user.id;
     
-    return res.redirect(`/hotel/profile/${id}/${id}`);
+    return res.redirect(`/hotel/profile/${id}`);
 }
  
 //for deleting session cookie created by passport
@@ -74,9 +74,9 @@ module.exports.destroySession = async function(req,res,next){
 
 module.exports.userProfile = async function(req,res){   
 
-    const userToVisit = req.params.uID;
+    const userToVisit = req.user.id;
  
-    let visitor = await User.findById(req.params.vID);
+    let visitor = await User.findById(req.user._id);
 
     let model;
  
@@ -87,24 +87,22 @@ module.exports.userProfile = async function(req,res){
         model = "Hotel"
     }
 
-     
-
     const userId = req.user._id.toString();
     
-    const profileUSerData = await Hotel.findById(req.params.uID)
+    const profileUSerData = await Hotel.findById(userId)
     .populate({
         path:'menuArray',
         populate:{
             path:'rating'
         }
     }).populate({
-        path:'reviewPosts',
+        path:'posts',
         populate:{
             path:'user'
         }
     })
     .populate({
-        path:'reviewPosts',
+        path:'posts',
         populate:{
             path:'upVotes',
             populate:{
@@ -113,7 +111,7 @@ module.exports.userProfile = async function(req,res){
         }
     })
     .populate({
-        path:'reviewPosts',
+        path:'posts',
         populate:{
             path:'comments',
             options: { sort: { createdAt: -1 } },
@@ -123,7 +121,7 @@ module.exports.userProfile = async function(req,res){
         }
     })
     .populate({
-        path:'reviewPosts',
+        path:'posts',
         populate:{
             path:'comments',
             populate:{
@@ -132,13 +130,13 @@ module.exports.userProfile = async function(req,res){
         }
     })
     .populate({
-        path:'reviewPosts',
+        path:'posts',
         populate:{
             path:'hotelName'
         }
     })
     .populate({
-        path:'reviewPosts',
+        path:'posts',
         populate:{
             path:'menuModel'
         }
@@ -199,4 +197,5 @@ module.exports.editProfile =async(req,res)=>{
 }
 
 
+ 
  
