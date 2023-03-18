@@ -49,7 +49,15 @@ module.exports.getMenu = async function(req,res){
 
 module.exports.toggleAvaialability = async function(req,res){
 
-    return res.status(200).json("reached");
+    const Item = await Menu.findById(req.body.id);
+
+    Item.isAvailable = !Item.isAvailable;
+
+    Item.save();
+
+    return res.status(200).json({
+        isAvailable:Item.isAvailable
+    });
     
 }
 

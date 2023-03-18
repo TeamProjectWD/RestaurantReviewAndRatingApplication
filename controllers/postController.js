@@ -73,8 +73,6 @@ module.exports.PostConroller = function(req,res){
 
         await post_User.save();
 
-        console.log(presentPost);
-         
  
     });
 
@@ -103,7 +101,7 @@ module.exports.deletePost = async function(req,res){
 
     const post = await Post.findById(req.params.pID);
 
-    console.log(post);
+     
 
     let commentData = post.comments;
     

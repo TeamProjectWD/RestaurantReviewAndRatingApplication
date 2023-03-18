@@ -72,11 +72,13 @@ module.exports.destroySession = async function(req,res,next){
 
 }
 
-module.exports.userProfile = async function(req,res){   
+module.exports.userProfile = async function(req,res){  
+    
+    
 
     const userToVisit = req.user.id;
  
-    let visitor = await User.findById(req.user._id);
+    let visitor = await User.findById(userToVisit);
 
     let model;
  
@@ -89,7 +91,7 @@ module.exports.userProfile = async function(req,res){
 
     const userId = req.user._id.toString();
     
-    const profileUSerData = await Hotel.findById(userId)
+    const profileUSerData = await Hotel.findById(req.params.uID)
     .populate({
         path:'menuArray',
         populate:{
@@ -141,9 +143,6 @@ module.exports.userProfile = async function(req,res){
             path:'menuModel'
         }
     });
-
-
-  
 
     return res.render('hotel',{
         

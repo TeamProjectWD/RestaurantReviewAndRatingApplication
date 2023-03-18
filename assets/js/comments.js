@@ -29,7 +29,7 @@ class commentDOMClass {
                     
                     $(`#commentUL-${this.postID}`).append(freshComment);
 
-                    console.log(data.data.comment._id);
+                    
 
                     new deleteComment(data.data.comment._id);
 

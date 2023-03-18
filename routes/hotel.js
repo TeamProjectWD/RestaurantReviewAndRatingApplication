@@ -28,7 +28,7 @@ router.get('/signOut',hotelController.destroySession);
 
 router.get('/profile/:uID/',passport.checkAuthentication,hotelController.userProfile);
 
-router.get('/toggleAvailability',menuController.toggleAvaialability);
+router.post('/toggleAvailability',menuController.toggleAvaialability);
 
 router.post('/profile/update/:id',hotelController.editProfile);
 

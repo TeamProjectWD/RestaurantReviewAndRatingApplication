@@ -23,7 +23,7 @@ class deleteComment{
 
             e.preventDefault();
 
-            console.log(self.deleteForm.attr("action"));
+            
 
             let callSelf = this;
             

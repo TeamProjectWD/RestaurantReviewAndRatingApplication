@@ -3,7 +3,7 @@ $('#hotelSelect').on('change', function() {
     
     let hotelID =  $(this).val();
 
-    console.log(hotelID);
+ 
 
     $.ajax({
 
@@ -15,7 +15,7 @@ $('#hotelSelect').on('change', function() {
 
         success: (data) => {
 
-            console.log(data);
+             
 
             $("#itemSelect").remove();
 

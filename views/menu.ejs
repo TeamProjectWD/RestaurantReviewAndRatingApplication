@@ -1,8 +1,22 @@
 <div style="margin-right: 20px; ">
 
-    <div>
-        <%-include('toggleMenu')%>
-    </div>
+    <%if(typeOfUser == "Hotel"){%>
+
+        <div>
+            <%-include('toggleMenu')%>
+        </div>
+
+    <%}else{%>
+
+        <%if(!item.isAvailable){%>
+            
+            <span>This Item is Currently Unavailable</span>
+
+        <%}%>
+
+    <%}%>
+
+     
 
   
     <h3>menu Name : <%= item.name%></h3>
@@ -30,7 +44,6 @@
                 present rating : <%= item.averageRating %> 
             </span>
     
-
         </div>  
 
     </div>
