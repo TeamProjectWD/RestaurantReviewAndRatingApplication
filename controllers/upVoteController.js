@@ -23,7 +23,7 @@ module.exports.upVoteController = async function(req,res){
     }
 
     const user_type = req.query.type1;
-    if(user_type=="user"){
+    if(user_type=="User"){
         // var post_User = await User.findById(req.user._id);
         var UserOrHotel = "User"
     }
@@ -40,7 +40,10 @@ module.exports.upVoteController = async function(req,res){
 
     });
 
+     
+
     if(upvoteInfo == null){
+        console.log("ENTERED");
         let newUpVote = await upVote.create({
             votable: req.params.id,
             postORcomment : req.query.type,
@@ -48,6 +51,8 @@ module.exports.upVoteController = async function(req,res){
             upVoted:false,
             UserOrHotel:UserOrHotel
         })
+
+        console.log(newUpVote);
 
         postORcom.upVotes.push(newUpVote.id);
  

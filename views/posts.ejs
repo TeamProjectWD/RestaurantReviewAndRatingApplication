@@ -6,7 +6,7 @@ function upVote(data){
     <!-- console.log(data); -->
     
     data.findIndex(upvote => {
-        
+    
         if(upvote.user.id == locals.user.id){
             
                 bools =  upvote.upVoted;
@@ -74,6 +74,8 @@ else{
         <div>
 
             <span><%= post.content%></span>
+
+            <%console.log(typeOfUser)%>
 
             <img src="<%= post.picturePath %>" alt="" class="img-fluid" style="width: 200; height: 200;">
             

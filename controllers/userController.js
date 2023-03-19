@@ -65,6 +65,9 @@ module.exports.userProfile = async function(req,res){
     
     const userToVisit = req.params.uID;
     const userId = req.user._id.toString();
+
+    console.log(userToVisit,userId);
+    
     const profileUSerData = await User.findById(req.params.uID)
     .populate({
         path:'posts',
@@ -95,6 +98,8 @@ module.exports.userProfile = async function(req,res){
     });
 
     profileUSerData.posts.reverse();
+
+ 
 
     return res.render('userProfile',{
         
