@@ -41,13 +41,42 @@ module.exports.commentController = async function(req,res){
 
     await postData.save();
 
+
+    // judging picture type
+    // const typeOfCommenter=req.user.UserOrHote
+
+    var picture = req.user.avatar;
+    
+    
+    var picturePath="";
+
+    if(picture){
+
+        if(user_type == "User"){
+            picturePath = `/uploads/userProfile/pics/${picture}`;
+        }
+        else{
+            picturePath = `/uploads/hotelProfile/pics/${picture}`;
+    
+        }
+    }
+
+    else{
+        picturePath = "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png"
+    }
+
+
+    console.log(picturePath);
     if(req.xhr){
         
         return res.status(200).json({
             data:{
                 comment:commentData,
                 userName : req.user.name,
+                userId : req.user.id,
                 commentID:commentData.id,
+                typeOfCommenter:user_type,
+                picturePath:picturePath,
                 commentUpVoteCount:commentData.upVotesCount
             }
             
@@ -65,6 +94,7 @@ module.exports.deleteComment = async function(req,res){
 
 
     if(req.xhr){
+        console.log("xhr");
 
         let commentData = await comment.findById(req.body.cID);
 

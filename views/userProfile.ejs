@@ -28,20 +28,24 @@
 
 
         <div id="postDiv">
+            <ul  style="list-style-type: none;">
+
 
             <%for (post of UserProfile.posts) {%>
 
-                <%- include('posts')%>
+                <%- include('Dposts')%>
 
             <%}%>
+
+            </ul>
 
         </div>
 
 <!-- edit starting -->
-        <div id="editDiv" style="margin-left: 540px; border: 2px solid black; width: 390px; padding-top: 10px; padding-left: 30px; display: none;">
+    <div id="editDiv" style="margin-left: 540px; border: 2px solid black; width: 390px; padding-top: 10px; padding-left: 30px; display: none;">
             <h1 id="editHeading" style="text-align: center;">Edit profile</h1>
             
-            <form action="/user/profile/update/<%= UserProfile._id %>" method="POST"  autocomplete="off" enctype="multipart/form-data" >
+        <form action="/user/profile/update/<%= UserProfile._id %>" method="POST"  autocomplete="off" enctype="multipart/form-data" >
             <label style="float: left; padding-right:75px;" for="email" >email:</label>
             <input type="email" name="email"  placeholder="<%= UserProfile.email %>" >
             <br>

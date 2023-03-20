@@ -11,8 +11,9 @@ module.exports.signUp = function(req,res){
         return res.redirect(`/profile/${user}`);
     }
     
-    return res.render("hotelSignUp",{
-        title: "HR&R @ signUP"
+    return res.render("DhotelSignIn",{
+        title: "HR&R @ signUP",
+        layout:false
     })
 }
 
@@ -25,8 +26,9 @@ module.exports.signIn = function(req,res){
         return res.redirect(`/`);
     } 
 
-    return res.render("hotelSignIn",{
-        title: "HR&R @ signIN "
+    return res.render("DhotelSignIn",{
+        title: "HR&R @ signIN ",
+        layout : false
     })
 }
 //for sign up

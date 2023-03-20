@@ -7,8 +7,9 @@ module.exports.signUp = function(req,res){
         return res.redirect('/');
     }
     
-    return res.render("userSignUp",{
-        title: "HR&R @ signUP"
+    return res.render("DuserSignUp",{
+        title: "HR&R @ signUP",
+        layout : false
     })
 }
 
@@ -17,8 +18,9 @@ module.exports.signIn = function(req,res){
         return res.redirect('/');
     } 
 
-    return res.render("userSignIn",{
-        title: "HR&R @ signIN "
+    return res.render("DuserSignIN",{
+        title: "HR&R @ signIN ",
+        layout: false
     })
 }
 //for sign up
@@ -95,14 +97,16 @@ module.exports.userProfile = async function(req,res){
     });
 
     profileUSerData.posts.reverse();
+    
+    // console.log(profileUSerData);
 
-    return res.render('userProfile',{
+    return res.render('DuserProfile',{
         
         title:"HR&R @ UserProfile",
         UserProfile :profileUSerData,
         userToVisit:userToVisit,
         userId:userId,
-        typeOfUser:"User"
+        typeOfUser:"User",
 
     });
 

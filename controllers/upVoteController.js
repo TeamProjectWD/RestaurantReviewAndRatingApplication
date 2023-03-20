@@ -23,7 +23,7 @@ module.exports.upVoteController = async function(req,res){
     }
 
     const user_type = req.query.type1;
-    if(user_type=="user"){
+    if(user_type=="User"){
         // var post_User = await User.findById(req.user._id);
         var UserOrHotel = "User"
     }
