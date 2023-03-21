@@ -29,11 +29,23 @@
              <% } %>   
         </div>
 
-        <h2>reviews</h2>
+        <h2>Posts</h2>
 
         <ul>
 
-            <%for (post of HotelProfile.posts) { %>
+            <%for (post of HotelProfile.posts){%>
+
+                <%-include('posts')%>
+
+            <%}%>
+
+        </ul>
+
+        <h2>reviews</h2>
+ 
+        <ul>
+
+            <%for (post of HotelProfile.reviewPosts) { %>
 
                 <%-include('posts')%>
     

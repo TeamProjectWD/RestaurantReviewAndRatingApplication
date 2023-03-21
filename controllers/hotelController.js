@@ -98,6 +98,51 @@ module.exports.userProfile = async function(req,res){
             path:'rating'
         }
     }).populate({
+        path:'reviewPosts',
+        populate:{
+            path:'user'
+        }
+    })
+    .populate({
+        path:'reviewPosts',
+        populate:{
+            path:'upVotes',
+            populate:{
+                path:'user'
+            }
+        }
+    })
+    .populate({
+        path:'reviewPosts',
+        populate:{
+            path:'comments',
+            options: { sort: { createdAt: -1 } },
+            populate:{
+                path:'upVotes'
+            }
+        }
+    })
+    .populate({
+        path:'reviewPosts',
+        populate:{
+            path:'comments',
+            populate:{
+                path:'user'
+            }
+        }
+    })
+    .populate({
+        path:'reviewPosts',
+        populate:{
+            path:'hotelName'
+        }
+    })
+    .populate({
+        path:'reviewPosts',
+        populate:{
+            path:'menuModel'
+        }
+    }).populate({
         path:'posts',
         populate:{
             path:'user'
@@ -153,7 +198,6 @@ module.exports.userProfile = async function(req,res){
         typeOfUser:model
     
     });
-
 
 }
 
