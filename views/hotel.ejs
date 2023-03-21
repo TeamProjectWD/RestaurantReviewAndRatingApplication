@@ -21,7 +21,7 @@
 
         <%}%>
 
-        <div id="menuArray" style="border: 2px solid black;">
+        <div id="menuArray" style="border: 2px solid black; display: flex; justify-content: space-between; padding: 2rem;">
             <% for(item of HotelProfile.menuArray){%>
 
                 <%-include('menu')%>
@@ -32,6 +32,8 @@
         <h2>reviews</h2>
 
         <ul>
+
+            <%console.log(HotelProfile.posts)%>
 
             <%for (post of HotelProfile.posts) { %>
 

@@ -19,6 +19,8 @@ $('#hotelSelect').on('change', function() {
 
             $("#itemSelect").remove();
 
+            $("#fileSubmit").remove();
+
             let selectDOM = menuMaker(data.data);
 
             $("#postForm").append(selectDOM);
@@ -43,6 +45,8 @@ let menuMaker = (data) => {
             ${data.map((obj) => `<option value = "${obj._id}"> ${obj.name}</li>`).join("")}
 
         </select>
+
+        <input id="fileSubmit" class="btn btn-success" type="submit" value="Submit">
         
     `)
 

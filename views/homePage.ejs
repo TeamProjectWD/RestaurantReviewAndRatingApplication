@@ -1,8 +1,8 @@
+<div style="margin-bottom: 1rem;">
  
-<a href="/<%=typeOfUser%>/signOut">signOut</a>
-<div>
+    <a class="btn btn-success" href="/<%=typeOfUser%>/profile/<%= locals.user._id%>/">profile</a>
     
-    <a href="/<%=typeOfUser%>/profile/<%= locals.user._id%>/">profile</a>
+    <a class="btn btn-danger" href="/<%=typeOfUser%>/signOut">signOut</a>
 
 </div>
 
@@ -13,28 +13,28 @@
             
         <input type="text" name="content" required/>
         
-        <input type="file" name="picturePath" required/>
+        <input  type="file" name="picturePath" required/>
 
-        <input type="submit" value="Submit">
-
+        
         <input type="text" value="<%=typeOfUser%>"  name = "userType" hidden>
-
+        
         <input type="number" value="0" name="upVotesCount" hidden>
-
+        
         <select name="hotel" id="hotelSelect" required>
- 
-            <option disabled selected>-- Please select a Restaurant--</option>
-
-            <%for (hotel of hotelNames) { %>
-
-                <option value= "<%=hotel._id%>"> <%=hotel.name%> </option>
             
-            <%}%>
-
-        </select>
-
-    </form>
-
+            <option disabled selected>-- Please select a Restaurant--</option>
+            
+            <%for (hotel of hotelNames) { %>
+                
+                <option value= "<%=hotel._id%>"> <%=hotel.name%> </option>
+                
+                <%}%>
+                
+            </select>
+            
+            <input id="fileSubmit" class="btn btn-success" type="submit" value="Submit">
+        </form>
+        
     <script src="/assets/js/menuSelect.js"></script>
 
     

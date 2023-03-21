@@ -49,7 +49,27 @@ else{
                     %>
                     
                     <div class="d-flex flex-row align-items-center"> <img src="<%=profilepic%>" alt="no" width="50" class="rounded-circle">
-                        <div class="d-flex flex-column ml-2"> <a href="/<%=postUserType%>/profile/<%=post.user.id%>/"><b> <span class="font-weight-bold"><%= post.user.name %></span> </b> </a> <small class="text-primary">Collegues</small> </div>
+                        <div class="d-flex flex-column ml-2"> <a href="/<%=postUserType%>/profile/<%=post.user.id%>/"><b> <span class="font-weight-bold"><%= post.user.name %></span> </b> </a> 
+                            <small >
+                                <%if(post.UserOrHotel == "User" && (post.menuModel != null && post.hotelName!= null)){%>
+                                    <span>
+                                        <b>
+                                            <%=post.user.name%> 
+                                        </b> 
+                                    
+                                        shared their experience about 
+                                        <b>
+                                            <%=post.menuModel.name%> 
+                                        </b>
+                                         
+                                        they had at
+                                        <b>
+                                            <%= post.hotelName.name%>
+                                        </b>
+                                         
+                                    </span>
+                                <%}%>
+                            </small> </div>
                     </div>
                     
                     <%if(locals.user.id == post.user.id){%>

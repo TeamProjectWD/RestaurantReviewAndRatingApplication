@@ -1,7 +1,7 @@
  
 <div class="form-check form-switch">
   <input class="form-check-input flexSwitchCheckChecked-<%=item.id%>" type="checkbox" id="flexSwitchCheckChecked" <% if(item.isAvailable) { %> checked <%}%>>
-  <label class="form-check-label" for="flexSwitchCheckChecked">Checked switch checkbox input</label>
+  <!-- <label class="form-check-label" for="flexSwitchCheckChecked">Checked switch checkbox input</label> -->
 </div>
 <div id="result"></div>
   
@@ -11,7 +11,7 @@
 <script>
 
     $(document).ready(function() {
-      $('#flexSwitchCheckChecked').bootstrapSwitch({
+      $('.flexSwitchCheckChecked-<%=item.id%>').bootstrapSwitch({
         onText: 'Available',
         offText: 'Unavailable',
         labelWidth: 0

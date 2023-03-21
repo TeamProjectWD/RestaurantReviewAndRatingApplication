@@ -1,4 +1,24 @@
-<div style="margin-right: 20px; ">
+<style>
+    #menuAv{
+        background-color: #a09898;
+        opacity: 70%;
+    }
+</style>
+<% 
+        console.log(typeOfUser)
+
+        if( typeOfUser!="Hotel"){
+
+                if(!item.isAvailable ){
+                var id1 = "menuAv";
+            } 
+            else{
+                var id1 = "";
+
+            }
+        }
+    %>
+<div id="<%=id1%>" style="margin-right: 20px; ">
 
     <%if(typeOfUser == "Hotel"){%>
 
@@ -20,19 +40,20 @@
 
   
     <h3>menu Name : <%= item.name%></h3>
-
+<!-- 
     <span>
         <%= item.content%>
-    </span>
-
+    </span> -->
     
-
-    <img src="<%=item.picturePath%>" alt="menuPic" class="img-fluid" style="width: 200; height: 200;">
-
+    
     <div>
-        <h4><%=item.name%></h4>
+    <img src="<%=item.picturePath%>" alt="menuPic" class="img-fluid" style="width: 300; height: 300;">
+    </div>
 
-        <%if(locals.user.id != HotelProfile._id && typeOfUser!="Hote") {%>
+    <div id="">
+        <h4><%=item.content%></h4>
+
+        <%if(locals.user.id != HotelProfile._id && typeOfUser!="Hotel") {%>
 
             <%-include ("rating.ejs")%>
 
