@@ -1,7 +1,6 @@
-console.log("hai");
 // edit or posts
 var y = document.getElementById("editOrPosts");
-console.log(y);
+ 
 y.addEventListener('click',()=>{
 
         var x= document.getElementById('editDiv')

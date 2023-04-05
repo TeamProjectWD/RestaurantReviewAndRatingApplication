@@ -11,7 +11,10 @@
 
     <form action="/posts/?type=<%=typeOfUser%>" method="POST" enctype="multipart/form-data" id="postForm">
             
-        <input type="text" name="content" required/>
+        <!-- <input type="text" name="content" required/>
+         -->
+
+         <textarea name="content" id="" cols="30" rows="10"></textarea>
         
         <input type="file" name="picturePath" required/>
 
@@ -48,8 +51,10 @@
             <input type="text" value="<%=typeOfUser%>"  name = "userType" hidden>
 
             <input type="number" value="0" name="upVotesCount" hidden>
+
+            <textarea name="content" id="" cols="30" rows="10"></textarea>
             
-            <input type="text" name="content" required/>
+            <!-- <input type="text" name="content" required/> -->
             
             <input type="file" name="picturePath" required/>
     
