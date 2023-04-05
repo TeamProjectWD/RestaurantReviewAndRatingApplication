@@ -1,6 +1,9 @@
 const mongoose = require('mongoose');
 
-mongoose.connect('mongodb://localhost:27017/RRR5');
+mongoose.connect('mongodb://localhost:27017/RRR6');
+
+ 
+ 
 
 mongoose.set('strictQuery', true);
 

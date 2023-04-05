@@ -2,6 +2,10 @@
     <head>
 
         <title> <%= title %>  </title>
+
+         <link rel="icon" type="image/x-icon" href="/uploads/Free_Logo_Maker_-_Create_your_own_logo_in_minutes___1_-removebg-preview-_1_.ico">
+
+        <link rel="stylesheet" href="/assets/css/layout.css">
          
         <script src="https://kit.fontawesome.com/178b16d080.js" crossorigin="anonymous"></script>
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
@@ -22,14 +26,14 @@
 
     <body> 
     
-
-        <h1>
-            Major Project
-        </h1>
-
         <%- include("header.ejs") -%>
 
-            <%- body%>
+            <div id="body-wrap">
+
+                <%- body%>
+
+            </div>
+
 
         <%- include("footer.ejs") -%>
 

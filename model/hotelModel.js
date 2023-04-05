@@ -32,7 +32,11 @@ const hotelSchema = new mongoose.Schema({
     reviewPosts:[{
         type:mongoose.Schema.Types.ObjectId,
         ref:'Post'
-    }]
+    }],
+    follow:{
+        type:mongoose.Schema.Types.ObjectId,
+        ref:'Follow'
+    }
 
 });
 

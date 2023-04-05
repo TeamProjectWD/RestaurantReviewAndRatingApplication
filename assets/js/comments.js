@@ -47,49 +47,62 @@ class commentDOMClass {
 
     commentDOM(data){
 
+        console.log(data.picturePath,"from commentDOM");
         return(`
-                <li id="commentArea-${data.commentID}">
-            
-                    <div id="commentsDiv">
+                <li id="commentArea-${data.commentID}" class="comments">
 
-                    <b>
-                        <form action="/posts/comment/delete/" method="post" id="commentDelete-${data.commentID}">
-
-                            <input type="hidden" value="${data.commentID}" name="cID">
-
-                            <input type="hidden" value="${this.postID}" name="pID">
-
-                            <button>
-                                <i class="fa-solid fa-delete-left"></i>
-                            </button>
-
-                        </form>
-                        
-                    </b>
                 
-                        <span>${data.userName}</span> 
-                        <span>${data.comment.content}</span>
-                        <form action="/upVote/${data.commentID}/?type=Comment" method="POST" id="commentUpVoteForm-${data.commentID}">
-                            
+                <div id="commentsDiv" class="d-flex flex-row mb-2">
+                    <img src="${data.picturePath}" width="30" height="30px" class="rounded-circle">
+
+                    <div class="d-flex flex-column ml-2"> 
+                        <a href="${data.typeOfCommentor}/profile/${data.userId}"> <b> <span class="name">${data.userName}</span> </b> </a>
+
+
+                            <b>
+                            <form action="/posts/comment/delete/" method="post" id="commentDelete-${data.commentID}">
+            
+                                <input type="hidden" value="${data.commentID}" name="cID">
+            
+                                <input type="hidden" value="${this.postID}" name="pID">
+            
+                                <button>
+                                    <i class="fa-solid fa-delete-left"></i>
+                                </button>
+            
+                            </form>
+                    
+                            </b>
+    
+
+                            <small class="comment-text">${data.comment.content}</small>
+                    <div class="d-flex flex-row align-items-center status">
+                            <form action="/upVote/${data.commentID}/?type=Comment" method="POST" id="commentUpVoteForm-${data.commentID}">
+                                            
                             <div id="commentContainer-${data.commentID}">
-                                
+                                    
                                     <button style="color:white;"><i class="fa-regular fa-circle-up"></i></button>
-                               
+                            
                                 <span>
                                     ${data.commentUpVoteCount}
                                 </span>
-                
+
                             </div>
                             
-                        </form>
-                
-                
-                    </div>    
-                
-                </li>
+                            </form>
+                    </div>
+
+
+                 </div>
+            </div>
+
+
+    </li>
+
 
                 <script>
                     new upVoteClass("comment","${data.commentID}");
+
                 </script>
     
     

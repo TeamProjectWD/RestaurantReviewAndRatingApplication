@@ -23,6 +23,7 @@ const  upVoteSchema = new mongoose.Schema({
         type:String,
         required:true,
         enum:['User','Hotel']
+
     }
      
 

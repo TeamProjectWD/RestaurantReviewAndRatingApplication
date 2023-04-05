@@ -1,0 +1,58 @@
+:root{
+  --orangeAlike : #E27D60;
+  --lightGreenAlike:#826206;
+  --lightOrangeAlike:#E8A87C;
+  --darkRosePink:#C38D9E;
+  --darkTurquoise:#41B3A3;
+}
+
+header{
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+    flex: 1;
+    justify-content: space-between;
+    height: 5%;
+  
+}
+
+footer{
+
+  background: rgba(0, 0, 0, 0.5);
+
+}
+
+
+
+html, body {
+  height: 100%;
+  
+}
+
+
+body {
+    display: flex;
+    flex-direction: column;
+    margin: 0;
+  }
+  
+  header {
+    flex: 1;
+   
+  }
+  #body-wrap{
+  
+    flex: 40;
+    padding: 1rem;    
+  }
+  
+  footer {
+    flex: 1;
+     
+  }
+
+  @media screen and (max-width: 576px) {
+    body {
+      height: 100vh;
+      margin: 0;
+    }
+  }

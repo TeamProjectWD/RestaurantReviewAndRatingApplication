@@ -28,8 +28,11 @@ const userSchemma = new mongoose.Schema({
     posts:[{
         type:mongoose.Schema.Types.ObjectId,
         ref:'Post'
-    }]
-
+    }],
+    follow:{
+        type:mongoose.Schema.Types.ObjectId,
+        ref:'Follow'
+    }
 
 });
 

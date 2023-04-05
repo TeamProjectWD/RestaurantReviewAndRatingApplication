@@ -15,14 +15,13 @@ module.exports.PostConroller = function(req,res){
         }
         const user_type = req.query.type;
 
-        let hotelName;
-        let menuModel;
+        var hotelName = "";
+        var menuModel = "";
 
-        if(user_type == "User"){
+        if(user_type=="User"){
            hotelName = req.body.hotel;
            menuModel = req.body.menuItem;
         }
-
         let presentPost = await Post.create({
             user:req.user._id,
             content:req.body.content,

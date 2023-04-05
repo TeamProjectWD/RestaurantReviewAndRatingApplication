@@ -1,39 +1,54 @@
-<li id="commentArea-<%=comment.id%>">
+<li  id="commentArea-<%=comment.id%>"  class="comments">
 
     <%
-        function upVote(data){
+    function upVote(data){
 
-            let bools = false;
-            data.findIndex(upvote => {
+        let bools = false;
+        data.findIndex(upvote => {
 
-                if(upvote.user== locals.user.id){
+            if(upvote.user== locals.user.id){
 
-                    <!-- console.log("TRUE DATA",upvote.upVoted); -->
-                
-                    bools =  upvote.upVoted;
-                }
+                <!-- console.log("TRUE DATA",upvote.upVoted); -->
+            
+                bools =  upvote.upVoted;
+            }
 
-            });
+        });
 
-        return bools;
+    return bools;
 
-        }
+    }
 
 
-        if(comment.UserOrHotel=="User"){
-            var postUserType = "User";
-        }
-        else{
-            var postUserType = "Hotel";
-        } 
-        
-       
+    if(comment.UserOrHotel=="User"){
+        var commentUserType = "User";
+    }
+    else{
+        var commentUserType = "Hotel";
+    } 
 
-   
+
+
+
     %>
-    <div id="commentsDiv%>">
 
-        <%if(locals.user.id == comment.user.id){%>
+    <%
+                 var profilepic
+                    if(comment.user.avatar){
+                         profilepic = "/uploads/userProfile/pics/" + comment.user.avatar;
+                         console.log(profilepic)
+                    }
+                    else{
+                        profilepic = "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png"
+                    }
+                %>
+
+<div id="commentsDiv%>" class="d-flex flex-row mb-2">
+     <img src="<%=profilepic%>" width="30" height="30px" class="rounded-circle">
+    <div class="d-flex flex-column ml-2"> 
+        <a href="<%=commentUserType%>/profile/<%=comment.user.id%>"> <b> <span class="name"><%=comment.user.name%></span> </b> </a>
+
+        <%if(locals.user.id == comment.user.id) {   console.log()%>
 
             <b>
                 <form action="/posts/comment/delete/" method="post" id="commentDelete-<%=comment.id%>">
@@ -52,34 +67,33 @@
 
         <%}%>
 
+         <small class="comment-text"><%=comment.content%></small>
+        <div class="d-flex flex-row align-items-center status">
+             <form action="/upVote/<%=comment.id%>/?type=Comment&type1=<%=typeOfUser%>" method="POST" id="commentUpVoteForm-<%=comment._id%>">
+        
+                <div id="commentContainer-<%=comment._id%>">
+    
+                    <%if(upVote(comment.upVotes) == true){%>
+                        <button><i class="fa-regular fa-circle-up"></i></button>
+                    <%}else{%>
+                        <button style="color:white;"><i class="fa-regular fa-circle-up"></i></button>
+                    <%}%>
+                    <span>
+                        <%= comment.upVotesCount%>
+                    </span>
+    
+                </div>
+                
+            </form>
+        </div>
 
-        <span><%=comment.user.name%></span> 
-        <span><%=comment.content%></span>
-        <form action="/upVote/<%=comment.id%>/?type=Comment&type1=<%=typeOfUser%>" method="POST" id="commentUpVoteForm-<%=comment._id%>">
-            
-            <div id="commentContainer-<%=comment._id%>">
 
-                <%if(upVote(comment.upVotes) == true){%>
-                    <button><i class="fa-regular fa-circle-up"></i></button>
-                <%}else{%>
-                    <button style="color:white;"><i class="fa-regular fa-circle-up"></i></button>
-                <%}%>
-                <span>
-                    <%= comment.upVotesCount%>
-                </span>
+    </div>
+</div>
 
-            </div>
-            
-        </form>
-
-
-    </div>    
 
 </li>
-
-
-
 <script>
-    new upVoteClass("comment","<%=comment._id%>");
-    new deleteComment("<%=comment.id%>")
+new upVoteClass("comment","<%=comment._id%>");
+new deleteComment("<%=comment.id%>")
 </script>

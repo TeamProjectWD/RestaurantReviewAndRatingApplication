@@ -1,29 +1,92 @@
+<link rel="stylesheet" href="/assets/css/signIN.css">
+
+<div class="signInBodyWrap">
+
+      <div class="video-container">
+            <video autoplay muted loop id="bg-video">
+                  <source src="/uploads/Intro masakan_mukbang free no copyright _ Intro cook mukbang free no copyright (online-video-cutter.com).mp4" type="video/mp4">
+            </video>
+      </div>
+
+            <div class="container py-6 h-100">
+              <div class="row d-flex justify-content-center align-items-center h-100">
+                <div class="col col-xl-10" style="background: hsla(0, 0%, 100%, 0)">
+                  <div class="card" style="border-radius: 1rem; background: hsla(0, 0%, 100%, 0)">
+                    <div class="row g-0" style="background: hsl(0deg 1.05% 46.91% / 43%); border-radius: 1rem;">
+                      <div class="col-md-6 col-lg-5 d-none d-md-block" style="border-radius: 1rem;">
+                        <img src="/uploads/signIN.jpg"
+                          alt="login form" class="img-fluid" style="border-radius: 1rem 0 0 1rem;width: 100%;
+                          height: auto;
+                          min-height: 100%;" />
+                      </div>
+                      <div class="col-md-6 col-lg-7 d-flex align-items-center">
+                        <div class="card-body p-4 p-lg-5 text-black" style="height: 100%;">
+          
+                        <form action="/user/create-session" method="POST" style=
+                              "display: flex;flex-direction: column;align-items: center; 
+                              display: flex;
+                              flex-direction: column;
+                              align-items: center;
+                              height: 100%;
+                              justify-content: space-between;
+                         ">
+           
+          
+                            <h2 class="fw-normal mb-3 pb-3" style="letter-spacing: 1px;">Sign into your account</h2>
+          
+                            <div class="form-outline mb-4">
+                              <label for="email">Email address</label>
+                              <br>
+                              <input type="email" name="email" placeholder="Email" required id="email">    
+                            </div>
+          
+                            <div class="form-outline mb-4">
+                              <label for="password">Password &nbsp; &nbsp;  &nbsp;  &nbsp;  &nbsp;</label>
+                              <br>
+                              <input type="password" name="password" placeholder="Password" required id="password">
+                            </div>
+          
+                            <div class="pt-1 mb-4" style="    display: flex;
+                            justify-content: space-around;
+                            width: 100%;">
+
+                              <button class="btn btn-dark btn-lg btn-block" type="submit">Login</button>
+
+                              <button class="btn btn-dark btn-lg btn-block"  onclick="location.href='/user/signUp'" type="button">Sign Up</button>
+                            </div>
+
+                            <div style="display: inline;">
+
+                                  <div class="pt-1 mb-4">
+
+                                    <span>Do you own a Restaurant</span>
+                                    <button class="btn btn-primary btn-sm" onclick="location.href='/hotel/signIn'" type="button">Restaurant Login</button>
+                                  </div>
+
+                            </div>
+                            
+                             
+
+ 
+                          </form>
+          
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+</div>
+
+ 
+
+ 
 
 
+ 
 
 
+ 
 
-
-
-
- <h1> User Sign In</h1>
-
-
-<form action="/user/create-session" method="POST" class="">
-     
-        <input type="email" name="email" placeholder="Email" required>    
-        <input type="password" name="password" placeholder="Password" required>          
-        <input type="submit" value="Sign in">
-        
-</form>
-       
-  
-<a href="/user/signUp">user signUp</a>
-
-
-
-<br>
-<br>
-
-
-<a href="/hotel/signIn">hotel sign in</a>

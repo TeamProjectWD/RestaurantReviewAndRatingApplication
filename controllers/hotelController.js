@@ -4,6 +4,7 @@ const path = require('path');
 const Menu = require('../model/menuModel');
 const User = require('../model/User');
 const Post = require('../model/postModel');
+const Follow = require('../model/follow');
 
 module.exports.signUp = function(req,res){
     if(req.isAuthenticated()){
@@ -11,8 +12,9 @@ module.exports.signUp = function(req,res){
         return res.redirect(`/profile/${user}`);
     }
     
-    return res.render("hotelSignUp",{
-        title: "HR&R @ signUP"
+    return res.render("hotelSignIn",{
+        title: "HR&R @ signUP",
+        layout:false
     })
 }
 
@@ -26,7 +28,8 @@ module.exports.signIn = function(req,res){
     } 
 
     return res.render("hotelSignIn",{
-        title: "HR&R @ signIN "
+        title: "HR&R @ signIN ",
+        layout : false
     })
 }
 //for sign up
@@ -41,6 +44,14 @@ module.exports.create = async function(req,res){
     if(!user){
         
         newUser = await Hotel.create(req.body);
+
+        let follow = await Follow.create({
+            user:newUser.id,
+            UserOrHotel:'Hotel'
+        })
+
+        newUser.follow = follow;
+        newUser.save();
         
         return res.redirect('/hotel/signIn');
     }else{
@@ -74,9 +85,9 @@ module.exports.destroySession = async function(req,res,next){
 
 module.exports.userProfile = async function(req,res){  
     
-    
-
     const userToVisit = req.user.id;
+
+    console.log(userToVisit);
  
     let visitor = await User.findById(userToVisit);
 
@@ -142,52 +153,18 @@ module.exports.userProfile = async function(req,res){
         populate:{
             path:'menuModel'
         }
-    }).populate({
-        path:'posts',
-        populate:{
-            path:'user'
-        }
-    })
-    .populate({
-        path:'posts',
-        populate:{
-            path:'upVotes',
-            populate:{
-                path:'user'
-            }
-        }
-    })
-    .populate({
-        path:'posts',
-        populate:{
-            path:'comments',
-            options: { sort: { createdAt: -1 } },
-            populate:{
-                path:'upVotes'
-            }
-        }
-    })
-    .populate({
-        path:'posts',
-        populate:{
-            path:'comments',
-            populate:{
-                path:'user'
-            }
-        }
-    })
-    .populate({
-        path:'posts',
-        populate:{
-            path:'hotelName'
-        }
-    })
-    .populate({
-        path:'posts',
-        populate:{
-            path:'menuModel'
-        }
     });
+
+    var followbtn = true;
+    const follow = await Follow.findById(profileUSerData.follow);
+    // console.log("````````````````",follow);
+    for(var i=0 ; i<follow.followers.length;i++){
+        // console.log("`````````````````",follow.followers[i].toString());
+        if(follow.followers[i].toString() == userId){
+            followbtn =false;
+            break;
+        }
+    }
 
     return res.render('hotel',{
         
@@ -195,9 +172,13 @@ module.exports.userProfile = async function(req,res){
         HotelProfile :profileUSerData,
         userToVisit:userToVisit,
         userId:userId,
-        typeOfUser:model
+        typeOfUser:model,
+        followbtn:followbtn,
+        followers:follow.followers.length,
+        following:follow.followings.length
     
     });
+
 
 }
 
@@ -241,4 +222,61 @@ module.exports.editProfile =async(req,res)=>{
 
 
  
- 
+module.exports.FollowOrUnfollow = async(req,res)=>{
+
+    const followedById = req.user.id;
+    const toFollowId = req.params.id;
+    if(followedById!=toFollowId){
+        
+            // checking user logged in is user or hotel
+            var typeOfUser="Hotel";
+            if (req.user && req.user.constructor.modelName === 'User') {
+                typeOfUser = "User";
+            }
+            if(typeOfUser=="User"){
+                var followedBy = await User.findById(followedById);
+            }
+            else{
+                var followedBy = await Hotel.findById(followedById);
+            }
+        
+        
+            const toFollow = await Hotel.findById(toFollowId);
+            
+        
+            const FollowVisitor = await Follow.findById(followedBy.follow);
+            const FollowVisitPage = await Follow.findById(toFollow.follow);
+            // console.log("222222222222222222222",FollowVisitPage);
+        
+            // logic 
+        
+            if(!FollowVisitPage.followers.includes(followedById)){
+                FollowVisitPage.followers.push(followedById);
+                FollowVisitor.followings.push(toFollowId);
+        
+                var followBtn = "unfollow"
+        
+        
+            }
+            else{
+                FollowVisitPage.followers.pull(followedById);
+                FollowVisitor.followings.pull(toFollowId);
+        
+        
+                var followBtn = "follow"
+        
+            }
+        
+            await FollowVisitPage.save();
+            await FollowVisitor.save();
+        
+            // for front end thing
+            const FollowVisitPage1 = await Follow.findById(toFollow.follow);
+            // console.log("22222222222222222222222",FollowVisitPage1);
+        
+            res.status(200).json(
+            {msg:"succeess",followers:FollowVisitPage1.followers.length,following:FollowVisitPage1.followings.length,followBtn:followBtn}
+            );
+    }
+
+}

@@ -1,121 +1,82 @@
-@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@500&display=swap');
-*{
-    margin: 0;
-    padding: 0;
-    font-family: 'poppins',sans-serif;
-}
-
-input:-webkit-autofill,
-input:autofill {
-  -webkit-box-shadow: 0 0 0px 1000px transparent inset;
-}
-section{
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    min-height: 100vh;
-    width: 100%;
+.signInBodyWrap{
     
-    background: url('../../uploads/backG.jpg')no-repeat;
-    background-position: center;
-    background-size: cover;
+    width: 100%;
 }
-.form-box{
-    position: relative;
-    width: 400px;
-    height: 450px;
-    background: transparent;
-    border: 2px solid rgba(255,255,255,0.5);
-    border-radius: 20px;
-    backdrop-filter: blur(15px);
-    display: flex;
-    justify-content: center;
-    align-items: center;
+.signInWrap{
 
-}
-h2{
-    font-size: 2em;
-    color: #fff;
-    text-align: center;
-}
-.inputbox{
-    position: relative;
-    margin: 30px 0;
-    width: 310px;
-    border-bottom: 2px solid #fff;
-}
-.inputbox label{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
     position: absolute;
     top: 50%;
-    left: 5px;
-    transform: translateY(-50%);
-    color: #fff;
-    font-size: 1em;
-    pointer-events: none;
-    transition: .5s;
-}
-input:focus ~ label,
-input:valid ~ label{
-top: -5px;
-}
-.inputbox input {
-    width: 100%;
-    height: 50px;
-    background: transparent;
-    border: none;
-    outline: none;
-    font-size: 1em;
-    padding:0 35px 0 5px;
-    color: #fff;
-}
-.inputbox ion-icon{
-    position: absolute;
-    right: 8px;
-    color: #fff;
-    font-size: 1.2em;
-    top: 20px;
-}
-.forget{
-    margin: -15px 0 15px ;
-    font-size: .9em;
-    color: #fff;
+    left: 50%;
+    transform: translate(-50%, -50%);
     display: flex;
-    justify-content: space-between;  
+    background-color: transparent;
+    border-radius: 1rem;
+    box-shadow: 4px 4px 60px 11px black;
+    width: auto;
+    height: 55%;
+    overflow: hidden;
 }
 
-.forget label input{
-    margin-right: 3px;
-    
+.SignInForm{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    flex: 1;
+    background: hsla(0, 0%, 100%, 0.55);
 }
-.forget label a{
-    color: #fff;
-    text-decoration: none;
-}
-.forget label a:hover{
-    text-decoration: underline;
-}
-button{
+
+.video-container{
     width: 100%;
-    height: 40px;
-    border-radius: 40px;
-    background: #fff;
-    border: none;
-    outline: none;
-    cursor: pointer;
-    font-size: 1em;
-    font-weight: 600;
 }
-.register{
-    font-size: .9em;
-    color: #fff;
-    text-align: center;
-    margin: 25px 0 10px;
+
+.video-container video{
+    width: 100%;
 }
-.register p a{
-    text-decoration: none;
-    color: #fff;
-    font-weight: 600;
+
+#bg-video {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    min-width: 100%;
+    min-height: 100%;
+    width: auto;
+    height: auto;
+    transform: translate(-50%, -50%);
+    z-index: -100;
+    filter: brightness(0.5);
+  }
+
+.SignInForm form{
+    display: flex;
+    flex-direction: column;    
 }
-.register p a:hover{
-    text-decoration: underline;
+
+/* .imageWrap{
+    flex:1;
+} */
+
+.imageWrap img{
+    height: 100%;
 }
+
+.video-container {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+  }
+  
+  #bg-video {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  

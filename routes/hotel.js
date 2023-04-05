@@ -38,6 +38,9 @@ router.post('/addRating/:id',ratingController.addRating);
 
 router.post('/showMenu',menuController.getMenu);
 
+router.get('/follow/:id',hotelController.FollowOrUnfollow);
+
+
 
 
 module.exports = router;

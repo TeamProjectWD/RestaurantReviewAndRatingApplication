@@ -31,5 +31,7 @@ router.get('/profile/:uID/',passport.checkAuthentication,userController.userProf
 
 router.post('/profile/update/:id',userController.editProfile);
 
+router.get('/follow/:id',userController.FollowOrUnfollow);
+
 module.exports = router;
 
