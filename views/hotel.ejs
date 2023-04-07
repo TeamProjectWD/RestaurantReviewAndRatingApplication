@@ -1,87 +1,643 @@
-<span style="margin-left: 1200px;">
-    <a href="/"><button>Home</button></a>
-</span>
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js" integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN" crossorigin="anonymous"></script>
+<link href="https://cdn.jsdelivr.net/npm/bootstrap-switch@3.3.4/dist/css/bootstrap3/bootstrap-switch.min.css" rel="stylesheet">
+ <!-- for hotel -->
+ <link rel="preconnect" href="https://fonts.googleapis.com">
+ <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+ <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100;0,200;0,300;0,400;0,500;1,100;1,200;1,300;1,400&display=swap" rel="stylesheet">
+ <link href="https://fonts.googleapis.com/css2?family=Josefin+Sans:ital,wght@0,100;0,200;0,300;0,400;0,500;1,100;1,200;1,300;1,400;1,500&family=Montserrat:ital,wght@0,100;0,200;0,300;0,400;0,500;1,100;1,200;1,300;1,400&display=swap" rel="stylesheet">
 
-<div >
+
+ <link rel="stylesheet" href="/assets/css/hotel.css">
+<link rel="stylesheet" type="text/css" href="/assets/hotelAssets/stylehotel.css">
+<!-- <div class="navbar">
+    <input  type="checkbox" class="checkbox" id="click" hidden>
+    <div class="sidebar">
+        <label for="click">
+        <div class="menu-icon">
+            <div class="line line1"></div>
+            <div class="line line2"></div>
+            <div class="line line3"></div>
+        </div>
+    </label>
+        <div class="social-media">
                 
-    <div>
-      <h5>Followers</h5>
-      <span id="followers" class="num"><%=followers%></span>
-    </div>  
-    <div >
-      <% if(followbtn == true){
-          var fvalue = "follow";
-      }
-      else{
-          var fvalue = "unfollow";
-      }
-      console.log(userToVisit,userId)
-          if(userToVisit!=userId){ %>                
-              <button onclick="followHotel(value)" id="fbutton" value="<%=HotelProfile.id%>" class="btn btn-primary"><%= fvalue %></button>
-      <% }
-          %>
-      <span class="num"></span>
-    </div>
-    <div >
-    <h5>Following</h5>
-      <span id="following" class="num"><%=following%></span>
-    </div>
-  
-  </div>
+                <ul>
+                    <li><a href="#" class="social-links"> 
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-facebook" viewBox="0 0 16 16">
+                            <path d="M16 8.049c0-4.446-3.582-8.05-8-8.05C3.58 0-.002 3.603-.002 8.05c0 4.017 2.926 7.347 6.75 7.951v-5.625h-2.03V8.05H6.75V6.275c0-2.017 1.195-3.131 3.022-3.131.876 0 1.791.157 1.791.157v1.98h-1.009c-.993 0-1.303.621-1.303 1.258v1.51h2.218l-.354 2.326H9.25V16c3.824-.604 6.75-3.934 6.75-7.951z"/>
+                          </svg>
+                    </a></li>
 
-    <div>
-        
-        <h1>Hotel Name :-  <%= HotelProfile.name %> </h1>
+                    <li><a href="#" class="social-links">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-instagram" viewBox="0 0 16 16">
+                            <path d="M8 0C5.829 0 5.556.01 4.703.048 3.85.088 3.269.222 2.76.42a3.917 3.917 0 0 0-1.417.923A3.927 3.927 0 0 0 .42 2.76C.222 3.268.087 3.85.048 4.7.01 5.555 0 5.827 0 8.001c0 2.172.01 2.444.048 3.297.04.852.174 1.433.372 1.942.205.526.478.972.923 1.417.444.445.89.719 1.416.923.51.198 1.09.333 1.942.372C5.555 15.99 5.827 16 8 16s2.444-.01 3.298-.048c.851-.04 1.434-.174 1.943-.372a3.916 3.916 0 0 0 1.416-.923c.445-.445.718-.891.923-1.417.197-.509.332-1.09.372-1.942C15.99 10.445 16 10.173 16 8s-.01-2.445-.048-3.299c-.04-.851-.175-1.433-.372-1.941a3.926 3.926 0 0 0-.923-1.417A3.911 3.911 0 0 0 13.24.42c-.51-.198-1.092-.333-1.943-.372C10.443.01 10.172 0 7.998 0h.003zm-.717 1.442h.718c2.136 0 2.389.007 3.232.046.78.035 1.204.166 1.486.275.373.145.64.319.92.599.28.28.453.546.598.92.11.281.24.705.275 1.485.039.843.047 1.096.047 3.231s-.008 2.389-.047 3.232c-.035.78-.166 1.203-.275 1.485a2.47 2.47 0 0 1-.599.919c-.28.28-.546.453-.92.598-.28.11-.704.24-1.485.276-.843.038-1.096.047-3.232.047s-2.39-.009-3.233-.047c-.78-.036-1.203-.166-1.485-.276a2.478 2.478 0 0 1-.92-.598 2.48 2.48 0 0 1-.6-.92c-.109-.281-.24-.705-.275-1.485-.038-.843-.046-1.096-.046-3.233 0-2.136.008-2.388.046-3.231.036-.78.166-1.204.276-1.486.145-.373.319-.64.599-.92.28-.28.546-.453.92-.598.282-.11.705-.24 1.485-.276.738-.034 1.024-.044 2.515-.045v.002zm4.988 1.328a.96.96 0 1 0 0 1.92.96.96 0 0 0 0-1.92zm-4.27 1.122a4.109 4.109 0 1 0 0 8.217 4.109 4.109 0 0 0 0-8.217zm0 1.441a2.667 2.667 0 1 1 0 5.334 2.667 2.667 0 0 1 0-5.334z"/>
+                          </svg>
+                    </a></li>
 
-        <%if(typeOfUser == "Hotel"){%>
-            
-            <h2 style="text-align: center;">menu </h2>
+                    <li><a href="#" class="social-links">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-twitter" viewBox="0 0 16 16">
+                            <path d="M5.026 15c6.038 0 9.341-5.003 9.341-9.334 0-.14 0-.282-.006-.422A6.685 6.685 0 0 0 16 3.542a6.658 6.658 0 0 1-1.889.518 3.301 3.301 0 0 0 1.447-1.817 6.533 6.533 0 0 1-2.087.793A3.286 3.286 0 0 0 7.875 6.03a9.325 9.325 0 0 1-6.767-3.429 3.289 3.289 0 0 0 1.018 4.382A3.323 3.323 0 0 1 .64 6.575v.045a3.288 3.288 0 0 0 2.632 3.218 3.203 3.203 0 0 1-.865.115 3.23 3.23 0 0 1-.614-.057 3.283 3.283 0 0 0 3.067 2.277A6.588 6.588 0 0 1 .78 13.58a6.32 6.32 0 0 1-.78-.045A9.344 9.344 0 0 0 5.026 15z"/>
+                          </svg>    
+                    </a></li>
 
-            <br>
+                    <li><a href="#" class="social-links">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-linkedin" viewBox="0 0 16 16">
+                            <path d="M0 1.146C0 .513.526 0 1.175 0h13.65C15.474 0 16 .513 16 1.146v13.708c0 .633-.526 1.146-1.175 1.146H1.175C.526 16 0 15.487 0 14.854V1.146zm4.943 12.248V6.169H2.542v7.225h2.401zm-1.2-8.212c.837 0 1.358-.554 1.358-1.248-.015-.709-.52-1.248-1.342-1.248-.822 0-1.359.54-1.359 1.248 0 .694.521 1.248 1.327 1.248h.016zm4.908 8.212V9.359c0-.216.016-.432.08-.586.173-.431.568-.878 1.232-.878.869 0 1.216.662 1.216 1.634v3.865h2.401V9.25c0-2.22-1.184-3.252-2.764-3.252-1.274 0-1.845.7-2.165 1.193v.025h-.016a5.54 5.54 0 0 1 .016-.025V6.169h-2.4c.03.678 0 7.225 0 7.225h2.4z"/>
+                          </svg>
+                    </a></li>
+                </ul>
 
-            <form action="/hotel/addMenu/<%=HotelProfile.id%>" method="POST" enctype="multipart/form-data">
-                <input type="file" name="picturePath" required>
-                <input type="text" name="name" id="" placeholder="Enter name of Dish">
-                <input type="text" name="content" placeholder="Decribe about the item">
-                <input type="submit" value="Add menu">
-            </form>
-
-
-        <%}%>
-
-        <div id="menuArray" style="border: 2px solid black; display: flex; justify-content: space-between; padding: 2rem;">
-            <% for(item of HotelProfile.menuArray){%>
-
-                <%-include('menu')%>
-                 
-             <% } %>   
         </div>
 
-        <h2>reviews</h2>
-
-        <ul>
-
-            <!-- <%console.log(HotelProfile.reviewPosts)%> -->
-
-            <%for (post of HotelProfile.reviewPosts) { %>
-
-                <%-include('posts')%>
-    
-            <%}%>
-
-        </ul>
-
-        
-         
-    
-
-         
+        <div class="year"> <p>2023</p></div>
 
     </div>
 
-     
+    <div class="navigation">
+
+        <div class="nav-header">
+            <h1 class="heading-name"> <%= HotelProfile.name %></h1>
+
+            <form class="form-search">
+                <input type="text" name="new" placeholder="search.." class="navigation-input">
+                <button class="nav-button">
+                    <i class="fas fa-search"></i>
+                </button>
+            </form>
+        </div>
+        
+        <ul class="navigation-list">
+            <li class="navigation-item"><a href="/" class="navigation-link">home</a></li>
+            <li class="navigation-item"><a href="#" class="navigation-link">about us!</a></li>
+            <li class="navigation-item"><a href="#" class="navigation-link">orders</a></li>
+            <li class="navigation-item"><a href="#" class="navigation-link">delivery</a></li>
+            <li class="navigation-item"><a href="#" class="navigation-link">contact</a></li>
+        </ul>
+
+
+        <div class="copyright">
+            <p>&copy; 2023.  <%= HotelProfile.name %></p>
+        </div>
+    </div>
+
+
+    
+</div>	1 -->
+<!-- image for back in first tile -->
+<% if (HotelProfile.coverPic) {
+    var imageForBack1 = "/uploads/hotelProfile/imagesForBack/" + HotelProfile.coverPic;
+} else {
+    var imageForBack1 = "/uploads/hotelProfile/imagesForBack/imageForBack.jpg";
+}
+<!-- console.log(imageForBack1) -->
+ %>
+ 
+<div class="header1" style="background: linear-gradient(to top, rgba(0, 0, 0, 0.6), rgba(0, 0, 0, .3)), url('<%= imageForBack1 %>') center no-repeat;">
+    <!-- <div class="brand">
+        <% if(HotelProfile.avatar){ %>
+            <div >
+                <img  width="40px" src="/uploads/hotelProfile/<%=HotelProfile.avatar%>" alt="">        
+            </div>
+        <%} 
+            else{ %>
+
+                <div id="imgbrand">
+                    <i class="fa-solid fa-utensils"></i>
+                </div>
+            <%} %>
+        <h3 class="heading">  <%= HotelProfile.name %> </h3>
+    </div> -->
+
+    <!-- form for the cover photo -->
+
+    <div id="popup-container3">
+        <div id="popup-form3">
+            <form action="/hotel/cover"  method="post" enctype="multipart/form-data">
+                <div class="p-3 py-5 form-group">
+                    <div class="d-flex justify-content-between align-items-center experience"> <span> <B> File </B></span> <span class="border px-3 p-1 add-experience"></div><br>
+                    <div class="col-md-12"><label class="labels">Change cover photo</label><input type="file" name="cover" class="form-control" placeholder="cover" value="" required></div> <br>
+                </div>
+                <button type="submit" class="btn btn-light">Submit</button>
+            </form>
+            <form action="/hotel/cover/remove" method="get">
+                <button type="submit" class="btn btn-danger" style="background-color: #dc3545;">remove</button>
+            </form>
+            <button id="close-popup3">Close</button>
+        </div>
+    </div>
+
+
+    <% if(typeOfUser == 'Hotel' && userToVisit == userId){ %>
+    <div id="settings">
+        <i id="open-popup3" class="fa fa-cog" style="color: aliceblue; cursor: pointer;"></i>
+    </div>
+    <%} %>
+    <div class="banner">
+        <h1 class="banner-heading"><%= HotelProfile.name %></h1>
+        <p class="banner-paragraph">Think Delicious , Eat delicious</p>
+
+        <div class="container">
+             <div class="row align-items-start" style="color: aliceblue;">
+
+                    <div class="col text-left" >
+                    <h5>Followers</h5>
+                    <span id="followers" class="num"><%=followers%></span>
+                    </div>  
+                    <div  class="col text-center">
+                    <% if(followbtn == true){
+                        var fvalue = "follow";
+                    }
+                    else{
+                        var fvalue = "unfollow";
+                    }
+                    console.log(userToVisit,userId)
+                        if(userToVisit!=userId){ %>                
+                            <button class="banner-button" onclick="followHotel(value)" id="fbutton" value="<%=HotelProfile.id%>" class="btn btn-primary"><%= fvalue %></button>
+                    <% }
+                        else{ %>
+                            <button id="open-popup">Edit</button>
+                            <!-- <button  id="fbutton" value="<%=HotelProfile.id%>" >Edit</button> -->
+        
+        
+                        <% }
+                        %>
+                    <span class="num"></span>
+                    </div>
+                    <div class="col text-right" >
+                    <h5>Following</h5>
+                    <span id="following" class="num"><%=following%></span>
+                    </div>
+                
+             </div>   
+             <div>
+                <img src="" alt="">
+             </div>
+        </div>
+
+
+    </div>
+</div>
+
+<!-- popup form -->
+<section >
+    <div style="z-index: 999;" id="popup-container">
+        <div id="popup-form">
+            <a  id="close-popup">&times;</a>
+            <div  class="container rounded bg-white mt-5 mb-5 " >
+    
+                <form action="/hotel/profile/update/<%=HotelProfile.id%>" method="POST"  autocomplete="off" enctype="multipart/form-data" >
+                <div class="row">
+                        <div class="col-md-3 border-right">
+                            
+                            <div class="d-flex flex-column align-items-center text-center p-3 py-5"><img class="rounded-circle mt-5" width="150px" src="https://st3.depositphotos.com/15648834/17930/v/600/depositphotos_179308454-stock-illustration-unknown-person-silhouette-glasses-profile.jpg"><span class="font-weight-bold">hh</span><span class="text-black-50">ho</span><span> </span></div>
+                        </div>
+                        <div class="col-md-5 border-right">
+                            <div class="p-3 py-5">
+                                <div class="d-flex justify-content-between align-items-center mb-3">
+                                    <h4 class="text-right">Page Settings</h4>
+                                </div>
+                                <div class="row mt-2">
+                                    <div class="col-md-6"><label class="labels">Name</label><input type="text" name="name" class="form-control" placeholder="first name" value=""></div>
+                                
+                                </div>
+                                <div class="row mt-3">
+                                    <div class="col-md-12"><label class="labels">Email ID</label><input type="text" name="email" class="form-control" placeholder="enter email id" value=""></div>
+                                    <div class="col-md-12"><label class="labels">Caption</label><input type="text" class="form-control" placeholder="enter caption" value=""></div>
+                                    </div>
+                                <div class="mt-5 text-center"><span> <button class="btn btn-primary profile-button" type="submit">Save Profile</button> </span> </div>
+            
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="p-3 py-5">
+                                <div class="d-flex justify-content-between align-items-center experience"> <span> <B> Add or Change Logo </B></span> <span class="border px-3 p-1 add-experience"></div><br>
+                                <div class="col-md-12"><label class="labels"></label><input type="file" name="avatar" class="form-control" placeholder="experience" value=""></div> <br>
+                            </div>
+                        </div>
+               
+                    </div>
+                </form>
+            </div>
+          <!-- <button id="close-popup">Close</button> -->
+        </div>
+    </div>
+</section>
+
+<section class="about-us">
+    <div class="about-us-content">
+        <h1 class="about-us-heading">About us!</h1>
+        <div class="underline">
+            <div class="small-underline"></div>
+            <div class="large-underline"></div>
+        </div>
+        <h3 class="sub-heading"> <%= HotelProfile.name %></h3>
+        <p class="about-us-paragraph">
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec consectetur nibh ut tellus posuere luctus. Nunc vitae luctus risus. Donec viverra aliquam viverra. Morbi gravida tellus non ex accumsan, lobortis molestie turpis mollis. </p>
+            <% if(typeOfUser == 'Hotel' && userToVisit == userId){ %>
+                <button id="open-popup1" class="about-us-button">
+                    Edit Podium
+                    <i class="fas fa-angle-double-right btn-arrow"></i>
+                </button>
+
+            <%} %>
+    </div>
+
+    <div class="about-us-images">
+    
+        
+        <%  
+            var array1  = [];
+            for(i=0;i<HotelProfile.collage.length;i++){
+                if(HotelProfile.collage[i] == ""){
+                     var temp = "https://cdn.pixabay.com/photo/2016/11/18/22/21/restaurant-1837150_960_720.jpg";
+                     array1.push[temp];
+                     continue; 
+                }
+
+                array1.push[HotelProfile.collage[i]];
+            }
+        %>
+
+        <%  var image1 =HotelProfile.collage[0] ? "/uploads/hotelProfile/collage/"+ HotelProfile.collage[0] : "https://cdn.pixabay.com/photo/2017/08/03/21/48/drinks-2578446_960_720.jpg" 
+        %>
+        <img src="<%= image1 %>" alt="" class="image image1">
+        
+        <%  var image2 =HotelProfile.collage[1] ? "/uploads/hotelProfile/collage/"+ HotelProfile.collage[1] : "https://cdn.pixabay.com/photo/2017/08/03/21/48/drinks-2578446_960_720.jpg" 
+        %>
+        <img src="<%= image2 %>" alt="" class="image image2">
+
+        <%  var image3 =HotelProfile.collage[2] ? "/uploads/hotelProfile/collage/"+ HotelProfile.collage[2] : "https://cdn.pixabay.com/photo/2017/08/03/21/48/drinks-2578446_960_720.jpg" 
+        %>
+        <img src="<%= image3 %>" alt="" class="image image3">
+
+        <%  var image4 =HotelProfile.collage[3] ? "/uploads/hotelProfile/collage/"+ HotelProfile.collage[3] : "https://cdn.pixabay.com/photo/2017/08/03/21/48/drinks-2578446_960_720.jpg" 
+        %>
+        <img src="<%= image4 %>" alt="" class="image image4">
+    
+    </div>	
+
+    <!-- form for collage pics -->
+        <!-- <button id="open-popup1">Open Popup Form</button> -->
+
+        <div id="popup-container1">
+            <div id="popup-form1">
+                <form action="/hotel/collage"  method="post" enctype="multipart/form-data">
+                    <!-- <label for="name">Name:</label>
+                    <input type="text" id="name" name="name" required>
+
+                    <label for="email">Email:</label>
+                    <input type="email" id="email" name="email" required>
+
+                    <label for="message">Message:</label>
+                    <textarea id="message" name="message" required></textarea> -->
+
+
+                    <div class="form-group" style="margin-bottom: 30px;">
+                        <label for="typeSelect">Select a photo to update</label>
+                        <select class="form-control" id="typeSelect" name="Photo">
+                        <option value="0">Photo 1</option>
+                        <option value="1">Photo 2</option>
+                        <option value="2">Photo 3</option>
+                        <option value="3">Photo 4</option>
+                        </select>
+                    </div>
+                    <div class="p-3 py-5">
+                        <div class="d-flex justify-content-between align-items-center experience"> <span> <B> File </B></span> <span class="border px-3 p-1 add-experience"></div><br>
+                        <div class="col-md-12"><label class="labels"></label><input type="file" name="collage" class="form-control" placeholder="collage" value="" required></div> <br>
+                    </div>
+                    <button type="submit" class="btn btn-light">Submit</button>
+
+                    <!-- <button type="submit">Submit</button> -->
+                </form>
+
+
+                <button id="close-popup1">Close</button>
+            </div>
+        </div>
+
+
+
+</section>
+
+
+<!-- varities -->
+<!-- for menu -->
+<section class="var">
+    <div class="common-header">
+        <h1 class="common-heading">Varieties In  <%= HotelProfile.name %></h1>
+        <div class="underline">
+            <div class="small-underline"></div>
+            <div class="large-underline"></div>
+        </div>
+    </div>
+    <% if(typeOfUser == "Hotel" && userToVisit==userId){%>
+        <div id="open-popup2" class="var-btn-wrapper">
+            <button class="var-btn">Add Menu</button>
+        </div>
+    <% } %>
+    <div class="var-wrapper">
+                <% for(item of HotelProfile.menuArray){%>
+                    <%-include('menu')%>
+                <% } %> 
+
+                <!-- <div class="var-card">
+                    <img src="https://media.istockphoto.com/photos/chicken-hariyali-kakab-or-malai-malai-kebab-served-with-skewers-and-picture-id1093396546?k=20&m=1093396546&s=612x612&w=0&h=_04gWG6SgceamZguEZ-2T_zXCzUiSDBi0Ic0HMcerwc=" alt="" class="var-img">
+                    <div class="var-content">
+                        <h4 class="var-heading">Starters</h4>
+                        <p class="var-paragraph">All types of starters (veg & non-veg)</p>
+                        <p class="var-price"> starting at <span>Rs 100</span></p>
+                        <button class="var-button">
+                            Order Now
+                            <i class="fas fa-angle-double-right btn-arrow"></i>
+
+                        </button>
+                    </div>
+
+                </div>
+
+                <div class="var-card">
+                    <img src="https://media.istockphoto.com/photos/hands-of-cook-photographing-asian-vegan-dish-picture-id1223803942?k=20&m=1223803942&s=612x612&w=0&h=dGljwKXtVMZudW4fpkDCyo2IJBYzZbbvenhTpF3yAPg=" alt="" height="333px" class="var-img imageteda">
+                    <div class="var-content">
+                        <h4 class="var-heading">Cuisines</h4>
+                        <p class="var-paragraph">Indian , chinese , American ,Russian</p>
+                        <p class="var-price"> starting at <span>Rs 149</span></p>
+                        <button class="var-button">
+                            Order Now
+                            <i class="fas fa-angle-double-right btn-arrow"></i>
+
+                        </button>
+                    </div>
+
+                </div>
+
+                <div class="var-card">
+                    <img src="https://media.istockphoto.com/photos/rajwari-or-rajwadi-sweet-kesar-badam-pista-kulfi-or-ice-cream-candy-picture-id657073780?k=20&m=657073780&s=612x612&w=0&h=NsB0dGlvR4742Y0FS41qKL4i0u57clyAzrO7Ua26E_Q=" alt="" class="var-img">
+                    <div class="var-content">
+                        <h4 class="var-heading">Deserts</h4>
+                        <p class="var-paragraph">Ice-creams , Pasteries , Cakes , Shakes</p>
+                        <p class="var-price"> starting at <span>Rs 30</span></p>
+                        <button class="var-button">
+                            Order Now
+                            <i class="fas fa-angle-double-right btn-arrow"></i>
+
+                        </button>
+                    </div>
+
+                </div> -->
+    </div>
+
+    <div class="var-btn-wrapper">
+        <button class="var-btn">check all varieties</button>
+    </div>
+
+    <!-- form for adding the menu -->
+    <div id="popup-container2">
+        <div id="popup-form2">
+            <form action="/hotel/addMenu/<%=HotelProfile.id%>"  method="post" enctype="multipart/form-data">
+                <div class="form-group">
+                    <label for="name">Menu Name:</label>
+                    <input type="text" id="name" name="name" placeholder="enter name of the dish" required>
+                </div>
+                <div class="form-group">
+                    <label for="email">Detail:</label>
+                    <input type="text" id="" name="content" placeholder="enter description" required>
+                </div>
+                <div class="p-3 py-5 form-group">
+                    <div class="d-flex justify-content-between align-items-center experience"> <span> <B> File </B></span> <span class="border px-3 p-1 add-experience"></div><br>
+                    <div class="col-md-12"><label class="labels"></label><input type="file" name="picturePath" class="form-control" placeholder="Menu" value="" required></div> <br>
+                </div>
+                <button type="submit" class="btn btn-light">Submit</button>
+            </form>
+            <button id="close-popup2">Close</button>
+        </div>
+    </div>
+</section>
+
+<!-- customers -->
+<section class="customers">
+    <div class="common-header">
+        <h1 class="common-heading">Customer's Talk</h1>
+        <div class="underline">
+            <div class="small-underline"></div>
+            <div class="large-underline"></div>
+        </div>
+    </div>
+
+    <p class="customers-paragraph">The below feedback is from our beloved customers. We appreciate the time and efforts they invest in loving us ! </p>
+
+    <div class="customer-card-wrapper" style="display: flex;"> 
+
+        <%
+            var i=0;
+            for(item of HotelProfile.reviewPosts){ %>
+                if(i>3){
+                    break;
+                }
+
+                <div class="customer-card">
+                    <div class="customer-image-wrapper">
+                        <%
+                            if(item.user.avatar){%>
+                                <img height="136px" src="/uploads/userProfile/pics/<%=item.user.avatar%>" alt="" class="customer-image">
+                                
+                            <%}
+                            else{%>
+                                <img height="136px" src="/uploads/userProfile/pics/noprofile.png" alt="" class="customer-image">
+                           <% } %>
+                    </div>
+                    <div class="customer-info">
+                        <h3 class="name"><%= item.user.name %></h3>
+                        <p class="customer-paragraph1">Happy Customer,</p>
+                        <p class="customer-paragraph2"><%= item.content%></p>
+                    </div>
+                </div>
+
+                <%}%>
+
+
+        <!-- <div class="customer-card">
+            <div class="customer-image-wrapper">
+                <img src="https://media.istockphoto.com/photos/happy-mature-man-using-smartphone-while-listening-to-music-picture-id1319763871?b=1&k=20&m=1319763871&s=170667a&w=0&h=c6Z793I7fi4KPqgm4t_xcLY3O75tKLDUXEGmzRAPJpw=" alt="" class="customer-image">
+            </div>
+            <div class="customer-info">
+                <h3 class="name">will smith</h3>
+                <p class="customer-paragraph1">Happy Customer,</p>
+                <p class="customer-paragraph2">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Dolor rerum fugiat ad distinctio at tenetur, soluta corrupti vero reprehenderit odit earum, quis accusamus nam inventore, dolorum in aspernatur error eveniet?</p>
+            </div>
+        </div> -->
+    </div>
+</section>
+<!-- footer -->
+<div class="footer">
+    <div class="main">
+        <div class="footer-list-wrapper">
+            <h3 class="footer-heading sarr"> <%= HotelProfile.name %></h3>
+            <ul class="footer-list">
+                <li class="footer-list-item">
+                    <a href="#" class="footer-list-link">
+                        support_dinehouse@gmail.com
+                    </a>
+                </li>
+                <li class="footer-list-item">
+                    <a href="#" class="footer-list-link">
+                        Near Kims , Srikakulam 532410
+                    </a>
+                </li>
+                <li class="footer-list-item">
+                    <a href="#" class="footer-list-link">
+                        Tel : 9849946366
+                    </a>
+                </li>
+            </ul>
+        </div>
+
+        <!-- <div class="footer-list-wrapper">
+            <h3 class="footer-heading">Explore</h3>
+            <ul class="footer-list">
+                <li class="footer-list-item">
+                    <a href="#" class="footer-list-link">
+                        Home
+                    </a>
+                </li>
+                <li class="footer-list-item">
+                    <a href="#" class="footer-list-link">
+                        About us
+                    </a>
+                </li>
+                <li class="footer-list-item">
+                    <a href="#" class="footer-list-link">
+                        Orders
+                    </a>
+                </li>
+                <li class="footer-list-item">
+                    <a href="#" class="footer-list-link">
+                        Delivery
+                    </a>
+                </li>
+
+                <li class="footer-list-item">
+                    <a href="#" class="footer-list-link">
+                        Contact
+                    </a>
+                </li>
+
+                <li class="footer-list-item">
+                    <a href="#" class="footer-list-link">
+                        Tel : 9849946366
+                    </a>
+                </li>
+
+            </ul>
+        </div> -->
+
+        <!-- <div class="contact">
+            <h3 class="footer-heading">Contact</h3>
+            <p>Sign up for news</p>
+            <form class="footer-form">
+                <input type="text" class="footer-input" placeholder="your email...">
+                <button class="footer-btn">Sign Up</button>
+            </form>
+        </div> -->
+        
+        <!-- <div class="gallery">
+            <h3 class="footer-heading">Gallery</h3>
+            <div class="gallery-images">
+                <div class="image-wrapper">
+                    <img src="https://media.istockphoto.com/photos/happy-waiter-serving-food-to-group-of-friends-in-a-pub-picture-id1307190527?b=1&k=20&m=1307190527&s=170667a&w=0&h=_GZiHqd9mIhvg_tMT-VwIGlPDeZUY6zUorx5XvQM358=" alt="" class="footer-image">
+                </div>
+                <div class="image-wrapper">
+                    <img src="https://media.istockphoto.com/photos/delicious-meal-picture-id1295387240?b=1&k=20&m=1295387240&s=170667a&w=0&h=KtWYFjSBgpNgVkE3P-WKZ2F6V-VxyUBBtJIP_k8IANM=" alt="" class="footer-image">
+                </div>
+                <div class="image-wrapper">
+                    <img src="https://media.istockphoto.com/photos/interior-of-a-modern-cozy-french-restaurant-picture-id1314951233?b=1&k=20&m=1314951233&s=170667a&w=0&h=XgyJ96HAeBPpC4c6PnvlN8pnIJw7PAkNhwySVvX2JQk=" alt="" class="footer-image">
+                </div>
+                <div class="image-wrapper">
+                    <img src="https://media.istockphoto.com/photos/pan-fried-duck-picture-id1081422898?b=1&k=20&m=1081422898&s=170667a&w=0&h=Ng5a5FU3zhnviVJbw64R4ehDyrRtb2KFvMZ1lOXm0hA=" alt="" class="footer-image">
+                </div>
+                <div class="image-wrapper">
+                    <img src="https://media.istockphoto.com/photos/modern-restaurant-interior-design-picture-id1211547141?b=1&k=20&m=1211547141&s=170667a&w=0&h=nPRsvYNpFhRiKW80dWpt4M-52tCyUyD6gRfs_Be63No=" alt="" class="footer-image">
+                </div>
+                <div class="image-wrapper">
+                    <img src="https://images.unsplash.com/photo-1414235077428-338989a2e8c0?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8Mnx8cmVzdGF1cmFudHxlbnwwfHwwfHw%3D&auto=format&fit=crop&w=500&q=60" alt="" class="footer-image ">
+                </div>
+                <div class="image-wrapper">
+                    <img src="https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MXx8cmVzdGF1cmFudHxlbnwwfHwwfHw%3D&auto=format&fit=crop&w=500&q=60" alt="" class="footer-image">
+                </div>
+
+            </div>
+        </div> -->
+
+    </div>
+        
+
+    <div class="creator-part">
+        <div class="copyright-text">
+            <p>Copyright &copy; 2023 </p>
+        </div>
+        <div class="text-right">
+            <p>Made with love from <span>OSCAR</span></p>
+        </div>
+    </div>
+
+</div>
+
+
+<% if(typeOfUser == "Hotel" && userToVisit==userId){%>
+
+    <script>
+        const openPopupButton = document.getElementById("open-popup");
+        const closePopupButton = document.getElementById("close-popup");
+        const popupContainer = document.getElementById("popup-container");
+    
+        openPopupButton.addEventListener("click", () => {
+        popupContainer.style.display = "flex";
+        });
+    
+        closePopupButton.addEventListener("click", () => {
+        popupContainer.style.display = "none";
+        });
+    
+        // collage script
+        const openPopupButton1 = document.getElementById("open-popup1");
+        const closePopupButton1 = document.getElementById("close-popup1");
+        const popupContainer1 = document.getElementById("popup-container1");
+    
+        openPopupButton1.addEventListener("click", () => {
+        popupContainer1.style.display = "flex";
+        });
+    
+        closePopupButton1.addEventListener("click", () => {
+        popupContainer1.style.display = "none";
+        });
+
+        // for menu form
+        const openPopupButton2 = document.getElementById("open-popup2");
+        const closePopupButton2 = document.getElementById("close-popup2");
+        const popupContainer2 = document.getElementById("popup-container2");
+    
+        openPopupButton2.addEventListener("click", () => {
+        popupContainer2.style.display = "flex";
+        });
+    
+        closePopupButton2.addEventListener("click", () => {
+        popupContainer2.style.display = "none";
+        });
+
+        // for cover photo
+        const openPopupButton3 = document.getElementById("open-popup3");
+        const closePopupButton3 = document.getElementById("close-popup3");
+        const popupContainer3 = document.getElementById("popup-container3");
+    
+        openPopupButton3.addEventListener("click", () => {
+        popupContainer3.style.display = "flex";
+        });
+    
+        closePopupButton3.addEventListener("click", () => {
+        popupContainer3.style.display = "none";
+        });
+    </script>
+<%}%>
+
 
 <script type="text/javascript" src="/assets/js/hotel.js"></script>
-
-
-

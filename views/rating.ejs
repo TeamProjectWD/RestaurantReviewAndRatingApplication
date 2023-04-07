@@ -1,177 +1,181 @@
-<%
+<div>
 
-  function ratingBool(){
 
-    let bool = true;
-
-    let rating = 0;
-
-    let arr = [];
-
-    item.rating.findIndex( (data) => {
-
-      if(data.ratedBy == locals.user.id){
-
-        rating = data.rating;
-
-        bool = false;
-
-        arr.push(rating);
-
-        arr.push(bool);
+  <%
+  
+    function ratingBool(){
+  
+      let bool = true;
+  
+      let rating = 0;
+  
+      let arr = [];
+  
+      item.rating.findIndex( (data) => {
+  
+        if(data.ratedBy == locals.user.id){
+  
+          rating = data.rating;
+  
+          bool = false;
+  
+          arr.push(rating);
+  
+          arr.push(bool);
+        }
+  
+      });
+  
+      if(arr.length == 0){
+  
+          arr.push(rating);
+  
+          arr.push(bool);
+  
       }
-
-    });
-
-    if(arr.length == 0){
-
-        arr.push(rating);
-
-        arr.push(bool);
-
+      return arr;
+  
     }
-    return arr;
-
-  }
-
+  
+     
+    ans = ratingBool();
+  
+     
+  
+  
+  %>
+  
    
-  ans = ratingBool();
-
-   
-
-
-%>
-
- 
-
-
-
-
-<link rel="stylesheet" href="/assets/css/rating.css">
-
-<%if(ans[1]){%>
-  
-  <div id="formWrap-<%=item.id%>">
-
-    <form class="rating" id="rating-<%=item.id%>"  method="POST" action="/hotel/addRating/<%=item.id%>">
-
-            <label>
-              <input type="radio" name="stars" value="1" />
-              <span class="icon">★</span>
-            </label>
-            <label>
-              <input type="radio" name="stars" value="2" />
-              <span class="icon">★</span>
-              <span class="icon">★</span>
-            </label>
-            <label>
-              <input type="radio" name="stars" value="3" />
-              <span class="icon">★</span>
-              <span class="icon">★</span>
-              <span class="icon">★</span>   
-            </label>
-            <label>
-              <input type="radio" name="stars" value="4" />
-              <span class="icon">★</span>
-              <span class="icon">★</span>
-              <span class="icon">★</span>
-              <span class="icon">★</span>
-            </label>
-            <label>
-              <input type="radio" name="stars" value="5" />
-              <span class="icon">★</span>
-              <span class="icon">★</span>
-              <span class="icon">★</span>
-              <span class="icon">★</span>
-              <span class="icon">★</span>
-            </label>
-
-    </form>
-
-
-  <button form="rating-<%=item.id%>" id="button-<%=item.id%>">
-    <i class="fa-solid fa-paper-plane"></i>
-  </button>
-
-</div>
-
-<button id="press-<%=item.id%>" hidden>
-  Rate Again
-</button>
-
-<%}else{%>
-
-  <div id="formWrap-<%=item.id%>"> 
-
-    <form class="rating" id="rating-<%=item.id%>"  method="POST" action="/hotel/addRating/<%=item.id%>" style="display: none;">
-
-            <label>
-              <input type="radio" name="stars" value="1" />
-              <span class="icon">★</span>
-            </label>
-            <label>
-              <input type="radio" name="stars" value="2" />
-              <span class="icon">★</span>
-              <span class="icon">★</span>
-            </label>
-            <label>
-              <input type="radio" name="stars" value="3" />
-              <span class="icon">★</span>
-              <span class="icon">★</span>
-              <span class="icon">★</span>   
-            </label>
-            <label>
-              <input type="radio" name="stars" value="4" />
-              <span class="icon">★</span>
-              <span class="icon">★</span>
-              <span class="icon">★</span>
-              <span class="icon">★</span>
-            </label>
-            <label>
-              <input type="radio" name="stars" value="5" />
-              <span class="icon">★</span>
-              <span class="icon">★</span>
-              <span class="icon">★</span>
-              <span class="icon">★</span>
-              <span class="icon">★</span>
-            </label>
-
-    </form>
-
   
   
-
-
-  <button form="rating-<%=item.id%>" id="button-<%=item.id%>" style="display: none;">
-    <i class="fa-solid fa-paper-plane"></i>
-  </button>
-
-</div>
-
-
-  <div id="givenRating-<%=item.id%>">
-        
-      <%if(ans[0] == 1){%>
-
-        <b>you have rated 1 star for this item</b>
-
-      <%}else{%>
-        
-        <b>you have rated <%=ans[0]%> stars for this item</b>
-
-      <%}%>
-
+  
+  
+  <link rel="stylesheet" href="/assets/css/rating.css">
+  
+  <%if(ans[1]){%>
+    
+    <div id="formWrap-<%=item.id%>">
+  
+      <form class="rating" id="rating-<%=item.id%>"  method="POST" action="/hotel/addRating/<%=item.id%>">
+  
+              <label>
+                <input type="radio" name="stars" value="1" />
+                <span class="icon">★</span>
+              </label>
+              <label>
+                <input type="radio" name="stars" value="2" />
+                <span class="icon">★</span>
+                <span class="icon">★</span>
+              </label>
+              <label>
+                <input type="radio" name="stars" value="3" />
+                <span class="icon">★</span>
+                <span class="icon">★</span>
+                <span class="icon">★</span>   
+              </label>
+              <label>
+                <input type="radio" name="stars" value="4" />
+                <span class="icon">★</span>
+                <span class="icon">★</span>
+                <span class="icon">★</span>
+                <span class="icon">★</span>
+              </label>
+              <label>
+                <input type="radio" name="stars" value="5" />
+                <span class="icon">★</span>
+                <span class="icon">★</span>
+                <span class="icon">★</span>
+                <span class="icon">★</span>
+                <span class="icon">★</span>
+              </label>
+  
+      </form>
+  
+  
+    <button form="rating-<%=item.id%>" id="button-<%=item.id%>">
+      <i class="fa-solid fa-paper-plane"></i>
+    </button>
+  
   </div>
   
-
-
-  <button id="press-<%=item.id%>">
+  <button id="press-<%=item.id%>" hidden>
     Rate Again
   </button>
-
-
-
-<%}%>
+  
+  <%}else{%>
+  
+    <div id="formWrap-<%=item.id%>"> 
+  
+      <form class="rating" id="rating-<%=item.id%>"  method="POST" action="/hotel/addRating/<%=item.id%>" style="display: none;">
+  
+              <label>
+                <input type="radio" name="stars" value="1" />
+                <span class="icon">★</span>
+              </label>
+              <label>
+                <input type="radio" name="stars" value="2" />
+                <span class="icon">★</span>
+                <span class="icon">★</span>
+              </label>
+              <label>
+                <input type="radio" name="stars" value="3" />
+                <span class="icon">★</span>
+                <span class="icon">★</span>
+                <span class="icon">★</span>   
+              </label>
+              <label>
+                <input type="radio" name="stars" value="4" />
+                <span class="icon">★</span>
+                <span class="icon">★</span>
+                <span class="icon">★</span>
+                <span class="icon">★</span>
+              </label>
+              <label>
+                <input type="radio" name="stars" value="5" />
+                <span class="icon">★</span>
+                <span class="icon">★</span>
+                <span class="icon">★</span>
+                <span class="icon">★</span>
+                <span class="icon">★</span>
+              </label>
+  
+      </form>
+  
+    
+    
+  
+  
+    <button form="rating-<%=item.id%>" id="button-<%=item.id%>" style="display: none;">
+      <i class="fa-solid fa-paper-plane"></i>
+    </button>
+  
+  </div>
+  
+  
+    <div id="givenRating-<%=item.id%>">
+          
+        <%if(ans[0] == 1){%>
+  
+          <b>you have rated 1 star for this item</b>
+  
+        <%}else{%>
+          
+          <b>you have rated <%=ans[0]%> stars for this item</b>
+  
+        <%}%>
+  
+    </div>
+    
+  
+  
+    <button id="press-<%=item.id%>">
+      Rate Again
+    </button>
+  
+  
+  
+  <%}%>
+</div>
 
  
 

@@ -40,6 +40,12 @@ router.post('/showMenu',menuController.getMenu);
 
 router.get('/follow/:id',hotelController.FollowOrUnfollow);
 
+router.post('/collage',hotelController.collage);
+
+router.post('/cover',hotelController.coverPic);
+
+router.get('/cover/remove',hotelController.removeCoverPic);
+
 
 
 

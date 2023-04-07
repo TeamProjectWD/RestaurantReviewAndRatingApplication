@@ -1,78 +1,38 @@
-<style>
-    #menuAv{
-        background-color: #a09898;
-        opacity: 70%;
-    }
-</style>
-<% 
-        console.log(typeOfUser)
+<div class="var-card">
+    <img  src="<%= item.picturePath%>" alt="" class="var-img"  >
+<div class="var-content">
+    <h4 class="var-heading"><%= item.name %></h4>
+    <p class="var-paragraph"><%= item.content %></p>
+    <div id="average-<%=item.id%>">
 
-        if( typeOfUser!="Hotel"){
+        <span id="span-<%=item.id%>">
+            <!-- present rating : <%= item.averageRating %>  -->
+            <p class="var-price"> <%= item.averageRating %>  &#9733;</p>
+        </span>
 
-                if(!item.isAvailable ){
-                var id1 = "menuAv";
-            } 
-            else{
-                var id1 = "";
+    </div>  
 
-            }
-        }
-    %>
-<div id="<%=id1%>" style="margin-right: 20px; ">
+    <%if(locals.user.id != HotelProfile._id && typeOfUser!="Hotel") {%>
 
-    <%console.log(typeOfUser)%>
+        <%-include ("rating.ejs")%>
 
-    <%if(typeOfUser == "Hotel"){%>
-
-        <div>
-            <%-include('toggleMenu')%>
-        </div>
-
-    <%}else{%>
-
-        <%if(!item.isAvailable){%>
+    <%}
+        else if(typeOfUser == "Hotel" && userToVisit==userId){ %>
+        <%-include('toggleMenu')%>
             
-            <span>This Item is Currently Unavailable</span>
+       <% } %>
 
-        <%}%>
+    <!-- <button class="var-button">
+        Order Now
+        <i class="fas fa-angle-double-right btn-arrow"></i>
 
-    <%}%>
-
-     
-
-  
-    <h3>menu Name : <%= item.name%></h3>
-<!-- 
-    <span>
-        <%= item.content%>
-    </span> -->
-    
-    
-    <div>
-    <img src="<%=item.picturePath%>" alt="menuPic" class="img-fluid" style="width: 300; height: 300;">
-    </div>
-
-    <div id="">
-        <h4><%=item.content%></h4>
-
-        <%if(locals.user.id != HotelProfile._id && typeOfUser!="Hotel") {%>
-
-            <%-include ("rating.ejs")%>
-
-        <%}%>
-        
-        <div id="average-<%=item.id%>">
-
-            <span id="span-<%=item.id%>">
-                present rating : <%= item.averageRating %> 
-            </span>
-    
-        </div>  
-
-    </div>
+    </button> -->
 </div>
+
+</div>
+
 <script>
 
     new ratingClass("<%=item.id%>","<%=locals.user._id%>")
 
-</script>
+</script>    

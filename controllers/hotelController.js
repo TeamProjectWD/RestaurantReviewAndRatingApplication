@@ -5,6 +5,7 @@ const Menu = require('../model/menuModel');
 const User = require('../model/User');
 const Post = require('../model/postModel');
 const Follow = require('../model/follow');
+const { log } = require('console');
 
 module.exports.signUp = function(req,res){
     if(req.isAuthenticated()){
@@ -51,7 +52,14 @@ module.exports.create = async function(req,res){
         })
 
         newUser.follow = follow;
-        newUser.save();
+        
+        newUser.collage.push("")
+        newUser.collage.push("")
+        newUser.collage.push("")
+        newUser.collage.push("")
+
+        
+        await newUser.save();
         
         return res.redirect('/hotel/signIn');
     }else{
@@ -85,11 +93,12 @@ module.exports.destroySession = async function(req,res,next){
 
 module.exports.userProfile = async function(req,res){  
     
-    const userToVisit = req.user.id;
+    
 
+    const userToVisit = req.params.uID;
     console.log(userToVisit);
  
-    let visitor = await User.findById(userToVisit);
+    let visitor = await User.findById(req.user.id);
 
     let model;
  
@@ -165,6 +174,7 @@ module.exports.userProfile = async function(req,res){
             break;
         }
     }
+    // console.log(profileUSerData.menuArray);
 
     return res.render('hotel',{
         
@@ -175,7 +185,8 @@ module.exports.userProfile = async function(req,res){
         typeOfUser:model,
         followbtn:followbtn,
         followers:follow.followers.length,
-        following:follow.followings.length
+        following:follow.followings.length,
+        // layout:false,
     
     });
 
@@ -184,16 +195,17 @@ module.exports.userProfile = async function(req,res){
 
 module.exports.editProfile =async(req,res)=>{
 
-    User.uploadPicture(req,res,async function(err){
+    Hotel.uploadPicture(req,res,async function(err){
 
         if(err){
             console.log(err);
         }
-        const user = await User.findById(req.user.id);
+        const user = await Hotel.findById(req.user.id);
         const nonEmptyValues = JSON.parse(JSON.stringify(req.body));
         const nonEmptyObject = {};
 
         console.log("values",nonEmptyValues,req.file);
+        // console.log("-----------------------------------",req.user.id,req.params.id);
         if(req.user.id == req.params.id){
 
             for(let userData in nonEmptyValues){
@@ -204,14 +216,14 @@ module.exports.editProfile =async(req,res)=>{
             if(req.file){
                 // removing previous file from folder
                 if(user.avatar){
-                    const oldProfilePath = path.join(__dirname,'../uploads/hotelProfile/pics',user.avatar);
+                    const oldProfilePath = path.join(__dirname,'../uploads/hotelProfile',user.avatar);
                     fs.unlinkSync(oldProfilePath);
                 }
                 nonEmptyObject.avatar = req.file.filename;
                 console.log(user);
             }
             
-            await User.findByIdAndUpdate(req.user.id,{$set:nonEmptyObject});
+            await Hotel.findByIdAndUpdate(req.user.id,{$set:nonEmptyObject});
 
         }
         
@@ -228,7 +240,7 @@ module.exports.FollowOrUnfollow = async(req,res)=>{
     const toFollowId = req.params.id;
     if(followedById!=toFollowId){
         
-            // checking user logged in is user or hotel
+     
             var typeOfUser="Hotel";
             if (req.user && req.user.constructor.modelName === 'User') {
                 typeOfUser = "User";
@@ -246,16 +258,12 @@ module.exports.FollowOrUnfollow = async(req,res)=>{
         
             const FollowVisitor = await Follow.findById(followedBy.follow);
             const FollowVisitPage = await Follow.findById(toFollow.follow);
-            // console.log("222222222222222222222",FollowVisitPage);
-        
-            // logic 
-        
+             
             if(!FollowVisitPage.followers.includes(followedById)){
                 FollowVisitPage.followers.push(followedById);
                 FollowVisitor.followings.push(toFollowId);
         
                 var followBtn = "unfollow"
-        
         
             }
             else{
@@ -278,5 +286,75 @@ module.exports.FollowOrUnfollow = async(req,res)=>{
             {msg:"succeess",followers:FollowVisitPage1.followers.length,following:FollowVisitPage1.followings.length,followBtn:followBtn}
             );
     }
+
+}
+
+module.exports.collage = async(req,res)=>{
+
+    Hotel.uploadCollagePicture(req,res,async function(err){
+        
+        if(err){
+            console.log(err);
+        }
+        
+         
+        const user = await Hotel.findById(req.user.id);
+        
+
+        // reference for thephoto
+        const ref = req.body.Photo;
+
+        // removing old photo
+        if(user.collage[ref]!=""){
+            const oldProfilePath = path.join(__dirname,'../uploads/hotelProfile/collage',user.collage[ref]);
+            fs.unlinkSync(oldProfilePath);
+        }
+
+        console.log(req.file.filename);
+         user.collage[ref] = req.file.filename;
+
+         await user.save();
+
+         
+        
+    });
+
+    return res.redirect('back');
+
+}
+
+
+module.exports.coverPic =async(req,res)=>{
+  Hotel.coverPic(req,res,async function(err){
+    if(err){
+        console.log(err);
+    }
+
+    const user = await Hotel.findById(req.user.id);
+
+    if(req.file){
+        if(user.coverPic){
+            const oldProfilePath = path.join(__dirname,'../uploads/hotelProfile/imagesForBack',user.coverPic);
+            fs.unlinkSync(oldProfilePath);
+        }
+    }
+
+    user.coverPic = req.file.filename;
+    await user.save();
+    return res.redirect('back');
+  })
+}
+
+module.exports.removeCoverPic = async(req,res)=>{
+    const user =await Hotel.findById(req.user.id);
+    console.log(user);
+    if(user.coverPic){
+        const oldProfilePath = path.join(__dirname,'../uploads/hotelProfile/imagesForBack',user.coverPic);
+        fs.unlinkSync(oldProfilePath);
+    }
+     user.coverPic = "";
+     await user.save();
+    return res.redirect('back');
+     
 
 }
