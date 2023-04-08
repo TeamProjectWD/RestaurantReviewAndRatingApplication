@@ -22,6 +22,9 @@ const userSchemma = new mongoose.Schema({
         type:String,
         required:true
     },
+    googleId:{
+        type: String
+    },
     avatar:{
         type:String,
     },

@@ -13,6 +13,8 @@ const HomePageController = require('../controllers/homePage');
 
 router.get('/',passport.checkAuthentication,HomePageController.HomePage);
 
+router.get('/auth/google' , passport.authenticate('google',{scope : ['email' , 'profile']}));
+
 router.use('/posts',require('./posts'));
 
 router.use('/user',require('./user'));

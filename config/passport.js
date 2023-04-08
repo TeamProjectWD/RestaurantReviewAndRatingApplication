@@ -2,6 +2,7 @@ const passport = require('passport');
 const LocalStrategy = require('passport-local').Strategy;
 const User = require('../model/User')
 const Hotel = require('../model/hotelModel')
+const Follow = require('../model/follow');
 
 //intilizing passport local strategy
 passport.use('local-user',new LocalStrategy({
@@ -43,6 +44,48 @@ passport.use('local-hotel',new LocalStrategy({
             }
             return done(null,hotel);
         })
+    }
+));
+
+
+// google oauth20
+
+var GoogleStrategy = require('passport-google-oauth20').Strategy;
+
+const GOOGLE_CLIENT_ID ='322329409826-t2uajqpo39tkgu4vus3bp2f4d1vmm4jj.apps.googleusercontent.com';
+const GOOGLE_CLIENT_SECRET ='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';
+passport.use(new GoogleStrategy({
+    clientID: GOOGLE_CLIENT_ID,
+    clientSecret: GOOGLE_CLIENT_SECRET,
+    callbackURL: "/user/google/callback",
+    passReqToCallback:true
+  },
+  function(request,accessToken, refreshToken, profile, cb) {
+    console.log(profile);
+    User.findOne({ googleId: profile.id }, async function (err, user) {
+        if (err) { return cb(err); }
+        if (!user) {
+          const newUser = await User.create({
+            name: profile.displayName,
+            email: profile.emails[0].value,
+            googleId: profile.id,
+            password:profile.id
+          });
+            let follow = await Follow.create({
+            user:newUser.id,
+            UserOrHotel:'User'
+            })
+
+            newUser.follow = follow;
+            newUser.save(function (err) {
+            if (err) { return cb(err); }
+            return cb(null, newUser);
+          });
+        } else {
+            console.log(user);
+          return cb(null, user);
+        }
+      });
     }
 ));
 

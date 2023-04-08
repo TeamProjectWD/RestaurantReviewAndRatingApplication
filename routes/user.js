@@ -23,6 +23,12 @@ router.post('/create-session',passport.authenticate(
 
 ),userController.createSession);
 
+router.get('/google/callback',
+    passport.authenticate('google',{
+        successRedirect:'/',
+        failureRedirect:'/user/signIn'
+    })
+)
 
 router.get('/signOut',userController.destroySession);
 
