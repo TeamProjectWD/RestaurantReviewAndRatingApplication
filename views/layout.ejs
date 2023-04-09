@@ -25,7 +25,18 @@
     </head>
 
     <body> 
-    
+        <div id="refresh-line"></div>
+        <script>
+            window.onload = function() {
+                console.log('animation started');
+                var refreshLine = document.getElementById('refresh-line');
+                refreshLine.style.transform = 'scaleX(1)';
+                window.addEventListener('beforeunload', function() {
+                    refreshLine.style.transform = 'scaleX(0)';
+                });
+            };
+        
+        </script>
         <%- include("header.ejs") -%>
 
             <div id="body-wrap">
@@ -36,6 +47,7 @@
 
 
         <%- include("footer.ejs") -%>
+
 
 
     </body>
