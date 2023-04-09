@@ -13,7 +13,9 @@ const HomePageController = require('../controllers/homePage');
 
 router.get('/',passport.checkAuthentication,HomePageController.HomePage);
 
-router.get('/auth/google' , passport.authenticate('google',{scope : ['email' , 'profile']}));
+router.get('/auth/user/google' , passport.authenticate('userGoogle',{scope : ['email' , 'profile']}));
+
+router.get('/auth/hotel/google' , passport.authenticate('hotelGoogle',{scope : ['email' , 'profile']}));
 
 router.use('/posts',require('./posts'));
 

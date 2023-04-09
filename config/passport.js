@@ -54,7 +54,7 @@ var GoogleStrategy = require('passport-google-oauth20').Strategy;
 
 const GOOGLE_CLIENT_ID ='322329409826-t2uajqpo39tkgu4vus3bp2f4d1vmm4jj.apps.googleusercontent.com';
 const GOOGLE_CLIENT_SECRET ='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';
-passport.use(new GoogleStrategy({
+passport.use('userGoogle',new GoogleStrategy({
     clientID: GOOGLE_CLIENT_ID,
     clientSecret: GOOGLE_CLIENT_SECRET,
     callbackURL: "/user/google/callback",
@@ -82,7 +82,52 @@ passport.use(new GoogleStrategy({
             return cb(null, newUser);
           });
         } else {
-            console.log(user);
+            // console.log(user);
+          return cb(null, user);
+        }
+      });
+    }
+));
+
+var GoogleStrategy = require('passport-google-oauth20').Strategy;
+
+const GOOGLE_CLIENT_ID_Hotel ='322329409826-vbk1b2v67pvpgi3m9tep6s9li98en729.apps.googleusercontent.com';
+const GOOGLE_CLIENT_SECRET_Hotel ='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';
+passport.use('hotelGoogle',new GoogleStrategy({
+    clientID: GOOGLE_CLIENT_ID_Hotel,
+    clientSecret: GOOGLE_CLIENT_SECRET_Hotel,
+    callbackURL: "/hotel/google/callback",
+    passReqToCallback:true
+  },
+  function(request,accessToken, refreshToken, profile, cb) {
+    console.log(profile);
+    Hotel.findOne({ googleId: profile.id }, async function (err, user) {
+        if (err) { return cb(err); }
+        if (!user) {
+          const newUser = await Hotel.create({
+            name: "Change Name",
+            email: profile.emails[0].value,
+            googleId: profile.id,
+            password:profile.id
+          });
+            let follow = await Follow.create({
+            user:newUser.id,
+            UserOrHotel:'Hotel'
+            })
+
+            newUser.follow = follow;
+            
+            newUser.collage.push("")
+            newUser.collage.push("")
+            newUser.collage.push("")
+            newUser.collage.push("")
+
+            newUser.save(function (err) {
+            if (err) { return cb(err); }
+            return cb(null, newUser);
+          });
+        } else {
+            // console.log(user);
           return cb(null, user);
         }
       });

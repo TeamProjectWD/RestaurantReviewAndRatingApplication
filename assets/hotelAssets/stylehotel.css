@@ -383,6 +383,7 @@ body{
 	flex:1 1;
 	position: relative;
 }
+
 .image{
 	width:32rem;
 	height: 13rem;
@@ -440,7 +441,8 @@ body{
 /* end of common header */
 .var-card{
 	width: 40rem;
-	background-color:rgba(0,0,0,0.9);
+	/* background-color:rgba(0,0,0,0.9); */
+	background: linear-gradient(145deg, #ececec, #ffffff);
 	margin:5rem ;
 }
 .var-img{

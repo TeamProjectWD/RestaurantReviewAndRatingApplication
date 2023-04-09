@@ -24,6 +24,9 @@ const hotelSchema = new mongoose.Schema({
         type:String,
         required:true
     },
+    googleId:{
+        type: String
+    },
     caption:{
         type:String,
     },

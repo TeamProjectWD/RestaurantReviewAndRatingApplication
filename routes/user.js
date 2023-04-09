@@ -24,7 +24,7 @@ router.post('/create-session',passport.authenticate(
 ),userController.createSession);
 
 router.get('/google/callback',
-    passport.authenticate('google',{
+    passport.authenticate('userGoogle',{
         successRedirect:'/',
         failureRedirect:'/user/signIn'
     })
