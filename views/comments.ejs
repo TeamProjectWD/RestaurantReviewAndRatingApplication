@@ -67,7 +67,7 @@
 
         <%}%>
 
-         <small class="comment-text"><%=comment.content%></small>
+         <small class="text-justify" class="comment-text"><%=comment.content%></small>
         <div class="d-flex flex-row align-items-center status">
              <form action="/upVote/<%=comment.id%>/?type=Comment&type1=<%=typeOfUser%>" method="POST" id="commentUpVoteForm-<%=comment._id%>">
         

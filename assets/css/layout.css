@@ -56,3 +56,24 @@ body {
       margin: 0;
     }
   }
+
+
+  /* refresh-line */
+  #refresh-line {
+    height: 3px;
+    width: 100%;
+    position: fixed;
+    top: 0;
+    left: 0;
+    background: linear-gradient(to right, red, orange, yellow, green, blue, indigo, violet);
+    z-index: 99999;
+    transform: translateX(-100%);
+    animation: slide-right 1s linear forwards;
+    }
+    
+    
+    @keyframes slide-right {
+    100% {
+      transform: translateX(100%);
+    }
+    }

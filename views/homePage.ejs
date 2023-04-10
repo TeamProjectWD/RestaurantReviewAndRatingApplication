@@ -1,94 +1,196 @@
- 
- <%if(typeOfUser == "User"){%>
+<link rel="stylesheet" href="/assets/css/homePage.css">
+<link href="https://fonts.googleapis.com/css2?family=Gloria+Hallelujah&&display=swap" rel="stylesheet">
+<div id="mainDiv" style="background-color: white;">
 
-
-    <form action="/posts/?type=<%=typeOfUser%>" method="POST" enctype="multipart/form-data" id="postForm">
-            
-        <input type="text" name="content" required/>
-        
-        <input  type="file" name="picturePath" required/>
-
-        
-        <input type="text" value="<%=typeOfUser%>"  name = "userType" hidden>
-        
-        <input type="number" value="0" name="upVotesCount" hidden>
-        
-        <select name="hotel" id="hotelSelect" required>
-            
-            <option disabled selected>-- Please select a Restaurant--</option>
-            
-            <%for (hotel of hotelNames) { %>
-                
-                <option value= "<%=hotel._id%>"> <%=hotel.name%> </option>
-                
-                <%}%>
-                
-            </select>
-            
-            <input id="fileSubmit" class="btn btn-success" type="submit" value="Submit">
-        </form>
-        
-    <script src="/assets/js/menuSelect.js"></script>
-
-    
-
- <%}else{%>
-
-    <div>
-
-        <form action="/posts/?type=<%=typeOfUser%>" method="POST" enctype="multipart/form-data">
-
-            <input type="text" value="<%=typeOfUser%>"  name = "userType" hidden>
-
-            <input type="number" value="0" name="upVotesCount" hidden>
-            
-            <input type="text" name="content" required/>
-            
-            <input type="file" name="picturePath" required/>
-    
-            <input type="submit" value="Submit">
-    
-        </form>
-    
-    
+    <div style="width: 100%;">
+          
+        <button id="open-popup4" class="btn btn-primary" style="width:50%; margin-top: 1rem;">Post</button>
     </div>
 
- <%}%>
-
- 
-
-<p>user : <%= locals.user.name%></p>
-
- 
-
-
-
-
-<div>
-
-    <ul  style="list-style-type: none;" id="posts"> 
-
-        
-        <%for(post of postData){%>
-            
-            
-            <%-include('posts')%>
-
-           
-        <%}%>
-
-
-
-
-    </ul>
+     
     
-
+     <%if(typeOfUser == "User"){%>
+        <div style="z-index: 999;" id="popup-container4">
+            <div id="popup-form4">
+                <a  id="close-popup4">&times;</a>
+                <div  class="container rounded bg-white mt-5 mb-5 " >
+        
+                    <form action="/posts/?type=<%=typeOfUser%>" id="postForm" method="POST"  autocomplete="off" enctype="multipart/form-data" >
+                    <div class="row">
+                            <div class="col-md-3 border-right">
+                                
+                                <div class="d-flex flex-column align-items-center text-center p-3 py-5"><img class="rounded-circle mt-5" width="150px" src="https://st3.depositphotos.com/15648834/17930/v/600/depositphotos_179308454-stock-illustration-unknown-person-silhouette-glasses-profile.jpg"><span class="font-weight-bold">hh</span><span class="text-black-50">ho</span><span> </span></div>
+                            </div>
+                            <div class="col-md-5 border-right">
+                                <div class="p-3 py-5">
+                                    <div class="d-flex justify-content-between align-items-center mb-3">
+                                        <h4 class="text-right">What's on your mind !</h4>
+                                    </div>
+                                    <div class="row mt-2">
+                                        <div class="col-md-6"><label class="labels">Content</label><input type="text" name="content" class="form-control" placeholder="..." value=""></div>
+                                        <input type="text" value="<%=typeOfUser%>"  name = "userType" hidden>
+                                        <input type="number" value="0" name="upVotesCount" hidden>
+                                    </div>
+                                    <div class="row mt-3" id="addMenuInput">
+                                        <div class="col-md-6"><label class="labels">Restaurant</label></div>
+                                        <select class="form-control" style="width: auto;" name="hotel" id="hotelSelect" required >
+                
+                                            <option disabled selected>-- Please select a Restaurant--</option>
+                                            
+                                            <%for (hotel of hotelNames) { %>
+                                                
+                                                <option value= "<%=hotel._id%>"> <%=hotel.name%> </option>
+                                                
+                                                <%}%>
+                                                
+                                        </select>   
+                                        
+                                        <br>
+                                
+                                    </div>
+                                    <div class="mt-5 text-center"><span> <button class="btn btn-primary profile-button" type="submit">Submit</button> </span> </div>
+                
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="p-3 py-5">
+                                    <div class="col-md-12"><label class="labels">Pic</label><input type="file" name="picturePath" class="form-control" placeholder="experience" value=""></div> <br>
+                                </div>
+                            </div>
+                   
+                        </div>
+                    </form>
+                </div>
+             
+            </div>
+        </div>
+        
+    
+    
+       
+            
+        <script src="/assets/js/menuSelect.js"></script>
+    
+        
+    
+     <%}else{%>
+    
+        <div>
+            <div style="z-index: 999;" id="popup-container4">
+                <div id="popup-form4">
+                    <a  id="close-popup4">&times;</a>
+                    <div  class="container rounded bg-white mt-5 mb-5 " >
+            
+                        <form action="/posts/?type=<%=typeOfUser%>" id="postForm" method="POST"  autocomplete="off" enctype="multipart/form-data" >
+                        <div class="row">
+                                <div class="col-md-3 border-right">
+                                    
+                                    <div class="d-flex flex-column align-items-center text-center p-3 py-5"><img class="rounded-circle mt-5" width="150px" src="https://st3.depositphotos.com/15648834/17930/v/600/depositphotos_179308454-stock-illustration-unknown-person-silhouette-glasses-profile.jpg"><span class="font-weight-bold">hh</span><span class="text-black-50">ho</span><span> </span></div>
+                                </div>
+                                <div class="col-md-5 border-right">
+                                    <div class="p-3 py-5">
+                                        <div class="d-flex justify-content-between align-items-center mb-3">
+                                            <h4 class="text-right">What's on your mind !</h4>
+                                        </div>
+                                        <div class="row mt-2">
+                                            <div class="col-md-6"><label class="labels">Content</label><input type="text" name="content" class="form-control" placeholder="..." value=""></div>
+                                            <input type="text" value="<%=typeOfUser%>"  name = "userType" hidden>
+                                            <input type="number" value="0" name="upVotesCount" hidden>
+                                        </div>
+                                        <div class="row mt-3" id="addMenuInput">
+                                            <div class="col-md-6"><label class="labels">Restaurant</label></div>
+                                            <select class="form-control" style="width: auto;" name="hotel" id="hotelSelect" required >
+                    
+                                                <option disabled selected>-- Please select a Restaurant--</option>
+                                                
+                                                <%for (hotel of hotelNames) { %>
+                                                    
+                                                    <option value= "<%=hotel._id%>"> <%=hotel.name%> </option>
+                                                    
+                                                    <%}%>
+                                                    
+                                            </select>   
+                                            
+                                            <br>
+                                    
+                                        </div>
+                                        <div class="mt-5 text-center"><span> <button class="btn btn-primary profile-button" type="submit">Save Profile</button> </span> </div>
+                    
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="p-3 py-5">
+                                        <div class="col-md-12"><label class="labels">Pic</label><input type="file" name="picturePath" class="form-control" placeholder="experience" value=""></div> <br>
+                                    </div>
+                                </div>
+                       
+                            </div>
+                        </form>
+                    </div>
+                  <!-- <button id="close-popup">Close</button> -->
+                </div>
+            </div>
+    
+            <!-- <form action="/posts/?type=<%=typeOfUser%>" method="POST" enctype="multipart/form-data">
+    
+                <input type="text" value="<%=typeOfUser%>"  name = "userType" hidden>
+    
+                <input type="number" value="0" name="upVotesCount" hidden>
+                
+                <input type="text" name="content" required/>
+                
+                <input type="file" name="picturePath" required/>
+        
+                <input type="submit" value="Submit">
+        
+            </form> -->
+        
+        
+        </div>
+    
+     <%}%>
+    
+      
+    
+     
+    
+    
+    
+    
+    <div>
+    
+        <ul  style="list-style-type: none;">
+    
+            
+            <%for(post of postData){%>
+                
+                
+                <%-include('posts')%>
+    
+               
+            <%}%>
+    
+    
+    
+    
+        </ul>
+        
+    
+    </div>
 </div>
 
- 
-	 
- 
 
-
-
- 
+ <script>
+    // for cover photo
+    const openPopupButton4 = document.getElementById("open-popup4");
+        const closePopupButton4 = document.getElementById("close-popup4");
+        const popupContainer4 = document.getElementById("popup-container4");
+    
+        openPopupButton4.addEventListener("click", () => {
+        popupContainer4.style.display = "flex";
+        });
+    
+        closePopupButton4.addEventListener("click", () => {
+        popupContainer4.style.display = "none";
+        });
+ </script>
