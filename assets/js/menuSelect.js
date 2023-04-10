@@ -19,11 +19,10 @@ $('#hotelSelect').on('change', function() {
 
             $("#itemSelect").remove();
 
-            $("#fileSubmit").remove();
 
             let selectDOM = menuMaker(data.data);
 
-            $("#postForm").append(selectDOM);
+            $("#addMenuInput").append(selectDOM);
 
         }
 
@@ -37,16 +36,16 @@ $('#hotelSelect').on('change', function() {
 let menuMaker = (data) => {
 
     return (`
-        
-        <select name="menuItem" id="itemSelect" required>
-    
-        <option disabled selected>-- Please select an Item --</option>
+        <div id="itemSelect"> 
+            <div class="col-md-6"><label class="labels">Menu</label></div>
+            <select class="form-control" style="width: auto;" name="menuItem"  required>
+            
+                <option disabled selected>-- Please select an Item --</option>
 
-            ${data.map((obj) => `<option value = "${obj._id}"> ${obj.name}</li>`).join("")}
+                    ${data.map((obj) => `<option value = "${obj._id}"> ${obj.name}</li>`).join("")}
 
-        </select>
-
-        <input id="fileSubmit" class="btn btn-success" type="submit" value="Submit">
+            </select>
+        </div>
         
     `)
 

@@ -223,9 +223,9 @@ body{
 	/* background-image:url(/img/pexels-rachel-claire-4577179.jpg); */
 	background-size:cover;
 	/* margin-top: -12px; */
-	display: flex;
+	/* display: flex; */
 	/* align-items: center; */
-	justify-content: center;
+	/* justify-content: center; */
 	position: relative;
 
 }
@@ -266,7 +266,7 @@ body{
 	height: 65rem;
 	flex-direction: row;
 	justify-content: space-between;
-
+	align-items: center;
 	/* align-content: start; */
 	
 }
@@ -275,22 +275,30 @@ body{
 	flex-direction: column;
 	align-items: center;
 	justify-content: center;
+	padding-left: 10%;
 }
 
-.banner-img-wp {
-    width: 100%;
-    height: 50%;
-    padding-left: 30px;
+.right-side{
+	margin-top: 100px;
+    width: 40%;
+    height: 60%;
+    /* padding-left: 30px; */
+	/* justify-content: center; */
+	/* align-items: center; */
 }
 
 .banner-img {
-    width: 100%;
-    height: 100%;
+    width: 70%;
+    height: 70%;
     background-size: cover;
     background-position: center;
-    animation: biani 4.5s linear infinite alternate;
-    box-shadow: 0 0px 20px rgba(36, 39, 37, 0.3);
+	/* border-radius: 50%; */
+    animation: biani 2.5s linear infinite alternate;
+    box-shadow: 0 0px 20px rgba(10, 222, 233, 0.587);
+	
 }
+
+
 
 @keyframes biani {
     0% {
@@ -1189,6 +1197,8 @@ body{
 	background-color: #c82333;
   }
   
+
+
 
   /* rating style */
 

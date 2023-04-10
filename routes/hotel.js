@@ -25,10 +25,8 @@ router.post('/create-session',passport.authenticate(
 
 router.get('/google/callback',
     passport.authenticate('hotelGoogle',{
-        successRedirect:'/',
         failureRedirect:'/user/signIn'
-    })
-)
+    }),hotelController.GoogleSession);
 
 router.get('/signOut',hotelController.destroySession);
 

@@ -79,6 +79,16 @@ module.exports.createSession = function(req,res){
     return res.redirect(`/hotel/profile/${id}`);
 }
  
+//for creating session and signIN using google
+
+module.exports.GoogleSession = function(req,res){
+  
+    const id = req.user.id;
+    
+    return res.redirect(`/hotel/profile/${id}`);
+}
+
+
 //for deleting session cookie created by passport
 module.exports.destroySession = async function(req,res,next){
     console.log(req.user);
