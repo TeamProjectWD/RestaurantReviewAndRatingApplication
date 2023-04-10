@@ -77,6 +77,8 @@ passport.use('userGoogle',new GoogleStrategy({
             })
 
             newUser.follow = follow;
+            newUser.avatar = "https://st3.depositphotos.com/15648834/17930/v/600/depositphotos_179308454-stock-illustration-unknown-person-silhouette-glasses-profile.jpg";
+ 
             newUser.save(function (err) {
             if (err) { return cb(err); }
             return cb(null, newUser);
@@ -116,6 +118,7 @@ passport.use('hotelGoogle',new GoogleStrategy({
             })
 
             newUser.follow = follow;
+            newUser.avatar = "https://st3.depositphotos.com/15648834/17930/v/600/depositphotos_179308454-stock-illustration-unknown-person-silhouette-glasses-profile.jpg";
             
             newUser.collage.push("")
             newUser.collage.push("")

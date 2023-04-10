@@ -14,7 +14,7 @@ module.exports.signUp = function(req,res){
     }
     
     return res.render("hotelSignIn",{
-        title: "HR&R @ signUP",
+        title: "RRR",
         layout:false
     })
 }
@@ -29,7 +29,7 @@ module.exports.signIn = function(req,res){
     } 
 
     return res.render("hotelSignIn",{
-        title: "HR&R @ signIN ",
+        title: "RRR",
         layout : false
     })
 }
@@ -52,6 +52,7 @@ module.exports.create = async function(req,res){
         })
 
         newUser.follow = follow;
+        newUser.avatar = "https://st3.depositphotos.com/15648834/17930/v/600/depositphotos_179308454-stock-illustration-unknown-person-silhouette-glasses-profile.jpg";
         
         newUser.collage.push("")
         newUser.collage.push("")
@@ -178,7 +179,7 @@ module.exports.userProfile = async function(req,res){
 
     return res.render('hotel',{
         
-        title:"HR&R @ HotelProfile",
+        title:"RRR",
         HotelProfile :profileUSerData,
         userToVisit:userToVisit,
         userId:userId,
@@ -215,11 +216,11 @@ module.exports.editProfile =async(req,res)=>{
             }
             if(req.file){
                 // removing previous file from folder
-                if(user.avatar){
-                    const oldProfilePath = path.join(__dirname,'../uploads/hotelProfile',user.avatar);
-                    fs.unlinkSync(oldProfilePath);
-                }
-                nonEmptyObject.avatar = req.file.filename;
+                // if(user.avatar){
+                //     const oldProfilePath = path.join(__dirname,'../uploads/hotelProfile',user.avatar);
+                //     fs.unlinkSync(oldProfilePath);
+                // }
+                nonEmptyObject.avatar = Hotel.picPath+'/'+req.file.filename;
                 console.log(user);
             }
             

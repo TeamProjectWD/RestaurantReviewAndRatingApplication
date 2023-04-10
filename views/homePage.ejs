@@ -1,11 +1,4 @@
-<div style="margin-bottom: 1rem;">
  
-    <a class="btn btn-success" href="/<%=typeOfUser%>/profile/<%= locals.user._id%>/">profile</a>
-    
-    <a class="btn btn-danger" href="/<%=typeOfUser%>/signOut">signOut</a>
-
-</div>
-
  <%if(typeOfUser == "User"){%>
 
 
@@ -73,7 +66,7 @@
 
 <div>
 
-    <ul  style="list-style-type: none;">
+    <ul  style="list-style-type: none;" id="posts"> 
 
         
         <%for(post of postData){%>
@@ -91,5 +84,11 @@
     
 
 </div>
+
+ 
+	 
+ 
+
+
 
  

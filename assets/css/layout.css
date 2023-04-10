@@ -7,11 +7,12 @@
 }
 
 header{
-  background: rgba(0, 0, 0, 0.5);
-  display: flex;
-    flex: 1;
-    justify-content: space-between;
-    height: 5%;
+  background: rgba(0, 0, 0, 0.5)!important;
+  display: flex!important;
+  flex: 1!important;
+  justify-content: space-between!important;
+  height: 7%!important;
+
   
 }
 
@@ -42,12 +43,11 @@ body {
   #body-wrap{
   
     flex: 40;
-    padding: 1rem;    
+   
   }
   
   footer {
     flex: 1;
-     
   }
 
   @media screen and (max-width: 576px) {

@@ -1,139 +1,235 @@
-<div id="profileMainDiv"  style="padding-top: 10px; padding-bottom: 10px;" class="userDivBody">
-    <link rel="stylesheet" href="/assets/css/userProfile.css">
-    
-    <div  class="container d-flex justify-content-center ">
-        <div class="cardUser p-3 py-4">
-            <div class="text-center"> 
-                <%if(UserProfile.avatar){
-                    var src = `/uploads/userProfile/pics/${UserProfile.avatar}`
-    
-                }else{
-                    var src = "https://st3.depositphotos.com/15648834/17930/v/600/depositphotos_179308454-stock-illustration-unknown-person-silhouette-glasses-profile.jpg"; 
-                }%>
-                <img src="<%=src%>" alt="" height="100" width="100" class="rounded-circle">
-                <h3 class="mt-2"> <%= UserProfile.name%></h3>
-                <span class="mt-1 clearfix"> <%= UserProfile.email%></span>
-                
-                <div class="row mt-3 mb-3">
-                
-                  <div class="col-md-4">
+ 
+ 
+ <div id="profile-wrap">
+ 
+    <link rel="stylesheet" href="/assets/Resume/sy.css">
+    <link rel="stylesheet" href="/assets/hotelAssets/stylehotel.css">
+    <link rel="stylesheet" href="/assets/hotelAssets/stylehotelii.css">
+
+    <div id="body-header" style="background-image:url(https://cdnb.artstation.com/p/assets/images/images/004/558/229/large/thiranjaya-gamlath-keyboard.jpg); color: white;"> 
+         
+            <ul class="horizontal-lists text-center">
+                    
+                    <li>
+                        <a href="#posts" > Posts </a>
+                    </li>
+            </ul>
+ 
+        
+            <div class="text-center">
+                <h2 id="my-name"><%= UserProfile.name%></h2>
+
+                <h6> <%= UserProfile.email%> </h6>
+            </div>
+
+
+            <div style="display: flex; justify-content: center;">
+
+                <div style="margin: 3%; margin-bottom: 0%; margin-top: 0%;">
                     <h5>Followers</h5>
-                    <span id="followers" class="num"><%=followers%></span>
-                  </div>
-                  <div class="col-md-4">
-                    <% if(followbtn == true){
-                        var fvalue = "follow";
-                    }
-                    else{
-                        var fvalue = "unfollow";
-                    }
-                        if(userToVisit!=userId){ %>                
-                            <button onclick="follow(value)" id="fbutton" value="<%=UserProfile.id%>" class="btn btn-primary"><%= fvalue %></button>
-                    <% }
-                        %>
-                    <span class="num"></span>
-                  </div>
-                  <div class="col-md-4">
-                  <h5>Following</h5>
-                    <span id="following" class="num"><%=following%></span>
-                  </div>
-                
+                    <%=followers%> 
                 </div>
-                
-                <hr class="line">
-                
-                <small class="mt-4">Hey there I am using RRR !</small>
-                  <div class="social-buttons mt-5"> 
-                   <button class="neo-button"><i class="fa fa-facebook fa-1x"></i> </button> 
-                   <button class="neo-button"><i class="fa fa-linkedin fa-1x"></i></button> 
-                   <button class="neo-button"><i class="fa fa-google fa-1x"></i> </button> 
-                   <button class="neo-button"><i class="fa fa-youtube fa-1x"></i> </button>
-                   <button class="neo-button"><i class="fa fa-twitter fa-1x"></i> </button>
-                  </div>
-                  
-                 <div class="profile mt-5">
-                    <% if(userToVisit==userId){%>
-                            <button class="profile_button px-5" id="editProfile"> Edit</button>
-                    <% } %>
+
+                <div style="margin: 3%; margin-bottom: 0%; margin-top: 0%;">
+                    <%if(userToVisit!=userId){ %>                
+                        <button onclick="follow(value)" id="fbutton" value="<%=UserProfile.id%>" class="btn btn-primary"><%= followbtn ? "follow" : "unfollow" %></button>
+                    <% }%>
+                </div>
+                <div style="margin: 3%; margin-bottom: 0%; margin-top: 0%;">
+                    <h5>Following</h5>
+                    <span id="following" class="num"><%=following%></span>
+                </div>
+
             </div>
-                   
-            </div>
+
+
+            
+            
+     
+
+        <style type="text/css">
+            /* Transparent background */
+            .popup-background{
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                background-color: rgba(0,0,0,0.5);
+                z-index: 999;
+                display: none;
+            }
+    
+            /* Center the form */
+            .popup-form{
+                position: fixed;
+                top: 50%;
+                left: 50%;
+                transform: translate(-50%, -50%);
+                background-color: #fff;
+                padding: 20px;
+                z-index: 1000;
+                display: none;
+            }
+    
+            /* Styling for form elements */
+            .popup-form input[type="text"], .popup-form input[type="email"], .popup-form button{
+                display: block;
+                margin-bottom: 10px;
+                width: 100%;
+                padding: 10px;
+                font-size: 16px;
+                border: none;
+                border-radius: 3px;
+            }
+    
+            .popup-form button{
+                background-color: #007bff;
+                color: #fff;
+                cursor: pointer;
+            }
+            .forms{
+                position: absolute;
+                top: 50%;
+                left: 50%;
+                transform: translate(-50%, -50%);
+                z-index: 9999;
+            }
+        </style>
+     
+        <!-- Button to trigger the popup form -->
+        <button id="open-popup">Edit</button>
+    
+        <!-- Popup background -->
+        <div class="popup-background"></div>
+    
+        <!-- Popup form -->
+        <div class="popup-form forms" style="z-index: 1000; color:black;">
+            <form action="/user/profile/update/<%= UserProfile._id %>" method="POST"  autocomplete="off" enctype="multipart/form-data" >
+                <label for="name">Name:</label>
+                <input type="text" name="name" class="form-control" placeholder="first name" value="">
+                <label for="email">Email:</label>
+                <input type="text" name="email" class="form-control" placeholder="enter email id" value="">
+                
+
+                <div class="p-3 py-5">
+                    <div class="d-flex justify-content-between align-items-center experience"> <span> <B> Add photo </B></span> <span class="border px-3 p-1 add-experience"></div><br>
+                    <div class="col-md-12"><label class="labels"></label><input type="file" name="avatar" class="form-control" placeholder="experience" value=""></div> <br>
+                    <!-- <div class="col-md-12"><label class="labels">Additional Details</label><input type="text" class="form-control" placeholder="additional details" value=""></div> -->
+                </div>
+    
+                <button class="btn btn-primary profile-button" type="submit">Save Profile</button>  
+                <button type="button" class="close-button">Close</button>
+            </form>
         </div>
     
+        <!-- JavaScript to show/hide the popup -->
+        <script type="text/javascript">
+            document.addEventListener("DOMContentLoaded", function(){
+                // Get the popup background and form elements
+                var popupBg = document.querySelector(".popup-background");
+                var popupForm = document.querySelector(".popup-form");
+                var pic = document.querySelector("#ok");
+                var photo = document.querySelector("#photo");
+
+          
+    
+                // Show the popup when the user clicks the button
+                document.querySelector("#open-popup").addEventListener("click", function(){
+                    popupBg.style.display = "block";
+                    popupForm.style.display = "block";
+           
+                    photo.style.display ="none";
+                });
+    
+                // Hide the popup when the user clicks outside the form or the close button
+                popupBg.addEventListener("click", function(){
+                    popupBg.style.display = "none";
+                    popupForm.style.display = "none";
+                 
+                
+                    photo.style.display ="block";
+                });
+    
+                document.querySelector(".close-button").addEventListener("click", function(){
+                    popupBg.style.display = "none";
+                    popupForm.style.display = "none";
+                  
+                    photo.style.display ="block";
+                });
+            });
+        </script>
+
+<script>
+
+    var popupBg = document.querySelector(".popup-background");
+    var popupForm = document.querySelector(".popup-form");
+    var pic = document.querySelector("#ok");
+    var photo = document.querySelector("#photo");
+    const openPopupButton3 = document.getElementById("open-popup3");
+    const closePopupButton3 = document.getElementById("close-popup3");
+    const popupContainer3 = document.getElementById("popup-container3");
+
+    console.log(photo);
+
+    openPopupButton3.addEventListener("click", () => {
+        photo.style.display ="none";
+        popupContainer3.style.display = "flex";
+    });
+
+    closePopupButton3.addEventListener("click", () => {
+    popupContainer3.style.display = "none";
+    photo.style.display ="block";
+    });
+</script>
+    
+    </div>
+
+
+    <section>
+        <div id="ok">
+             <img src="<%=UserProfile.avatar%>" id="photo">
+
+        </div>
+    </section>
+
+ 
         
-    
-    </div>
-    </div>
-    
-    <!-- posts starting -->
-    
-    
-    <div id="postDiv">
-        <ul  style="list-style-type: none;">
-    
-        <%for (post of UserProfile.posts) {%>
-    
-            <%- include('posts')%>
-    
-        <%}%>
-    
-        </ul>
-    
-    </div>
-    
-    <!-- edit starting -->
-    <div id="editDiv" style="display: none; ">
-        <link rel="stylesheet" href="/assets/css/userProfile_editForm.css">
-    <div  class="container rounded bg-white mt-5 mb-5 " >
-    
-        <form action="/user/profile/update/<%= UserProfile._id %>" method="POST"  autocomplete="off" enctype="multipart/form-data" >
-        <div class="row">
-                <div class="col-md-3 border-right">
-                    
-                    <div class="d-flex flex-column align-items-center text-center p-3 py-5"><img class="rounded-circle mt-5" width="150px" src="https://st3.depositphotos.com/15648834/17930/v/600/depositphotos_179308454-stock-illustration-unknown-person-silhouette-glasses-profile.jpg"><span class="font-weight-bold"><%=UserProfile.name%></span><span class="text-black-50"><%=UserProfile.email%></span><span> </span></div>
-                </div>
-                <div class="col-md-5 border-right">
-                    <div class="p-3 py-5">
-                        <div class="d-flex justify-content-between align-items-center mb-3">
-                            <h4 class="text-right">Profile Settings</h4>
-                        </div>
-                        <div class="row mt-2">
-                            <div class="col-md-6"><label class="labels">Name</label><input type="text" name="name" class="form-control" placeholder="first name" value=""></div>
-                        <!-- <input type="email" name="email"  placeholder="<%= UserProfile.email %>" > -->
-                            <!-- <div class="col-md-6"><label class="labels">Surname</label><input type="text" class="form-control" value="" placeholder="surname"></div> -->
-                        </div>
-                        <div class="row mt-3">
-                            <div class="col-md-12"><label class="labels">Email ID</label><input type="text" name="email" class="form-control" placeholder="enter email id" value=""></div>
-                            <div class="col-md-12"><label class="labels">Caption</label><input type="text" class="form-control" placeholder="enter caption" value=""></div>
-                            <!-- <div class="col-md-12"><label class="labels">Address Line 1</label><input type="text" class="form-control" placeholder="enter address line 1" value=""></div>
-                            <div class="col-md-12"><label class="labels">Address Line 2</label><input type="text" class="form-control" placeholder="enter address line 2" value=""></div>
-                            <div class="col-md-12"><label class="labels">Postcode</label><input type="text" class="form-control" placeholder="enter address line 2" value=""></div>
-                            <div class="col-md-12"><label class="labels">State</label><input type="text" class="form-control" placeholder="enter address line 2" value=""></div>
-                            <div class="col-md-12"><label class="labels">Area</label><input type="text" class="form-control" placeholder="enter address line 2" value=""></div>
-                            <div class="col-md-12"><label class="labels">Education</label><input type="text" class="form-control" placeholder="education" value=""></div> -->
-                        </div>
-                        <!-- <div class="row mt-3">
-                            <div class="col-md-6"><label class="labels">Country</label><input type="text" class="form-control" placeholder="country" value=""></div>
-                            <div class="col-md-6"><label class="labels">State/Region</label><input type="text" class="form-control" value="" placeholder="state"></div>
-                        </div> -->
-                        <div class="mt-5 text-center"><span> <button class="btn btn-primary profile-button" type="submit">Save Profile</button> </span> <span> <button id="blackBtn" class="btn btn-primary profile-button" >Back</button></span></div>
-    
-                    </div>
-                </div>
-                <div class="col-md-4">
-                    <div class="p-3 py-5">
-                        <div class="d-flex justify-content-between align-items-center experience"> <span> <B> Add photo </B></span> <span class="border px-3 p-1 add-experience"></div><br>
-                        <div class="col-md-12"><label class="labels"></label><input type="file" name="avatar" class="form-control" placeholder="experience" value=""></div> <br>
-                        <!-- <div class="col-md-12"><label class="labels">Additional Details</label><input type="text" class="form-control" placeholder="additional details" value=""></div> -->
-                    </div>
-                </div>
        
-            </div>
-        </form>
+          
+        
+       
+        
+       
+           
+       
+        
+        
+       
+
+<!-- posts starting -->
+
+
+    <div id="postDiv">
+            <ul  style="list-style-type: none;">
+
+            <%for (post of UserProfile.posts) {%>
+
+                <%- include('posts')%>
+
+            <%}%>
+
+            </ul>
+
     </div>
-    </div>
-    </div>
-    </div>
-    
-    <script type="text/javascript" src="/assets/js/userPage.js"></script>
+
+ 
+<script type="text/javascript" src="/assets/js/userPage.js"></script>
+
+
+
+ </div>
+
+
+            
     

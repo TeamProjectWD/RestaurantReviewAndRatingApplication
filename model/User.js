@@ -6,6 +6,8 @@ const path = require('path');
 
 const profilePicturePath = path.join('/uploads/userProfile/pics');
 
+const coverPicPath = path.join('/uploads/userProfile/backG');
+
 const userSchemma = new mongoose.Schema({
 
     name:{
@@ -28,6 +30,9 @@ const userSchemma = new mongoose.Schema({
     avatar:{
         type:String,
     },
+    background:{
+        type:String
+    },
     posts:[{
         type:mongoose.Schema.Types.ObjectId,
         ref:'Post'
@@ -43,6 +48,16 @@ const storage = multer.diskStorage({
     destination: function (req, file, cb) {
         console.log(__dirname);
       cb(null, path.join(__dirname,'..',profilePicturePath));
+    },
+    filename: function (req, file, cb) {
+      cb(null, file.fieldname + '-' + Date.now());
+    }
+});
+
+const storageBackground = multer.diskStorage({
+    destination: function (req, file, cb) {
+        console.log(__dirname);
+      cb(null, path.join(__dirname,'..',coverPicPath));
     },
     filename: function (req, file, cb) {
       cb(null, file.fieldname + '-' + Date.now());

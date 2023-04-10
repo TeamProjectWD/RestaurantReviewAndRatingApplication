@@ -15,8 +15,6 @@ $('#hotelSelect').on('change', function() {
 
         success: (data) => {
 
-             
-
             $("#itemSelect").remove();
 
             $("#fileSubmit").remove();

@@ -10,7 +10,7 @@ module.exports.signUp = function(req,res){
     }
     
     return res.render("userSignUp",{
-        title: "HR&R @ signUP"
+        title: "RRR"
     })
 }
 
@@ -20,7 +20,7 @@ module.exports.signIn = function(req,res){
     } 
 
     return res.render("userSignIn",{
-        title: "HR&R @ signIN "
+        title: "RRR "
     })
 }
  
@@ -41,6 +41,7 @@ module.exports.create = async function(req,res){
         })
 
         newUser.follow = follow;
+        newUser.avatar = "https://st3.depositphotos.com/15648834/17930/v/600/depositphotos_179308454-stock-illustration-unknown-person-silhouette-glasses-profile.jpg";
         newUser.save();
 
         return res.redirect('/user/signIn');
@@ -128,7 +129,7 @@ module.exports.userProfile = async function(req,res){
 
     return res.render('userProfile',{
         
-        title:"HR&R @ UserProfile",
+        title:"RRR",
         UserProfile :profileUSerData,
         userToVisit:userToVisit,
         userId:userId,
@@ -150,6 +151,7 @@ module.exports.editProfile =async(req,res)=>{
             console.log(err);
         }
         const user = await User.findById(req.user.id);
+        console.log(user);
         const nonEmptyValues = JSON.parse(JSON.stringify(req.body));
         const nonEmptyObject = {};
 
@@ -163,15 +165,18 @@ module.exports.editProfile =async(req,res)=>{
             }
             if(req.file){
                 // removing previous file from folder
-                if(user.avatar){
-                    const oldProfilePath = path.join(__dirname,'../uploads/userProfile/pics',user.avatar);
-                    fs.unlinkSync(oldProfilePath);
-                }
-                nonEmptyObject.avatar = req.file.filename;
+                // if(user.avatar){
+                //     const oldProfilePath = path.join(__dirname,'../uploads/userProfile/pics',user.avatar);
+                //     fs.unlinkSync(oldProfilePath);
+                // }
+                nonEmptyObject.avatar = User.picPath+'/'+req.file.filename;
+                
                 // console.log(user);
             }
             
             await User.findByIdAndUpdate(req.user.id,{$set:nonEmptyObject});
+            const users = await User.findById(req.user.id);
+            user.save();
 
         }
         
@@ -238,4 +243,39 @@ module.exports.FollowOrUnfollow = async(req,res)=>{
     }
 
 }
+
+module.exports.coverPic =async(req,res)=>{
+    Hotel.coverPic(req,res,async function(err){
+      if(err){
+          console.log(err);
+      }
+  
+      const user = await User.findById(req.user.id);
+  
+      if(req.file){
+          if(user.coverPic){
+              const oldProfilePath = path.join(__dirname,'../uploads/userProfile/backG',user.background);
+              fs.unlinkSync(oldProfilePath);
+          }
+      }
+  
+      user.background = req.file.filename;
+      await user.save();
+      return res.redirect('back');
+    })
+  }
+  
+  module.exports.removeCoverPic = async(req,res)=>{
+      const user =await User.findById(req.user.id);
+      
+      if(user.background){
+          const oldProfilePath = path.join(__dirname,'../uploads/userProfile/backG',user.background);
+          fs.unlinkSync(oldProfilePath);
+      }
+       user.background = "";
+       await user.save();
+      return res.redirect('back');
+       
+  
+  }
 
