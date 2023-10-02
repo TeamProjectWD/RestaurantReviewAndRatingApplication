@@ -1,185 +1,157 @@
-<div>
+<style>
+  .ratingStars{
+    display: flex; 
+    flex-direction: row; 
+    justify-content: space-evenly; 
+    width: 100%;
+  }
+  .formWrapper{
+    margin-top: 10px;
+
+  }
+  .icon{
+    color: aliceblue;
+  }
 
 
-  <%
+
+</style>
+<link rel="stylesheet" href="/assets/css/rating.css">
+
+<%if(ans[1]){%>
+
+ 
   
-    function ratingBool(){
-  
-      let bool = true;
-  
-      let rating = 0;
-  
-      let arr = [];
-  
-      item.rating.findIndex( (data) => {
-  
-        if(data.ratedBy == locals.user.id){
-  
-          rating = data.rating;
-  
-          bool = false;
-  
-          arr.push(rating);
-  
-          arr.push(bool);
-        }
-  
-      });
-  
-      if(arr.length == 0){
-  
-          arr.push(rating);
-  
-          arr.push(bool);
-  
-      }
-      return arr;
-  
-    }
-  
-     
-    ans = ratingBool();
-  
-     
-  
-  
-  %>
-  
-   
-  
-  
-  
-  
-  <link rel="stylesheet" href="/assets/css/rating.css">
-  
-  <%if(ans[1]){%>
-    
-    <div id="formWrap-<%=item.id%>">
-  
-      <form class="rating" id="rating-<%=item.id%>"  method="POST" action="/hotel/addRating/<%=item.id%>">
-  
-              <label>
-                <input type="radio" name="stars" value="1" />
-                <span class="icon">★</span>
-              </label>
-              <label>
-                <input type="radio" name="stars" value="2" />
-                <span class="icon">★</span>
-                <span class="icon">★</span>
-              </label>
-              <label>
-                <input type="radio" name="stars" value="3" />
-                <span class="icon">★</span>
-                <span class="icon">★</span>
-                <span class="icon">★</span>   
-              </label>
-              <label>
-                <input type="radio" name="stars" value="4" />
-                <span class="icon">★</span>
-                <span class="icon">★</span>
-                <span class="icon">★</span>
-                <span class="icon">★</span>
-              </label>
-              <label>
-                <input type="radio" name="stars" value="5" />
-                <span class="icon">★</span>
-                <span class="icon">★</span>
-                <span class="icon">★</span>
-                <span class="icon">★</span>
-                <span class="icon">★</span>
-              </label>
-  
+  <div id="formWrap-<%=item.id%>" class="formWrapper" >
+
+  <div class="ratingStars">
+
+      <form class="rating" id="rating-<%=item.id%>"  method="POST" action="/hotel/addRating/<%=item.id%>" style="margin-bottom: 0px;" >
+
+        <label class="labelStar">
+          <input type="radio" name="stars" value="1" />
+          <span  class="icon">★</span>
+        </label>
+        <label class="labelStar">
+          <input type="radio" name="stars" value="2" />
+          <span class="icon">★</span>
+          <span class="icon">★</span>
+        </label>
+        <label class="labelStar">
+          <input type="radio" name="stars" value="3" />
+          <span class="icon">★</span>
+          <span class="icon">★</span>
+          <span class="icon">★</span>   
+        </label>
+        <label class="labelStar">
+          <input type="radio" name="stars" value="4" />
+          <span class="icon">★</span>
+          <span class="icon">★</span>
+          <span class="icon">★</span>
+          <span class="icon">★</span>
+        </label>
+        <label class="labelStar">
+          <input type="radio" name="stars" value="5" />
+          <span class="icon">★</span>
+          <span class="icon">★</span>
+          <span class="icon">★</span>
+          <span class="icon">★</span>
+          <span class="icon">★</span>
+        </label>
+
       </form>
-  
-  
-    <button form="rating-<%=item.id%>" id="button-<%=item.id%>">
-      <i class="fa-solid fa-paper-plane"></i>
-    </button>
-  
+
+      <div style="display: flex; height: 50%; align-self: center;">
+        <button form="rating-<%=item.id%>" id="button-<%=item.id%>" style="height:30%; background-color:transparent; border: none; color: #fd7e14;">
+          <i class="fa-solid fa-paper-plane" style="font-size:2rem;"></i>
+        </button>
+      </div>
   </div>
+
   
-  <button id="press-<%=item.id%>" hidden>
-    Rate Again
-  </button>
-  
-  <%}else{%>
-  
-    <div id="formWrap-<%=item.id%>"> 
-  
-      <form class="rating" id="rating-<%=item.id%>"  method="POST" action="/hotel/addRating/<%=item.id%>" style="display: none;">
-  
-              <label>
-                <input type="radio" name="stars" value="1" />
-                <span class="icon">★</span>
-              </label>
-              <label>
-                <input type="radio" name="stars" value="2" />
-                <span class="icon">★</span>
-                <span class="icon">★</span>
-              </label>
-              <label>
-                <input type="radio" name="stars" value="3" />
-                <span class="icon">★</span>
-                <span class="icon">★</span>
-                <span class="icon">★</span>   
-              </label>
-              <label>
-                <input type="radio" name="stars" value="4" />
-                <span class="icon">★</span>
-                <span class="icon">★</span>
-                <span class="icon">★</span>
-                <span class="icon">★</span>
-              </label>
-              <label>
-                <input type="radio" name="stars" value="5" />
-                <span class="icon">★</span>
-                <span class="icon">★</span>
-                <span class="icon">★</span>
-                <span class="icon">★</span>
-                <span class="icon">★</span>
-              </label>
-  
-      </form>
-  
-    
-    
-  
-  
-    <button form="rating-<%=item.id%>" id="button-<%=item.id%>" style="display: none;">
-      <i class="fa-solid fa-paper-plane"></i>
-    </button>
-  
-  </div>
-  
-  
-    <div id="givenRating-<%=item.id%>">
-          
-        <%if(ans[0] == 1){%>
-  
-          <b>you have rated 1 star for this item</b>
-  
-        <%}else{%>
-          
-          <b>you have rated <%=ans[0]%> stars for this item</b>
-  
-        <%}%>
-  
-    </div>
-    
-  
-  
-    <button id="press-<%=item.id%>">
+  <div  style="text-align: center;">
+    <button id="press-<%=item.id%>" hidden class="animated-button8" style="padding: 0.5rem;">
+      <span></span>
+      <span></span>
+      <span></span>
+      <span></span> 
       Rate Again
     </button>
-  
-  
-  
-  <%}%>
+  </div>
+
+
+ 
+
 </div>
 
  
 
+ 
+
+<%}else{%>
+
+  <div id="formWrap-<%=item.id%>" class="formWrapper"> 
+
+     
+
+
+        <div class="ratingStars">
+
+              <form class="rating" id="rating-<%=item.id%>"  method="POST" action="/hotel/addRating/<%=item.id%>" style="display: none;">
+
+                <label>
+                  <input type="radio" name="stars" value="1" />
+                  <span class="icon">★</span>
+                </label>
+                <label>
+                  <input type="radio" name="stars" value="2" />
+                  <span class="icon">★</span>
+                  <span class="icon">★</span>
+                </label>
+                <label>
+                  <input type="radio" name="stars" value="3" />
+                  <span class="icon">★</span>
+                  <span class="icon">★</span>
+                  <span class="icon">★</span>   
+                </label>
+                <label>
+                  <input type="radio" name="stars" value="4" />
+                  <span class="icon">★</span>
+                  <span class="icon">★</span>
+                  <span class="icon">★</span>
+                  <span class="icon">★</span>
+                </label>
+                <label>
+                  <input type="radio" name="stars" value="5" />
+                  <span class="icon">★</span>
+                  <span class="icon">★</span>
+                  <span class="icon">★</span>
+                  <span class="icon">★</span>
+                  <span class="icon">★</span>
+                </label>
+      
+              </form>
+
+              <div style="display: flex; height: 50%; align-items: center;">
+                  <button form="rating-<%=item.id%>" id="button-<%=item.id%>" style="height:30%; background-color:transparent; border: none; display: none; color: #fd7e14;">
+                    <i class="fa-solid fa-paper-plane" style="font-size:2rem;"></i>
+                  </button>
+              </div>
+        </div>
+    
+        <div style="text-align: center;"> 
+            <button id="press-<%=item.id%>"  class="animated-button8" style="padding: 0.5rem;">
+              <span></span>
+              <span></span>
+              <span></span>
+              <span></span> 
+              Rate Again
+            </button>
+        </div>  
+        
+</div>
+
 
  
 
- 
+<%}%>

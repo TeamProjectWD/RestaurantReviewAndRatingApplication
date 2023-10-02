@@ -10,11 +10,13 @@ const userController = require('../controllers/userController');
 
 const User = require('../model/User');
 
+const otpVerify = require('../config/otpVerifyMiddleware');
+
 router.get('/signIn',userController.signIn);
 
 router.get('/signUp',userController.signUp);
 
-router.post('/create',userController.create);
+router.post('/create',otpVerify,userController.create);
 
 router.post('/create-session',passport.authenticate(
     
@@ -25,10 +27,8 @@ router.post('/create-session',passport.authenticate(
 
 router.get('/google/callback',
     passport.authenticate('userGoogle',{
-        successRedirect:'/',
         failureRedirect:'/user/signIn'
-    })
-)
+    }),userController.GoogleSession);
 
 router.get('/signOut',userController.destroySession);
 
@@ -38,6 +38,14 @@ router.get('/profile/:uID/',passport.checkAuthentication,userController.userProf
 router.post('/profile/update/:id',userController.editProfile);
 
 router.get('/follow/:id',userController.FollowOrUnfollow);
+
+router.post('/cover',userController.coverPic);
+
+router.get('/cover/remove',userController.removeCoverPic);
+
+router.post('/sendOtpVerification',userController.sendOtpVerification);
+
+router.get('/changeDistrict/:id',userController.changeDistrict,);
 
 module.exports = router;
 

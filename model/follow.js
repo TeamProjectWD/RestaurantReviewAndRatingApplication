@@ -7,11 +7,11 @@ const followSchema = new mongoose.Schema({
     },
     followers: [{ 
             type: mongoose.Schema.Types.ObjectId,
-            refPath: 'UserOrHotel' 
+            ref: 'Follow' 
         }],
     followings: [{ 
         type: mongoose.Schema.Types.ObjectId,
-        refPath: 'UserOrHotel' 
+        ref: 'Follow'  
     }],
     UserOrHotel:{
         type:String,

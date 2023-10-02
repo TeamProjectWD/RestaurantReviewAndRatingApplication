@@ -77,7 +77,7 @@ module.exports.addRating = async(req,res)=>{
             menu.save();
 
             return res.status(200).json({
-                average:menu.averageRating,
+                average:menu.averageRating.toFixed(1),
                 rating:rating
             })
         }

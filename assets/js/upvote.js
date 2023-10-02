@@ -73,10 +73,10 @@ class upVoteClass {
         if(upVoteBool){
             return(`
 
-                <div id="${type}Container-${this.id}">
+                <div class="d-flex flex-row  d-flex align-items-center" id="${type}Container-${this.id}">
 
-                    <button><i class="fa-regular fa-circle-up"></i></button>
-                    <span>
+                    <button style="border: none; background-color: transparent; color: red;"><i class="fa-regular fa-circle-up"></i></button>
+                    <span class="likesCount">
                         ${count}
                     </span>
     
@@ -86,9 +86,9 @@ class upVoteClass {
         }else{
             return(`
 
-                <div id="${type}Container-${this.id}">
-                    <button style="color:white;" ><i class="fa-regular fa-circle-up"></i></button>
-                    <span>
+                <div class="d-flex flex-row  d-flex align-items-center" id="${type}Container-${this.id}">
+                    <button style="border: none; background-color: transparent; color:white;" ><i class="fa-regular fa-circle-up"></i></button>
+                    <span class="likesCount">
                         ${count}
                     </span>
                 </div>

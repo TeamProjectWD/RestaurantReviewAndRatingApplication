@@ -5,21 +5,31 @@ const Menu = require('../model/menuModel');
 const User = require('../model/User');
 const Post = require('../model/postModel');
 const Follow = require('../model/follow');
-const { log } = require('console');
+const Districts = require('../model/districts');
+const { ObjectId } = require('mongodb');
+const bcrypt = require('bcrypt');
+const mailer = require('../config/mailer');
+const otpVerify = require('../model/otpVerify');
+const lodash = require('lodash');
+const tinycolor = require('tinycolor2');
 
-module.exports.signUp = function(req,res){
+
+
+
+module.exports.signUp = async function(req,res){
     if(req.isAuthenticated()){
         const user = req.user.id
         return res.redirect(`/profile/${user}`);
     }
     
-    return res.render("hotelSignIn",{
+    return res.render("hotelSignUp",{
         title: "RRR",
+        message: await req.flash('message') ,
         
     })
 }
 
-module.exports.signIn = function(req,res){
+module.exports.signIn =async function(req,res){
 
     // console.log("Yes+++++++++++++++++++++++++++++++++++++++++++++");
 
@@ -30,6 +40,7 @@ module.exports.signIn = function(req,res){
 
     return res.render("hotelSignIn",{
         title: "RRR",
+        message: await req.flash('message') ,
          
     })
 }
@@ -46,25 +57,48 @@ module.exports.create = async function(req,res){
         
         newUser = await Hotel.create(req.body);
 
-        let follow = await Follow.create({
-            user:newUser.id,
-            UserOrHotel:'Hotel'
-        })
+        // let follow = await Follow.create({
+        //     user:newUser.id,
+        //     UserOrHotel:'Hotel'
+        // })
+        // newUser.follow = follow;
 
-        newUser.follow = follow;
-        newUser.avatar = "https://st3.depositphotos.com/15648834/17930/v/600/depositphotos_179308454-stock-illustration-unknown-person-silhouette-glasses-profile.jpg";
+        // generating hash
+        const salt = await bcrypt.genSalt(10);
+        // hashing here
+        const hashPassword = await bcrypt.hash(req.body.password,salt);
+        newUser.password = hashPassword;
+
+
+        newUser.avatar = "/uploads//hotelProfile/logo.png";
         
         newUser.collage.push("")
         newUser.collage.push("")
         newUser.collage.push("")
         newUser.collage.push("")
+
+
+        newUser.colors.push("")
+        newUser.colors.push("")
+        newUser.colors.push("")
+
 
         
         await newUser.save();
         
-        return res.redirect('/hotel/signIn');
+
+        await req.flash('message', [
+            { type: 'flash-success', text: 'Approval Pending' },
+          ]);
+
+        mailer('pendingapproval',`${req.body.email}`);
+        // return res.redirect('/hotel/signIn');
+        return res.json({ redirectUrl: '/hotel/signIn' });
+
     }else{
-       
+        await req.flash('message', [
+            { type: 'flash-warning', text: 'Email Already Exists' },
+          ]);
         return res.redirect('back');
     }
     
@@ -73,19 +107,23 @@ module.exports.create = async function(req,res){
 
 
 //for creating session and signIN
-module.exports.createSession = function(req,res){
+module.exports.createSession =async function(req,res){
   
     const id = req.user.id;
-    
+    await req.flash('message', [
+        { type: 'flash-success', text: 'Login Success' },
+      ]);
     return res.redirect(`/hotel/profile/${id}`);
 }
  
 //for creating session and signIN using google
 
-module.exports.GoogleSession = function(req,res){
+module.exports.GoogleSession =async function(req,res){
   
     const id = req.user.id;
-    
+    await req.flash('message', [
+        { type: 'flash-success', text: 'Login Success' },
+      ]);
     return res.redirect(`/hotel/profile/${id}`);
 }
 
@@ -93,15 +131,30 @@ module.exports.GoogleSession = function(req,res){
 //for deleting session cookie created by passport
 module.exports.destroySession = async function(req,res,next){
     console.log(req.user);
-    req.logout(function(err) {
+    req.logout(async function(err) {
        
         if (err) { return next(err); }
-        res.redirect('/');
+        await req.flash('message', [
+            { type: 'flash-warning', text: 'Logged out' },
+          ]);
+        res.redirect('/user/signIn');
     });
     
 
 }
-
+var quotes ={
+    0:"Where every flavor tells a story.",
+    1:"Think Delicious , Eat delicious",
+    2:"For the love of delicious food.",
+    3:"A taste you’ll remember.",
+    4:"Chicken dinner is a winner.",
+    5:"Hundreds of flavors under one roof.",
+    6:"Food that tells a story.",
+    7:"Sensory indulgence unlocked.",
+    8:"Life is short, make it sweet.",
+    9:"A pinch of passion in every dish.",
+    10:"Wake up your taste buds."
+};
 module.exports.userProfile = async function(req,res){  
     
     
@@ -111,18 +164,30 @@ module.exports.userProfile = async function(req,res){
  
     let visitor = await User.findById(req.user.id);
 
-    let model;
+    // let model;
  
 
-    if(visitor){
-        model = "User"
-    }else{
-        model = "Hotel"
+    // if(visitor){
+    //     model = "User"
+    // }else{
+    //     model = "Hotel"
+    // }
+    var typeOfUser="Hotel";
+    if (req.user && req.user.constructor.modelName === 'User') {
+        typeOfUser = "User";
+    }
+    
+    if (req.user && req.user.constructor.modelName === 'Admin') {
+        typeOfUser = "Admin";
     }
 
     const userId = req.user._id.toString();
     
     const profileUSerData = await Hotel.findById(req.params.uID)
+    .populate({
+        path:'district',
+        select:'name'
+    })
     .populate({
         path:'menuArray',
         populate:{
@@ -176,16 +241,69 @@ module.exports.userProfile = async function(req,res){
     });
 
     var followbtn = true;
-    const follow = await Follow.findById(profileUSerData.follow);
+    const follow = await Follow.findById(profileUSerData.follow)
+    .populate({
+        path:'followers',
+        populate:{
+            path:'user',
+            select:'name avatar follow'
+        }
+    })
+    .populate({
+        path:'followings',
+        populate:{
+            path:'user',
+            select:'name avatar follow'
+        }
+    });;
     // console.log("````````````````",follow);
     for(var i=0 ; i<follow.followers.length;i++){
         // console.log("`````````````````",follow.followers[i].toString());
-        if(follow.followers[i].toString() == userId){
+        if(follow.followers[i]._id == req.user.follow.toString()){
             followbtn =false;
             break;
         }
     }
-    // console.log(profileUSerData.menuArray);
+
+
+    console.log(follow);
+
+    // populating user and hotels for footer
+    const HotelData = await Hotel.find({}).populate();
+
+    const users = await User.find({}).populate();
+
+    // for districts data
+    const districts = await Districts.find({});
+
+    // for shuffling customer section rp=reviewPosts
+    if(profileUSerData.reviewPosts.length<3){
+        var rp = profileUSerData.reviewPosts
+    }
+    else{
+        var shuffledList = lodash.shuffle(profileUSerData.reviewPosts);
+        var rp = shuffledList.slice(0,3);
+    }
+
+    // for quotes
+    var shuffleQuotes = lodash.shuffle(quotes)
+    var oneQuote = shuffleQuotes[0];
+
+
+    // for paragraph colors 
+    var backgroundColor1 = profileUSerData.colors[0];
+    if(!backgroundColor1){
+        backgroundColor1 = '#ddd'
+    }
+    const textColor1 = tinycolor(backgroundColor1).isDark() ? '#fff' : '#000';
+    
+
+    var backgroundColor2 = profileUSerData.colors[2];
+    if(!backgroundColor2){
+        backgroundColor2 = '#000000e6'
+    }
+    const textColor2 = tinycolor(backgroundColor2).isDark() ? '#ACF4DB' : '#000';
+
 
     return res.render('hotel',{
         
@@ -193,11 +311,18 @@ module.exports.userProfile = async function(req,res){
         HotelProfile :profileUSerData,
         userToVisit:userToVisit,
         userId:userId,
-        typeOfUser:model,
+        typeOfUser:typeOfUser,
         followbtn:followbtn,
-        followers:follow.followers.length,
-        following:follow.followings.length,
-        // layout:false,
+        followers:follow.followers,
+        following:follow.followings,
+        hotelNames: HotelData,
+        users:users,
+        message: await req.flash('message') ,
+        districts:districts,
+        rp:rp,
+        oneQuote:oneQuote,
+        textColor1,
+        textColor2,
     
     });
 
@@ -212,10 +337,11 @@ module.exports.editProfile =async(req,res)=>{
             console.log(err);
         }
         const user = await Hotel.findById(req.user.id);
+        let email = user.email;
         const nonEmptyValues = JSON.parse(JSON.stringify(req.body));
         const nonEmptyObject = {};
 
-        console.log("values",nonEmptyValues,req.file);
+        // console.log("values",nonEmptyValues,req.file);00000000000000000
         // console.log("-----------------------------------",req.user.id,req.params.id);
         if(req.user.id == req.params.id){
 
@@ -224,6 +350,8 @@ module.exports.editProfile =async(req,res)=>{
                     nonEmptyObject[userData] = nonEmptyValues[userData];
                 }
             }
+
+            nonEmptyObject.email = email
             if(req.file){
                 // removing previous file from folder
                 // if(user.avatar){
@@ -233,13 +361,33 @@ module.exports.editProfile =async(req,res)=>{
                 nonEmptyObject.avatar = Hotel.picPath+'/'+req.file.filename;
                 console.log(user);
             }
-            
+            if(req.body.district){
+                // check if already the hotel is in a district then modify it 
+                if(user.district){
+                    const id1 = ObjectId(user.district.id)
+                    const district1 = await Districts.findById(id1);
+
+                    await district1.hotels.pull(user.id);
+
+                    await district1.save();
+                }
+
+                // new enrolling
+                console.log("in new enroll");
+                const district2 = await Districts.findById(req.body.district);
+                await district2.hotels.push(user.id);
+                await district2.save();
+
+
+            }
             await Hotel.findByIdAndUpdate(req.user.id,{$set:nonEmptyObject});
 
         }
         
     });
-   
+    await req.flash('message', [
+        { type: 'flash-success-hotel', text: 'Edit Successfull' },
+      ]);
     return res.redirect('back');
 }
 
@@ -270,16 +418,16 @@ module.exports.FollowOrUnfollow = async(req,res)=>{
             const FollowVisitor = await Follow.findById(followedBy.follow);
             const FollowVisitPage = await Follow.findById(toFollow.follow);
              
-            if(!FollowVisitPage.followers.includes(followedById)){
-                FollowVisitPage.followers.push(followedById);
-                FollowVisitor.followings.push(toFollowId);
+            if(!FollowVisitPage.followers.includes(FollowVisitor.id)){
+                FollowVisitPage.followers.push(FollowVisitor.id);
+                FollowVisitor.followings.push(FollowVisitPage.id);
         
                 var followBtn = "unfollow"
         
             }
             else{
-                FollowVisitPage.followers.pull(followedById);
-                FollowVisitor.followings.pull(toFollowId);
+                FollowVisitPage.followers.pull(FollowVisitor.id);
+                FollowVisitor.followings.pull(FollowVisitPage.id);
         
         
                 var followBtn = "follow"
@@ -290,11 +438,13 @@ module.exports.FollowOrUnfollow = async(req,res)=>{
             await FollowVisitor.save();
         
             // for front end thing
-            const FollowVisitPage1 = await Follow.findById(toFollow.follow);
+            const FollowVisitPage1 = await Follow.findById(toFollow.follow)
+            .populate('followers')
+            .populate('followings');;
             // console.log("22222222222222222222222",FollowVisitPage1);
         
             res.status(200).json(
-            {msg:"succeess",followers:FollowVisitPage1.followers.length,following:FollowVisitPage1.followings.length,followBtn:followBtn}
+            {msg:"succeess",followers:FollowVisitPage1.followers,following:FollowVisitPage1.followings,followBtn:followBtn}
             );
     }
 
@@ -317,11 +467,12 @@ module.exports.collage = async(req,res)=>{
 
         // removing old photo
         if(user.collage[ref]!=""){
+            // console.log("in user.collage");
             const oldProfilePath = path.join(__dirname,'../uploads/hotelProfile/collage',user.collage[ref]);
             fs.unlinkSync(oldProfilePath);
         }
 
-        console.log(req.file.filename);
+        // console.log(req.file.filename,"in controller");
          user.collage[ref] = req.file.filename;
 
          await user.save();
@@ -329,7 +480,9 @@ module.exports.collage = async(req,res)=>{
          
         
     });
-
+    await req.flash('message', [
+        { type: 'flash-success-hotel', text: 'Collage Updated' },
+      ]);
     return res.redirect('back');
 
 }
@@ -352,6 +505,9 @@ module.exports.coverPic =async(req,res)=>{
 
     user.coverPic = req.file.filename;
     await user.save();
+    await req.flash('message', [
+        { type: 'flash-success-hotel', text: 'Cover-pic Updated !' },
+      ]);
     return res.redirect('back');
   })
 }
@@ -365,7 +521,81 @@ module.exports.removeCoverPic = async(req,res)=>{
     }
      user.coverPic = "";
      await user.save();
+     await req.flash('message', [
+        { type: 'flash-warning-hotel', text: 'Back to default' },
+      ]);
     return res.redirect('back');
      
 
 }
+
+module.exports.colors = async(req,res)=>{
+    if(req.body.section){
+        const hotel = await Hotel.findById(req.user.id);
+        const section = req.body.section;
+        console.log(section,"-------------------",req.body.color);
+
+        hotel.colors[section] = req.body.color;
+
+        await req.flash('message', [
+            { type: 'flash-success-hotel', text: 'color updated' },
+          ]);
+
+        await hotel.save();
+    }
+
+    return res.redirect('back');
+
+}
+
+
+module.exports.sendOtpVerification = async(req,res)=>{
+    try {
+        if(req.body.password != req.body.confirm_password){
+        
+            return res.json({ redirectUrl: '/hotel/signUp' });
+            // return res.redirect('back');
+        }
+        let user = await Hotel.findOne({email:req.body.email});
+        if(!user){
+            // check previous records and delete them
+            await otpVerify.deleteMany({user:req.body.email});
+            // const data = req.body;
+
+            const otp = `${Math.floor(1000 + Math.random() * 9000)}`; 
+            
+            // hashing the otp to store
+            const salt = 10;
+            const hashedOtp = await bcrypt.hash(otp,salt);
+            const newOtp = await new otpVerify({
+                user:req.body.email,
+                otp:hashedOtp,
+                UserOrHotel:'Hotel',
+                createdAt:Date.now(),
+                expiredAt:Date.now() +3600000
+            })
+            
+            // sending mail for otp
+            mailer('userOtp',req.body.email,otp);
+            
+            await newOtp.save();
+
+            return res.json({
+                change:true,
+                // data:data,
+
+            })
+        }else{
+        await req.flash('message', [
+            { type: 'flash-warning', text: 'User Already Exists' },
+          ]);
+          return res.json({ redirectUrl: '/user/signUp' });
+        }
+        
+
+    } catch (error) {
+        res.json({
+            message:error.message
+        })
+    }
+  }

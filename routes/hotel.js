@@ -10,11 +10,13 @@ const menuController = require('../controllers/menuController');
 
 const ratingController = require('../controllers/ratingController');
 
+const otpVerify = require('../config/otpVerifyMiddleware');
+
 router.get('/signIn',hotelController.signIn);
 
 router.get('/signUp',hotelController.signUp);
 
-router.post('/create',hotelController.create);
+router.post('/create',otpVerify,hotelController.create);
 
 router.post('/create-session',passport.authenticate(
     
@@ -25,7 +27,7 @@ router.post('/create-session',passport.authenticate(
 
 router.get('/google/callback',
     passport.authenticate('hotelGoogle',{
-        failureRedirect:'/user/signIn'
+        failureRedirect:'/hotel/signIn'
     }),hotelController.GoogleSession);
 
 router.get('/signOut',hotelController.destroySession);
@@ -50,6 +52,9 @@ router.post('/cover',hotelController.coverPic);
 
 router.get('/cover/remove',hotelController.removeCoverPic);
 
+router.post('/color',hotelController.colors);
+
+router.post('/sendOtpVerification',hotelController.sendOtpVerification);
 
 
 

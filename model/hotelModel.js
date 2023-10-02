@@ -34,6 +34,10 @@ const hotelSchema = new mongoose.Schema({
         type:Array,
         maxlength:4
     },
+    colors:{
+        type:Array,
+        maxlength:3
+    },
     avatar:{
         type:String,
     },
@@ -56,6 +60,29 @@ const hotelSchema = new mongoose.Schema({
     follow:{
         type:mongoose.Schema.Types.ObjectId,
         ref:'Follow'
+    },
+    district:{
+        type:mongoose.Schema.Types.ObjectId,
+        ref:'Districts'
+    },
+    isVisible:{
+        type:Boolean,
+        default:false
+    },
+    address:{
+        type:String,
+        maxlength:60,
+        default:'Near Kims, Srikakulam, 532410'
+    },
+    phone:{
+        type:Number,
+        maxlength:10,
+        minlength:10,
+        default:9988776655
+    },
+    about:{
+        type:String,
+        maxlength:230
     }
 
 });

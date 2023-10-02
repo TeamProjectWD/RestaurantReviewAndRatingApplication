@@ -3,6 +3,11 @@ const LocalStrategy = require('passport-local').Strategy;
 const User = require('../model/User')
 const Hotel = require('../model/hotelModel')
 const Follow = require('../model/follow');
+const mailerExp = require('./mailer');
+const bcrypt = require('bcrypt');
+const axios = require('axios');
+const path = require('path')
+const fs = require('fs')
 
 //intilizing passport local strategy
 passport.use('local-user',new LocalStrategy({
@@ -10,15 +15,31 @@ passport.use('local-user',new LocalStrategy({
     passReqToCallback:true
     },
     function(req,email,password,done){
-        User.findOne({email: email},function(err,user){
-            if(err){
-                return done(err);
+        User.findOne({email: email},async function(err,user){
+          if(err){
+            return done(err);
+          }
+          if(user){
+            const validatePassword = await bcrypt.compare(password,user.password)
+            // const validatePassword = user.password != password;
+            // if(!user || user.password != password){
+  
+            if(!user || !validatePassword){
+              req.flash('message', [
+                { type: 'flash-warning', text: 'Invalid Credentials' },
+              ]);
+              return done(null,false);
             }
-            if(!user || user.password  != password){
-                
-                return done(null,false);
-            }
-            return done(null,user);
+            // console.log("in the passport local",req.sessionID);
+             
+              return done(null,user);
+          }
+          else{
+            req.flash('message', [
+              { type: 'flash-warning', text: 'Invalid Credentials' },
+            ]);
+            return done(null,false);
+          }
         })
     }
 ));
@@ -29,20 +50,39 @@ passport.use('local-hotel',new LocalStrategy({
     passReqToCallback:true
     },
     function(req,email,password,done){
-        console.log("test1");
+        // console.log("test1");
 
-        Hotel.findOne({email: email},function(err,hotel){
+        Hotel.findOne({email: email},async function(err,hotel){
             if(err){
                 return done(err);
             }
-            console.log("test2");
-            if(!hotel || hotel.password  != password){
+            // console.log("test2");
+            if(hotel){
+              const validatePassword = await bcrypt.compare(password,hotel.password)
 
-                console.log("error +++++++++++++++++++++++++++++++");
-                
-                return done(null,false);
+              if(!hotel || !validatePassword){
+  
+                  // console.log("error +++++++++++++++++++++++++++++++");
+                  req.flash('message', [
+                    { type: 'flash-warning', text: 'Invalid Credentials' },
+                  ]);
+                  return done(null,false);
+              }
+              if(!hotel.follow && hotel.isVisible==false){
+                  req.flash('message', [
+                    { type: 'flash-success', text: 'Approval needed' },
+                  ]);
+                  return done(null,false);
+              }
+              return done(null,hotel);
             }
-            return done(null,hotel);
+            else{
+              req.flash('message', [
+                { type: 'flash-warning', text: 'Invalid Credentials' },
+              ]);
+              return done(null,false);
+            }
+
         })
     }
 ));
@@ -52,16 +92,18 @@ passport.use('local-hotel',new LocalStrategy({
 
 var GoogleStrategy = require('passport-google-oauth20').Strategy;
 
-const GOOGLE_CLIENT_ID ='322329409826-t2uajqpo39tkgu4vus3bp2f4d1vmm4jj.apps.googleusercontent.com';
-const GOOGLE_CLIENT_SECRET ='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';
+const GOOGLE_CLIENT_ID = process.env.GOOGLE_CLIENT_ID;
+const GOOGLE_CLIENT_SECRET = process.env.GOOGLE_CLIENT_SECRET;
+
+console.log(GOOGLE_CLIENT_ID,GOOGLE_CLIENT_SECRET,"SSSSSSSSSSSSSSSSSSSSSSSSSS");
 passport.use('userGoogle',new GoogleStrategy({
     clientID: GOOGLE_CLIENT_ID,
     clientSecret: GOOGLE_CLIENT_SECRET,
     callbackURL: "/user/google/callback",
     passReqToCallback:true
   },
-  function(request,accessToken, refreshToken, profile, cb) {
-    console.log(profile);
+  function(req,accessToken, refreshToken, profile, cb) {
+    // console.log(profile);
     User.findOne({ googleId: profile.id }, async function (err, user) {
         if (err) { return cb(err); }
         if (!user) {
@@ -69,7 +111,8 @@ passport.use('userGoogle',new GoogleStrategy({
             name: profile.displayName,
             email: profile.emails[0].value,
             googleId: profile.id,
-            password:profile.id
+            password:profile.id,
+           
           });
             let follow = await Follow.create({
             user:newUser.id,
@@ -77,15 +120,61 @@ passport.use('userGoogle',new GoogleStrategy({
             })
 
             newUser.follow = follow;
-            newUser.avatar = "https://st3.depositphotos.com/15648834/17930/v/600/depositphotos_179308454-stock-illustration-unknown-person-silhouette-glasses-profile.jpg";
+            // console.log(profile);
+            if( profile._json['picture']){
+              // newUser.avatar= profile._json['picture']
+  
+              const imageUrl = profile._json['picture']; 
+              const imageName = `avatar-${Date.now()}`; 
+
+              try {
+                const downloadDirectory = path.join(__dirname,'../uploads/userProfile/pics');
+                
+                const response = await axios.get(imageUrl, { responseType: 'stream' });
+                
+                const filePath = path.join(downloadDirectory, imageName);
+                const fileStream = fs.createWriteStream(filePath);
+                console.log(downloadDirectory,filePath);
+
+                response.data.pipe(fileStream);
+
+                // Handle success
+                fileStream.on('finish', () => {
+                  // res.status(200).send('Image downloaded successfully!');
+                  console.log('Image downloaded successfully!');
+                });
+
+                // Handle errors
+                fileStream.on('error', (err) => {
+                  console.error('Error while downloading the image:', err);
+                  // res.status(500).send('Error downloading the image.');
+                });
+              } catch (error) {
+                console.error('Error fetching the image:', error);
+                // res.status(500).send('Error fetching the image.');
+              }
+              newUser.avatar=`/uploads/userProfile/pics/${imageName}`
+            }
+            else{
+              newUser.avatar = "https://i.imgur.com/ce3eomA.png";
+            }
  
-            newUser.save(function (err) {
-            if (err) { return cb(err); }
-            return cb(null, newUser);
-          });
-        } else {
+            mailerExp('newuser',`${profile.emails[0].value}`)
+    
+            await newUser.save(function (err) {
+              if (err) { return cb(err); }
+              return cb(null, newUser);
+            });
+            
+          } else {
             // console.log(user);
-          return cb(null, user);
+            // req.session.shareid = 
+            // console.log("in user google auth",req.query);
+
+            // console.log("in the passport google ",req.query);
+            // console.log(profile);
+
+            return cb(null, user);
         }
       });
     }
@@ -93,16 +182,16 @@ passport.use('userGoogle',new GoogleStrategy({
 
 var GoogleStrategy = require('passport-google-oauth20').Strategy;
 
-const GOOGLE_CLIENT_ID_Hotel ='322329409826-vbk1b2v67pvpgi3m9tep6s9li98en729.apps.googleusercontent.com';
-const GOOGLE_CLIENT_SECRET_Hotel ='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';
+const GOOGLE_CLIENT_ID_Hotel = process.env.GOOGLE_CLIENT_ID_Hotel;
+const GOOGLE_CLIENT_SECRET_Hotel = process.env.GOOGLE_CLIENT_SECRET_Hotel;
 passport.use('hotelGoogle',new GoogleStrategy({
     clientID: GOOGLE_CLIENT_ID_Hotel,
     clientSecret: GOOGLE_CLIENT_SECRET_Hotel,
     callbackURL: "/hotel/google/callback",
     passReqToCallback:true
   },
-  function(request,accessToken, refreshToken, profile, cb) {
-    console.log(profile);
+  function(req,accessToken, refreshToken, profile, cb) {
+    // console.log(profile);
     Hotel.findOne({ googleId: profile.id }, async function (err, user) {
         if (err) { return cb(err); }
         if (!user) {
@@ -112,26 +201,45 @@ passport.use('hotelGoogle',new GoogleStrategy({
             googleId: profile.id,
             password:profile.id
           });
-            let follow = await Follow.create({
-            user:newUser.id,
-            UserOrHotel:'Hotel'
-            })
+            // let follow = await Follow.create({
+            // user:newUser.id,
+            // UserOrHotel:'Hotel'
+            // })
 
-            newUser.follow = follow;
-            newUser.avatar = "https://st3.depositphotos.com/15648834/17930/v/600/depositphotos_179308454-stock-illustration-unknown-person-silhouette-glasses-profile.jpg";
+            // newUser.follow = follow;
+            newUser.avatar = "/uploads//hotelProfile/logo.png";
             
             newUser.collage.push("")
             newUser.collage.push("")
             newUser.collage.push("")
             newUser.collage.push("")
 
+            newUser.colors.push("")
+            newUser.colors.push("")
+            newUser.colors.push("")
+    
+            mailerExp('pendingapproval',`${profile.emails[0].value}`);
+
+
             newUser.save(function (err) {
-            if (err) { return cb(err); }
-            return cb(null, newUser);
+            if (err) 
+            { 
+              return cb(err); 
+            }
+            req.flash('message', [
+              { type: 'flash-success', text: 'Approval needed' },
+            ]);
+            return cb(null, false);
           });
         } else {
             // console.log(user);
-          return cb(null, user);
+            if(!user.follow && user.isVisible==false){
+              req.flash('message', [
+                { type: 'flash-success', text: 'Approval needed' },
+              ]);
+              return cb(null, false);
+            }
+            return cb(null, user);
         }
       });
     }
@@ -161,16 +269,34 @@ passport.deserializeUser(async function(id,done){
 passport.checkAuthentication  = function(req,res,next){
     
     if(req.isAuthenticated()){
-        console.log("inside checkAuthentication");
+        // console.log("inside checkAuthentication");
         return next();
     }
+    // req.session.shareUrl = `/share/${req.params.shareid}`;
+    console.log("inside check share");
     return res.redirect('/user/signIn');
 }
+
+
+// for the share thing
+// passport.checkAuthenticationShare  = function(req,res,next){
+    
+//   if(req.isAuthenticated()){
+//       console.log("inside checkshareAuthentication");
+//       return next();
+//   }
+//   req.session.redirectUrl = `/share/${req.params.id}`;
+//   console.log("inside check share",req.session);
+//   return res.redirect('/user/signIn');
+// }
+
 
 //making user object from passport available for locals
 passport.setAuthenticated = function(req,res,next){
     if(req.isAuthenticated()){
+      // console.log("in set authenticated",req.session);
         res.locals.user = req.user;
+        // console.log('------------------',res.locals,"--------------");
     }
     next();
 }

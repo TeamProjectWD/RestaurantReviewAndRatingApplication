@@ -22,6 +22,8 @@ router.post('/comment/delete/',commentController.deleteComment);
 
 router.post('/delete/:uID/:pID/',postController.deletePost);
 
+router.post('/download/:id', postController.download)
+
 
 
 module.exports = router;

@@ -35,8 +35,10 @@ let menuMaker = (data) => {
 
     return (`
         <div id="itemSelect"> 
-            <div class="col-md-6"><label class="labels">Menu</label></div>
-            <select class="form-control" style="width: auto;" name="menuItem"  required>
+            <div  class="formText">
+                <label class="labels">Menu :</label>
+            </div>
+            <select   name="menuItem" class="select" required>
             
                 <option disabled selected>-- Please select an Item --</option>
 

@@ -6,7 +6,7 @@ const path = require('path');
 
 const profilePicturePath = path.join('/uploads/userProfile/pics');
 
-const coverPicPath = path.join('/uploads/userProfile/backG');
+const coverPicPath = path.join('/uploads/userProfile/coverPics');
 
 const userSchemma = new mongoose.Schema({
 
@@ -30,8 +30,13 @@ const userSchemma = new mongoose.Schema({
     avatar:{
         type:String,
     },
-    background:{
-        type:String
+    coverPic:{
+        type:String,
+        default:""
+    },
+    isAdmin:{
+        type:Boolean,
+        default:false
     },
     posts:[{
         type:mongoose.Schema.Types.ObjectId,
@@ -40,8 +45,11 @@ const userSchemma = new mongoose.Schema({
     follow:{
         type:mongoose.Schema.Types.ObjectId,
         ref:'Follow'
-    }
-
+    },
+    district:{
+        type:mongoose.Schema.Types.ObjectId,
+        ref:'Districts',
+    },
 });
 
 const storage = multer.diskStorage({
@@ -68,6 +76,9 @@ const storageBackground = multer.diskStorage({
 userSchemma.statics.uploadPicture =  multer({storage:storage}).single('avatar');
 
 userSchemma.statics.picPath = profilePicturePath;
+
+userSchemma.statics.coverPic =  multer({storage:storageBackground}).single('cover');
+
 
 const User = mongoose.model('User',userSchemma);
 

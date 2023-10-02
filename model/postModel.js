@@ -8,7 +8,7 @@ const hotelModel = require('../model/hotelModel');
 
 const menuModel = require('../model/menuModel');
 
-const postPicturePath = path.join('/uploads/posts/pics');
+const postPicturePath = path.join('/uploads/posts');
 
 const postSchema = new mongoose.Schema({
 

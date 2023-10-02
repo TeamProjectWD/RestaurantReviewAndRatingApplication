@@ -1,11 +1,11 @@
 const mongoose = require('mongoose');
+require('dotenv').config();
 
-mongoose.connect('mongodb://localhost:27017/newDB');
 
- 
- 
 
-mongoose.set('strictQuery', true);
+mongoose.set('strictQuery', false);
+mongoose.connect(process.env.mongo_url);
+
 
 const db = mongoose.connection;
 
