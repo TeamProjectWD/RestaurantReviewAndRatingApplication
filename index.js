@@ -1,15 +1,10 @@
-
 const express = require('express');
 
 const expressEjsLayouts = require('express-ejs-layouts');
 
 const path = require('path');
 
-require('dotenv').config()
-
 const port = 8000;
-
-console.log(port);
 
 const app = express();
 
@@ -39,7 +34,7 @@ const schedule = require('node-schedule');
 
 const OtpVerify = require('./model/otpVerify')
 
- 
+require('dotenv').config()
 
 // console.log(process.env.port);
 //to encode url
@@ -86,16 +81,34 @@ app.use(passport.setAuthenticated);
 
 // for cookies
 app.use(cookieParser());
+
+
 //making upload folder available to browser
+
 app.use('/uploads',express.static(__dirname +"/uploads"));
 
 app.use('/assets',express.static(__dirname+"/assets"));
 
- 
+
+// app.use('/',express.static(__dirname+"/assets/input"));
+// app.use('/user/profile',express.static(__dirname+"/assets/js"));
+
+//seperate directory for routes
 app.use('/',require('./routes'));
 
 
- 
+// const vapidKeys = webpush.generateVAPIDKeys();
+// console.log(vapidKeys);
+// const vapidKeys = {
+//     publicKey: 'BNfuRLxYhSowPcZcNrPtYnkYXmk30uBCBgxi6u6UtDaOr8vb2QW5Ac0yiwgrPa3qevv-ns58uOVpXkAA7vw-Vfc',
+//     privateKey: 'VwsEfHe3ZCzmuAHcvtfWvqIc35QddULTmzXS5J06kK8'
+// };
+// webpush.setVapidDetails(
+//     'mailto:fullstackwebdevelopersteam@gmail.com',
+//     vapidKeys.publicKey,
+//     vapidKeys.privateKey
+//   );
+
 kue.app.listen(process.env.kuePort);
 
 // Set up a schedule to delete expired records every hour (adjust as needed)
@@ -107,8 +120,6 @@ schedule.scheduleJob('0 0 */5 * *', async () => {
 });
 
 app.listen(port,(err)=>{
-
-    console.log(process.env.ports);
 
     if(err){
         console.log("error in express",err);

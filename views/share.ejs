@@ -1,8 +1,23 @@
+<% if (message != '') { %>
+    <div class="flash <%= message[0].type %> fade">
+        <p>
+            <%= message[0].text %>
+        </p>
+    </div>
+<% } %>
+
 <link rel="stylesheet" href="/assets/css/share.css">
 
 <div style="display: flex; flex-direction: column; justify-content: center; align-items: center; background-color: rgb(18,18,18); height: 100%;">
     <div style="margin-left: 25px;">
+      <% if(post){%>
         <%-include('posts')%>
+      <%}
+      else{%>
+        <div  id="DeletedPost">
+          <h4>The post you are looking for,might be deleted by the owner (or) removed by admin for not adhering to guidelines.</h4>
+        </div>
+      <%}%>
     </div>
     <div style="margin-bottom: 100px;">
         <a href="/"><button  class="spacebtn" type="button">
